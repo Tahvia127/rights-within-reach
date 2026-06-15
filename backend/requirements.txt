@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+psycopg2-binary
+sqlalchemy
+pgvector
+python-dotenv
+sentence-transformers
+anthropic
+deepl
+google-cloud-translate
+redis
+beautifulsoup4
+pdfplumber
+requests
+slowapi
+pytest
