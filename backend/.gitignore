@@ -1,0 +1,6 @@
+# Paths are relative to this backend/ directory
+.env
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/

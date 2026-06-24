@@ -1,0 +1,30 @@
+source_name,url,topic,jurisdiction,priority,status,date_ingested,chunk_count,permission_status,notes
+Illinois Wage Payment and Collection Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2402&ChapterID=68,money_debt,illinois,High,,,,,covers unpaid wages and final paycheck rules
+Illinois Consumer Fraud and Deceptive Business Practices Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2266&ChapterID=67,money_debt,illinois,High,,,,,foundational consumer protection statute
+Illinois Collection Agency Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=1325&ChapterID=24,money_debt,illinois,High,,,,,governs licensed debt collectors in IL
+Federal Fair Debt Collection Practices Act (FDCPA),https://www.consumerfinance.gov/rules-policy/regulations/1006/,money_debt,federal,High,,,,,CFPB Regulation F covering debt collector conduct
+Illinois Wage Garnishment Exemptions (735 ILCS 5/12-803),https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=073500050K12-803,money_debt,illinois,High,,,,,exemption amounts from wage garnishment
+Illinois Predatory Loan Prevention Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=4138&ChapterID=20,money_debt,illinois,High,,,,,36 percent APR cap on consumer loans
+Illinois Commerce Commission Utility Shutoff Rules (83 IAC 280),https://www.icc.illinois.gov/rules/83-iac-280,money_debt,illinois,High,,,,,winter shutoff moratorium and payment plan rules
+Illinois LIHEAP Program (utility assistance),https://dceo.illinois.gov/communityservices/utilitybillassistance.html,money_debt,illinois,High,,,,,emergency utility bill assistance
+ComEd CHAMP and PIPP Programs,https://www.comed.com/SmartEnergy/SmartIdeas/Pages/IncomeEligible.aspx,money_debt,illinois,Medium,,,,,low income utility payment assistance
+Peoples Gas Share the Warmth,https://www.peoplesgasdelivery.com/save-money-energy/payment-assistance,money_debt,illinois,Medium,,,,,gas bill assistance program
+ILAO Debt Collection Self Help,https://www.illinoislegalaid.org/legal-information/debt-and-money,money_debt,illinois,Medium,,,,,plain language guide from ILAO
+CARPLS Legal Aid Hotline,https://www.carpls.org,money_debt,chicago-il,High,,,,,Cook County free legal advice hotline referral
+City of Chicago Home Repair Program,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home_repair_program.html,housing_repair,chicago-il,High,,,,,grants up to 50 percent AMI for porch and roof
+Small Accessible Repairs for Seniors (SARFS),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/small_accessible_repairsforseniors.html,housing_repair,chicago-il,High,,,,,for Chicago residents 60+ at 80 percent AMI
+Emergency Heating Repair Program (EHRP),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/emergency_heatingrepairprogram.html,housing_repair,chicago-il,High,,,,,winter heating system emergency grants
+Critical Home Improvement Program (CHIP),https://www.chicagobungalow.org/programs,housing_repair,chicago-il,High,,,,,up to 15k in select South Side neighborhoods
+Chicago HomeMod Program (MOPD),https://www.chicago.gov/city/en/depts/mopd/provdrs/independence/svcs/homemod.html,housing_repair,chicago-il,High,,,,,accessibility mods for residents with disabilities
+IHDA Homeowner Assistance Fund Home Repair (HAFHR),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,,,,,up to 60k for COVID delayed critical repairs
+IHDA Home Repair and Accessibility Program (HRAP),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,,,,,up to 45k for low income homeowners
+IDHS Trust Fund Home Modification Program,https://www.dhs.state.il.us/page.aspx?item=32042,housing_repair,illinois,High,,,,,accessibility mods for income eligible elderly
+USDA Section 504 Home Repair (Illinois),https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants/il,housing_repair,federal,High,,,,,loans and grants for very low income rural homeowners
+Rebuilding Together Metro Chicago,http://www.rebuildingtogether-chi.com/,housing_repair,chicago-il,Medium,,,,,volunteer based repairs for low income homeowners
+Chicagoland Habitat for Humanity Repair Programs,https://chicagolandhabitat.org/hafhr/,housing_repair,chicago-il,Medium,,,,,HAFHR administrator for affiliated counties
+NHS Chicago HAF Home Repair,https://nhschicago.org/home-repair-program/,housing_repair,chicago-il,Medium,,,,,HAFHR administrator for Chicago
+UCP Ramp Up Foundation,https://www.ucpnet.org/services/ramp-up-foundation,housing_repair,chicago-il,Medium,,,,,ramp construction for accessibility
+Illinois Solar for All,https://illinoissfa.com,housing_repair,illinois,Low,,,,,income eligible solar installation
+ComEd Income Eligible Energy Efficiency,https://www.comed.com/WaysToSave/ForYourHome/Pages/IncomeEligibleProgram.aspx,housing_repair,illinois,Low,,,,,free weatherization and efficiency upgrades
+Cook County Home Repair Programs,https://www.cookcountyil.gov/service/housing-resources,housing_repair,chicago-il,Medium,,,,,suburban Cook County repair assistance
+HUD Section 203(k) Rehab Mortgage,https://www.hud.gov/program_offices/housing/sfh/203k,housing_repair,federal,Low,,,,,renovation loan for homeowners

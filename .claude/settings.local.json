@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E 'venv|__pycache__|\\\\.pyc$|\\\\.pytest_cache|\\\\.DS_Store')",
+      "Bash(grep -E '\\(^|/\\)\\\\._|\\\\.DS_Store$|__pycache__|\\\\.pyc$')",
+      "Bash(git checkout *)"
+    ]
+  }
+}
