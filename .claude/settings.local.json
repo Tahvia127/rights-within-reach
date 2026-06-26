@@ -108,7 +108,29 @@
       "Bash(echo \"immigration data removed: exit $?\")",
       "Bash(rm -rf __pycache__ .pytest_cache backend/__pycache__ backend/**/__pycache__)",
       "Bash(grep -v '^\\\\.$')",
-      "Bash(python -m pytest backend/tests/test_parsers.py -q)"
+      "Bash(python -m pytest backend/tests/test_parsers.py -q)",
+      "Bash(lsof -i :8000 -sTCP:LISTEN)",
+      "Bash(lsof -i :5173 -sTCP:LISTEN)",
+      "Bash(curl -s \"http://localhost:8000/api/search?q=eviction%20notice&k=2\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(awk '{print \"local-ahead:\",$1,\" remote-ahead:\",$2}')",
+      "Bash(xargs git log --oneline -1)",
+      "Bash(git merge-tree *)",
+      "Bash(git config *)",
+      "Bash(echo \"core.fileMode -> $\\(git config core.fileMode\\)\")",
+      "Bash(awk 'NR>1 && /\\\\t[123]\\\\t/ {print $4}')",
+      "Bash(git stash *)",
+      "Bash(git merge *)",
+      "Bash(grep -E '\\\\.py$|\\\\.csv$')",
+      "Bash(git diff *)",
+      "Bash(xargs -0 git checkout --ours --)",
+      "Bash(xargs -0 git add --)",
+      "Bash(grep -E '\\\\.pyc$')",
+      "Bash(grep -E '\\\\.pyc$|immigration|\\\\.csv\\\\.csv')",
+      "Bash(git commit --no-verify -q -m 'Merge origin/main: reconcile remote data/parser work with local analytics+deploy *)",
+      "Bash(git push *)"
     ]
   }
 }
