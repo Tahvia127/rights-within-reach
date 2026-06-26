@@ -1,0 +1,10 @@
+{
+  "source_name": "File an Unemployment Claim (IDES)",
+  "url": "https://ides.illinois.gov/unemployment/file-a-claim.html",
+  "topic": "benefits",
+  "jurisdiction": "illinois",
+  "priority": "Medium",
+  "downloaded_at": "2026-06-25",
+  "file_type": "html",
+  "notes": "how to file"
+}

@@ -1,0 +1,13 @@
+# Railway service config for the backend API.
+# Set env vars in the Railway dashboard (see docs/DEPLOY.md): ANTHROPIC_API_KEY,
+# ALLOWED_ORIGINS, and any ANALYTICS_* overrides. Railway injects $PORT.
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3

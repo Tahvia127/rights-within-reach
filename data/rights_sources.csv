@@ -1,30 +1,100 @@
-source_name,url,topic,jurisdiction,priority,status,date_ingested,chunk_count,permission_status,notes
-Illinois Wage Payment and Collection Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2402&ChapterID=68,money_debt,illinois,High,,,,,covers unpaid wages and final paycheck rules
-Illinois Consumer Fraud and Deceptive Business Practices Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2266&ChapterID=67,money_debt,illinois,High,,,,,foundational consumer protection statute
-Illinois Collection Agency Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=1325&ChapterID=24,money_debt,illinois,High,,,,,governs licensed debt collectors in IL
-Federal Fair Debt Collection Practices Act (FDCPA),https://www.consumerfinance.gov/rules-policy/regulations/1006/,money_debt,federal,High,,,,,CFPB Regulation F covering debt collector conduct
-Illinois Wage Garnishment Exemptions (735 ILCS 5/12-803),https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=073500050K12-803,money_debt,illinois,High,,,,,exemption amounts from wage garnishment
-Illinois Predatory Loan Prevention Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=4138&ChapterID=20,money_debt,illinois,High,,,,,36 percent APR cap on consumer loans
-Illinois Commerce Commission Utility Shutoff Rules (83 IAC 280),https://www.icc.illinois.gov/rules/83-iac-280,money_debt,illinois,High,,,,,winter shutoff moratorium and payment plan rules
-Illinois LIHEAP Program (utility assistance),https://dceo.illinois.gov/communityservices/utilitybillassistance.html,money_debt,illinois,High,,,,,emergency utility bill assistance
-ComEd CHAMP and PIPP Programs,https://www.comed.com/SmartEnergy/SmartIdeas/Pages/IncomeEligible.aspx,money_debt,illinois,Medium,,,,,low income utility payment assistance
-Peoples Gas Share the Warmth,https://www.peoplesgasdelivery.com/save-money-energy/payment-assistance,money_debt,illinois,Medium,,,,,gas bill assistance program
-ILAO Debt Collection Self Help,https://www.illinoislegalaid.org/legal-information/debt-and-money,money_debt,illinois,Medium,,,,,plain language guide from ILAO
-CARPLS Legal Aid Hotline,https://www.carpls.org,money_debt,chicago-il,High,,,,,Cook County free legal advice hotline referral
-City of Chicago Home Repair Program,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home_repair_program.html,housing_repair,chicago-il,High,,,,,grants up to 50 percent AMI for porch and roof
-Small Accessible Repairs for Seniors (SARFS),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/small_accessible_repairsforseniors.html,housing_repair,chicago-il,High,,,,,for Chicago residents 60+ at 80 percent AMI
-Emergency Heating Repair Program (EHRP),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/emergency_heatingrepairprogram.html,housing_repair,chicago-il,High,,,,,winter heating system emergency grants
-Critical Home Improvement Program (CHIP),https://www.chicagobungalow.org/programs,housing_repair,chicago-il,High,,,,,up to 15k in select South Side neighborhoods
-Chicago HomeMod Program (MOPD),https://www.chicago.gov/city/en/depts/mopd/provdrs/independence/svcs/homemod.html,housing_repair,chicago-il,High,,,,,accessibility mods for residents with disabilities
-IHDA Homeowner Assistance Fund Home Repair (HAFHR),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,,,,,up to 60k for COVID delayed critical repairs
-IHDA Home Repair and Accessibility Program (HRAP),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,,,,,up to 45k for low income homeowners
-IDHS Trust Fund Home Modification Program,https://www.dhs.state.il.us/page.aspx?item=32042,housing_repair,illinois,High,,,,,accessibility mods for income eligible elderly
-USDA Section 504 Home Repair (Illinois),https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants/il,housing_repair,federal,High,,,,,loans and grants for very low income rural homeowners
-Rebuilding Together Metro Chicago,http://www.rebuildingtogether-chi.com/,housing_repair,chicago-il,Medium,,,,,volunteer based repairs for low income homeowners
-Chicagoland Habitat for Humanity Repair Programs,https://chicagolandhabitat.org/hafhr/,housing_repair,chicago-il,Medium,,,,,HAFHR administrator for affiliated counties
-NHS Chicago HAF Home Repair,https://nhschicago.org/home-repair-program/,housing_repair,chicago-il,Medium,,,,,HAFHR administrator for Chicago
-UCP Ramp Up Foundation,https://www.ucpnet.org/services/ramp-up-foundation,housing_repair,chicago-il,Medium,,,,,ramp construction for accessibility
-Illinois Solar for All,https://illinoissfa.com,housing_repair,illinois,Low,,,,,income eligible solar installation
-ComEd Income Eligible Energy Efficiency,https://www.comed.com/WaysToSave/ForYourHome/Pages/IncomeEligibleProgram.aspx,housing_repair,illinois,Low,,,,,free weatherization and efficiency upgrades
-Cook County Home Repair Programs,https://www.cookcountyil.gov/service/housing-resources,housing_repair,chicago-il,Medium,,,,,suburban Cook County repair assistance
-HUD Section 203(k) Rehab Mortgage,https://www.hud.gov/program_offices/housing/sfh/203k,housing_repair,federal,Low,,,,,renovation loan for homeowners
+source_name,url,topic,jurisdiction,priority,status,date_ingested,chunk_count,last_checked,permission_status,notes
+Illinois Wage Payment and Collection Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2402&ChapterID=68,money_debt,illinois,High,live,2026-06-25,1,2026-06-25,,covers unpaid wages and final paycheck rules
+Illinois Consumer Fraud and Deceptive Business Practices Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2266&ChapterID=67,money_debt,illinois,High,dead,,0,2026-06-25,,foundational consumer protection statute
+Illinois Collection Agency Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=1325&ChapterID=24,money_debt,illinois,High,live,2026-06-25,1,2026-06-25,,governs licensed debt collectors in IL
+Federal Fair Debt Collection Practices Act (FDCPA),https://www.consumerfinance.gov/rules-policy/regulations/1006/,money_debt,federal,High,live,2026-06-25,1,2026-06-25,,CFPB Regulation F covering debt collector conduct
+Illinois Wage Garnishment Exemptions (735 ILCS 5/12-803),https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=073500050K12-803,money_debt,illinois,High,live,2026-06-25,1,2026-06-25,,exemption amounts from wage garnishment
+Illinois Predatory Loan Prevention Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=4138&ChapterID=20,money_debt,illinois,High,live,2026-06-25,1,2026-06-25,,36 percent APR cap on consumer loans
+Illinois Commerce Commission Utility Shutoff Rules (83 IAC 280),https://www.icc.illinois.gov/rules/83-iac-280,money_debt,illinois,High,dead,,0,2026-06-25,,winter shutoff moratorium and payment plan rules
+Illinois LIHEAP Program (utility assistance),https://dceo.illinois.gov/communityservices/utilitybillassistance.html,money_debt,illinois,High,live,2026-06-25,2,2026-06-25,,emergency utility bill assistance
+ComEd CHAMP and PIPP Programs,https://www.comed.com/SmartEnergy/SmartIdeas/Pages/IncomeEligible.aspx,money_debt,illinois,Medium,empty,,0,2026-06-25,,low income utility payment assistance
+Peoples Gas Share the Warmth,https://www.peoplesgasdelivery.com/save-money-energy/payment-assistance,money_debt,illinois,Medium,dead,,0,2026-06-25,,gas bill assistance program
+ILAO Debt Collection Self Help,https://www.illinoislegalaid.org/legal-information/debt-and-money,money_debt,illinois,Medium,dead,,0,2026-06-25,,plain language guide from ILAO
+CARPLS Legal Aid Hotline,https://www.carpls.org,money_debt,chicago-il,High,live,2026-06-25,2,2026-06-25,,Cook County free legal advice hotline referral
+City of Chicago Home Repair Program,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home_repair_program.html,housing_repair,chicago-il,High,live,2026-06-25,2,2026-06-25,,grants up to 50 percent AMI for porch and roof
+Small Accessible Repairs for Seniors (SARFS),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/small_accessible_repairsforseniors.html,housing_repair,chicago-il,High,dead,,0,2026-06-25,,for Chicago residents 60+ at 80 percent AMI
+Emergency Heating Repair Program (EHRP),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/emergency_heatingrepairprogram.html,housing_repair,chicago-il,High,dead,,0,2026-06-25,,winter heating system emergency grants
+Critical Home Improvement Program (CHIP),https://www.chicagobungalow.org/programs,housing_repair,chicago-il,High,live,2026-06-25,17,2026-06-25,,up to 15k in select South Side neighborhoods
+Chicago HomeMod Program (MOPD),https://www.chicago.gov/city/en/depts/mopd/provdrs/independence/svcs/homemod.html,housing_repair,chicago-il,High,dead,,0,2026-06-25,,accessibility mods for residents with disabilities
+IHDA Homeowner Assistance Fund Home Repair (HAFHR),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,live,2026-06-25,6,2026-06-25,,up to 60k for COVID delayed critical repairs
+IHDA Home Repair and Accessibility Program (HRAP),https://www.ihda.org/my-community/revitalization-programs/,housing_repair,illinois,High,live,2026-06-25,6,2026-06-25,,up to 45k for low income homeowners
+IDHS Trust Fund Home Modification Program,https://www.dhs.state.il.us/page.aspx?item=32042,housing_repair,illinois,High,live,2026-06-25,1,2026-06-25,,accessibility mods for income eligible elderly
+USDA Section 504 Home Repair (Illinois),https://www.rd.usda.gov/programs-services/single-family-housing-programs/single-family-housing-repair-loans-grants/il,housing_repair,federal,High,dead,,0,2026-06-25,,loans and grants for very low income rural homeowners
+Rebuilding Together Metro Chicago,http://www.rebuildingtogether-chi.com/,housing_repair,chicago-il,Medium,thin,,1,2026-06-25,,volunteer based repairs for low income homeowners
+Chicagoland Habitat for Humanity Repair Programs,https://chicagolandhabitat.org/hafhr/,housing_repair,chicago-il,Medium,live,2026-06-25,9,2026-06-25,,HAFHR administrator for affiliated counties
+NHS Chicago HAF Home Repair,https://nhschicago.org/home-repair-program/,housing_repair,chicago-il,Medium,live,2026-06-25,9,2026-06-25,,HAFHR administrator for Chicago
+UCP Ramp Up Foundation,https://www.ucpnet.org/services/ramp-up-foundation,housing_repair,chicago-il,Medium,dead,,0,2026-06-25,,ramp construction for accessibility
+Illinois Solar for All,https://illinoissfa.com,housing_repair,illinois,Low,empty,,0,2026-06-25,,income eligible solar installation
+ComEd Income Eligible Energy Efficiency,https://www.comed.com/WaysToSave/ForYourHome/Pages/IncomeEligibleProgram.aspx,housing_repair,illinois,Low,empty,,0,2026-06-25,,free weatherization and efficiency upgrades
+Cook County Home Repair Programs,https://www.cookcountyil.gov/service/housing-resources,housing_repair,chicago-il,Medium,dead,,0,2026-06-25,,suburban Cook County repair assistance
+HUD Section 203(k) Rehab Mortgage,https://www.hud.gov/program_offices/housing/sfh/203k,housing_repair,federal,Low,thin,,1,2026-06-25,,renovation loan for homeowners
+Medicaid for Immigrants Illinois,https://www.illinoislegalaid.org/legal-information/government-benefits-immigrants,benefits,illinois,High,live,2026-06-25,15,2026-06-25,,
+All Kids Illinois,https://hfs.illinois.gov/medicalprograms/allkids.html,benefits,illinois,High,live,2026-06-25,1,2026-06-25,,
+LIHEAP Illinois,https://dceo.illinois.gov/communityservices/utilitybillassistance.html,benefits,illinois,High,live,2026-06-25,2,2026-06-25,,
+Illinois Medicaid Eligibility,https://hfs.illinois.gov/medicalclients/medicalprograms.html,benefits,illinois,High,live,2026-06-25,13,2026-06-25,,
+Illinois SNAP Eligibility,https://www.dhs.state.il.us/page.aspx?item=30357,benefits,illinois,High,live,2026-06-25,1,2026-06-25,,
+TANF Illinois (IDHS),https://www.dhs.state.il.us/page.aspx?item=30357,benefits,illinois,High,live,2026-06-25,1,2026-06-25,,
+SNAP for Non-Citizens (USDA),https://www.fna.usda.gov/snap/recipient/eligibility/non-citizen,benefits,federal,High,thin,2026-06-24,1,2026-06-25,,
+Chicago Fair Notice Ordinance,https://www.chicago.gov/city/en/depts/doh/provdrs/renters/svcs/rents-rights.html,housing,chicago-il,High,live,2026-06-25,3,2026-06-25,,
+Chicago RLTO Full Text,https://www.chicago.gov/content/dam/city/depts/doh/RLTO/RLTO%20Summary_2023_EN_FINAL.pdf,housing,chicago-il,High,live,2026-06-25,14,2026-06-25,,
+HUD Tenant Rights Guide,https://www.hud.gov/topics/rental_assistance/tenantrights,housing,federal,High,thin,2026-06-24,1,2026-06-25,,
+Illinois Eviction Process Guide (ILAO),https://www.illinoislegalaid.org/legal-information/eviction,housing,illinois,High,live,2026-06-25,4,2026-06-25,,
+Illinois Landlord Tenant Act,https://www.ilga.gov/legislation/ilcs/ilcs5.asp?ActID=2017,housing,illinois,High,thin,2026-06-24,1,2026-06-25,,
+Illinois Security Deposit Return Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2202&ChapterID=62,housing,illinois,High,thin,2026-06-24,1,2026-06-25,,
+Getting or Returning a Security Deposit (ILAO),https://www.illinoislegalaid.org/legal-information/getting-or-returning-security-deposit,housing,illinois,High,live,2026-06-25,9,2026-06-25,,fuller security deposit content; replaces 239-char thin page
+Tenants' Rights and Rental Housing (ILAO),https://www.illinoislegalaid.org/legal-information/tenants-rights-and-rental-housing,housing,illinois,High,dead,2026-06-25,0,2026-06-25,,tenant rights hub; bolsters thin landlord-tenant source
+City of Chicago Homeowner Resources,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/homeowner-resources.html,housing_repair,chicago-il,Medium,live,2026-06-25,5,2026-06-25,,directory of repair programs (EHRP and others)
+HUD FHA 203(k) Rehabilitation Mortgage,https://www.hud.gov/hud-partners/single-family-mortgage-programs-203k,housing_repair,federal,High,live,2026-06-25,3,2026-06-25,,fuller 203k content (~4k chars); targets repair-07 (replaces 192-char stub)
+Basics of Public Utilities During Winter (ILAO),https://www.illinoislegalaid.org/legal-information/basics-public-utilities-during-winter,money_debt,illinois,High,live,2026-06-25,11,2026-06-25,,winter utility shutoff moratorium; replaces dead ICC 83 IAC 280 page
+Debt Collections Resources (ILAO),https://www.illinoislegalaid.org/legal-information/debt-collections,money_debt,illinois,High,live,2026-06-25,3,2026-06-25,,overview of debt-collection help; replaces dead ILAO debt page
+Illinois AG Consumer Protection - Finance and Credit,https://illinoisattorneygeneral.gov/consumer-protection/finance-and-credit/,money_debt,illinois,Medium,live,2026-06-25,2,2026-06-25,,AG consumer finance protections; replaces dead Consumer Fraud Act page
+Responding to Debt Collectors (ILAO),https://www.illinoislegalaid.org/legal-information/my-rights-under-fair-debt-collection-practices-act,money_debt,illinois,High,live,2026-06-25,15,2026-06-25,,plain-language debt collection rights + Collection Agency Act licensing; targets debt-04
+What Are Payday Loans (ILAO),https://www.illinoislegalaid.org/legal-information/what-are-payday-loans,money_debt,illinois,High,live,2026-06-25,17,2026-06-25,,36% PLPA cap + payday rules in plain language; targets debt-05
+Apply for SSI and SSDI (ILAO),https://www.illinoislegalaid.org/legal-information/apply-ssi-and-ssdi-local-social-security-office,benefits,illinois,Medium,live,2026-06-25,3,2026-06-25,,how to apply for disability
+Eligible for SSI Benefits (ILAO),https://www.illinoislegalaid.org/legal-information/eligible-supplemental-security-income-or-ssi-benefits,benefits,illinois,High,live,2026-06-25,12,2026-06-25,,SSI eligibility
+File an Unemployment Claim (IDES),https://ides.illinois.gov/unemployment/file-a-claim.html,benefits,illinois,Medium,live,2026-06-25,1,2026-06-25,,how to file
+Food Assistance for Women Infants and Children WIC (ILAO),https://www.illinoislegalaid.org/legal-information/assistance-women-infants-and-children-or-wic,benefits,illinois,Medium,live,2026-06-25,3,2026-06-25,,WIC eligibility plain language
+Get Covered Illinois Marketplace,https://getcovered.illinois.gov/,benefits,illinois,Medium,live,2026-06-25,2,2026-06-25,,official ACA marketplace
+Health Insurance under the Affordable Care Act (ILAO),https://www.illinoislegalaid.org/legal-information/health-insurance-under-affordable-care-act,benefits,illinois,Medium,live,2026-06-25,8,2026-06-25,,ACA marketplace basics
+No Surprises Act (ILAO),https://www.illinoislegalaid.org/legal-information/no-surprises-acts,benefits,illinois,Medium,live,2026-06-25,16,2026-06-25,,surprise medical bill protections
+Overview of Social Security Programs (ILAO),https://www.illinoislegalaid.org/legal-information/overview-social-security-programs,benefits,illinois,Medium,live,2026-06-25,11,2026-06-25,,SSDI vs SSI vs retirement
+Social Security Benefit Basics (ILAO),https://www.illinoislegalaid.org/legal-information/social-security-benefit-basics,benefits,illinois,High,live,2026-06-25,11,2026-06-25,,SSA programs overview
+Unemployment Insurance Eligibility (IDES),https://ides.illinois.gov/unemployment/insurance/ui-eligibility.html,benefits,illinois,High,live,2026-06-25,2,2026-06-25,,who qualifies for unemployment
+Chicago Residential Landlord Tenant Ordinance RLTO (ILAO),https://www.illinoislegalaid.org/legal-information/chicago-residential-landlord-tenant-ordinance-or-rlto,housing,chicago-il,High,live,2026-06-25,19,2026-06-25,,plain-language RLTO summary
+Common Eviction Defenses (ILAO),https://www.illinoislegalaid.org/legal-information/common-eviction-defenses,housing,illinois,High,live,2026-06-25,13,2026-06-25,,defenses to an eviction
+Cook County Just Housing Amendment,https://www.cookcountyil.gov/content/just-housing-amendment-human-rights-ordinance,housing,cook-county-il,Medium,live,2026-06-25,9,2026-06-25,,criminal-history screening protections
+Going to Court for an Eviction Case (ILAO),https://www.illinoislegalaid.org/legal-information/understanding-eviction-tenant,housing,illinois,High,live,2026-06-25,6,2026-06-25,,eviction process and court steps
+Housing Choice Voucher HCV Program (ILAO),https://www.illinoislegalaid.org/legal-information/housing-choice-voucher-hcv-program,housing,illinois,High,empty,,0,2026-06-25,,Section 8 voucher basics
+Housing Discrimination Basics (ILAO),https://www.illinoislegalaid.org/legal-information/housing-discrimination-basics,housing,illinois,Medium,live,2026-06-25,4,2026-06-25,,fair housing protections
+Landlord-Tenant Laws (ILAO),https://www.illinoislegalaid.org/legal-information/landlord-tenant-laws,housing,illinois,Medium,live,2026-06-25,19,2026-06-25,,general landlord-tenant FAQ
+Lockouts and Emergency Rental Repairs (ILAO),https://www.illinoislegalaid.org/legal-information/lockouts,housing,illinois,High,live,2026-06-25,29,2026-06-25,,illegal lockout remedies
+Losing a Section 8 Voucher (ILAO),https://www.illinoislegalaid.org/legal-information/losing-section-8-voucher,housing,illinois,Medium,live,2026-06-25,6,2026-06-25,,voucher termination and hearings
+Rental Living Conditions (ILAO),https://www.illinoislegalaid.org/legal-information/rental-living-conditions,housing,illinois,Medium,live,2026-06-25,4,2026-06-25,,habitability standards
+Rental Repair Rights and Landlord Access (ILAO),https://www.illinoislegalaid.org/legal-information/rental-repair-rights-and-landlord-access,housing,illinois,High,live,2026-06-25,19,2026-06-25,,landlord repair duties and entry
+Requesting Rental Repairs (ILAO),https://www.illinoislegalaid.org/legal-information/requesting-rental-repairs,housing,illinois,Medium,live,2026-06-25,10,2026-06-25,,how to demand repairs
+Responding to Eviction Papers (ILAO),https://www.illinoislegalaid.org/legal-information/responding-eviction-papers,housing,illinois,High,live,2026-06-25,13,2026-06-25,,how to answer an eviction
+Source of Income Protections for Renters (ILAO),https://www.illinoislegalaid.org/legal-information/source-income-protections-renters,housing,illinois,High,live,2026-06-25,16,2026-06-25,,voucher/source-of-income discrimination
+Tenants Rights and Rental Housing (ILAO),https://www.illinoislegalaid.org/legal-information/tenants-rights-and-rental-housing,housing,illinois,High,live,2026-06-25,3,2026-06-25,,tenant rights hub
+Utility Shut Off by My Landlord (ILAO),https://www.illinoislegalaid.org/legal-information/utility-shut-my-landlord,housing,illinois,Medium,empty,,0,2026-06-25,,landlord utility shutoff is illegal
+Illinois Home Weatherization Assistance Program (DCEO),https://dceo.illinois.gov/communityservices/homeweatherization.html,housing_repair,illinois,High,live,2026-06-25,3,2026-06-25,,free energy efficiency upgrades for low-income
+Keep Warm Illinois - Families and Individuals,https://keepwarm.illinois.gov/state-assistance/families-and-individuals.html,housing_repair,illinois,Medium,live,2026-06-25,2,2026-06-25,,energy bill and weatherization help
+Immigration Court Process (EOIR),https://www.justice.gov/eoir/policy-manual-eoir/part-II/icpm,immigration,federal,High,empty,,0,2026-06-25,,
+ILRC Know Your Rights Guide,https://www.ilrc.org/know-your-rights,immigration,federal,High,empty,,0,2026-06-25,,
+USCIS Asylum Information,https://www.uscis.gov/humanitarian/refugees-and-asylum/asylum,immigration,federal,High,empty,,0,2026-06-25,,
+USCIS I-589 Instructions,https://www.uscis.gov/sites/default/files/document/forms/i-589instr.pdf,immigration,federal,High,empty,,0,2026-06-25,,
+TPS Designated Countries,https://www.uscis.gov/humanitarian/temporary-protected-status,immigration,federal,High,empty,,0,2026-06-25,,
+USCIS Work Authorization (I-765),https://www.uscis.gov/i-765,immigration,federal,High,empty,,0,2026-06-25,,
+Bankruptcy Basics (ILAO),https://www.illinoislegalaid.org/legal-information/filing-bankruptcy-0,money_debt,illinois,High,live,2026-06-25,13,2026-06-25,,chapter 7 vs 13 overview
+Can a Debt Collector Sue You (ILAO),https://www.illinoislegalaid.org/legal-information/can-collection-agency-sue-you,money_debt,illinois,Medium,live,2026-06-25,6,2026-06-25,,statute of limitations on debt
+Chapter 13 versus Chapter 7 Bankruptcy (ILAO),https://www.illinoislegalaid.org/legal-information/chapter-13-versus-chapter-7-bankruptcy,money_debt,illinois,Medium,live,2026-06-25,9,2026-06-25,,choosing a chapter
+Exempt Assets in Bankruptcy (ILAO),https://www.illinoislegalaid.org/legal-information/exempt-assets-bankruptcy,money_debt,illinois,Medium,live,2026-06-25,8,2026-06-25,,property you can keep
+Handling a Wage Garnishment or Third Party Citation (ILAO),https://www.illinoislegalaid.org/legal-information/handling-wage-garnishment-or-third-party-citation,money_debt,illinois,Medium,live,2026-06-25,8,2026-06-25,,bank account and wage citations
+Medical Bills and Debt (ILAO),https://www.illinoislegalaid.org/legal-information/medical-bills-and-debt,money_debt,illinois,High,live,2026-06-25,16,2026-06-25,,Fair Patient Billing Act + hospital financial assistance
+Money and Property Debtors Can Protect (ILAO),https://www.illinoislegalaid.org/legal-information/money-and-property-debtors-can-protect-collection-agent,money_debt,illinois,High,live,2026-06-25,11,2026-06-25,,exemptions from garnishment
+Receiving a Debt Collection Lawsuit (ILAO),https://www.illinoislegalaid.org/legal-information/receiving-debt-collection-lawsuit-basics,money_debt,illinois,High,live,2026-06-25,10,2026-06-25,,what to do when served
+Responding to a Car Repossession (ILAO),https://www.illinoislegalaid.org/legal-information/responding-car-repossession,money_debt,illinois,Medium,live,2026-06-25,5,2026-06-25,,steps after a repo
+Responding to a Debt Collection Lawsuit (ILAO),https://www.illinoislegalaid.org/legal-information/responding-debt-collection-lawsuit-basics,money_debt,illinois,High,live,2026-06-25,20,2026-06-25,,how to answer a debt lawsuit
+Understanding Car Repossession (ILAO),https://www.illinoislegalaid.org/legal-information/understanding-car-repossession,money_debt,illinois,High,live,2026-06-25,9,2026-06-25,,repossession and redemption rights
+Understanding Collection-Proof Status (ILAO),https://www.illinoislegalaid.org/legal-information/understanding-collection-proof-status,money_debt,illinois,High,live,2026-06-25,6,2026-06-25,,when income/assets are judgment-proof
+Free Civil Legal Aid (ILAO),https://www.illinoislegalaid.org/legal-information/can-i-receive-free-civil-legal-aid,resources,illinois,Medium,live,2026-06-25,12,2026-06-25,,who qualifies for free legal aid
+Get Legal Help (ILAO),https://www.illinoislegalaid.org/get-legal-help,resources,illinois,High,live,2026-06-25,2,2026-06-25,,how to find free legal aid

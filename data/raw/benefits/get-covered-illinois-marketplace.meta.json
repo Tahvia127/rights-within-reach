@@ -1,0 +1,10 @@
+{
+  "source_name": "Get Covered Illinois Marketplace",
+  "url": "https://getcovered.illinois.gov/",
+  "topic": "benefits",
+  "jurisdiction": "illinois",
+  "priority": "Medium",
+  "downloaded_at": "2026-06-25",
+  "file_type": "html",
+  "notes": "official ACA marketplace"
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President on the state of the Union.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/9?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President on the state of the Union. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/21?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/87?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/136?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct technical errors in the enrollment of the bill H.R. 2014.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/138?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "To correct technical errors in the enrollment of the bill H.R. 2014. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct a technical error in the enrollment of H.R. 2160.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/167?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "To correct a technical error in the enrollment of H.R. 2160. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/169?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/194?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To inform the Senate that a quorum of the House has assembled and of the election of the Speaker and the Clerk.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/2?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "To inform the Senate that a quorum of the House has assembled and of the election of the Speaker and the Clerk. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/3?format=json",
+    "topic": "immigration",
+    "jurisdiction": "federal",
+    "text": "Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President on the state of the Union.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/9?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President on the state of the Union. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/21?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/87?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/136?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct technical errors in the enrollment of the bill H.R. 2014.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/138?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "To correct technical errors in the enrollment of the bill H.R. 2014. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct a technical error in the enrollment of H.R. 2160.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/167?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "To correct a technical error in the enrollment of H.R. 2160. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/169?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/194?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Authorizing the Clerk to inform the President of the election of the Speaker and the Clerk.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/4?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Authorizing the Clerk to inform the President of the election of the Speaker and the Clerk. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/3?format=json",
+    "topic": "housing",
+    "jurisdiction": "federal",
+    "text": "Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President on the state of the Union.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/9?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President on the state of the Union. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/21?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/87?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/136?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct technical errors in the enrollment of the bill H.R. 2014.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/138?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "To correct technical errors in the enrollment of the bill H.R. 2014. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: To correct a technical error in the enrollment of H.R. 2160.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/167?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "To correct a technical error in the enrollment of H.R. 2160. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for an adjournment of the two Houses.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/169?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for an adjournment of the two Houses. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Providing for a joint session of Congress to receive a message from the President.",
+    "url": "https://api.congress.gov/v3/bill/105/hconres/194?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Providing for a joint session of Congress to receive a message from the President. Message on Senate action sent to the House.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/3?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Authorizing the Speaker to appoint a committee to notify the President of the assembly of the Congress. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  },
+  {
+    "source_name": "Congress.gov: Authorizing the Clerk to inform the President of the election of the Speaker and the Clerk.",
+    "url": "https://api.congress.gov/v3/bill/105/hres/4?format=json",
+    "topic": "benefits",
+    "jurisdiction": "federal",
+    "text": "Authorizing the Clerk to inform the President of the election of the Speaker and the Clerk. Motion to reconsider laid on the table Agreed to without objection.",
+    "fetched_at": "2026-06-17"
+  }
+]

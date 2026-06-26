@@ -31,6 +31,14 @@ dist/
 *.log
 npm-debug.log*
 
+# ---- Build artifacts / generated data ----
+# vector store — regenerate with: python -m backend.ingest.load_to_chroma
+data/chroma/
+# benchmark output — regenerate with: python scripts/eval.py
+data/eval/results.json
+# request analytics log (runtime-generated usage data)
+data/analytics/
+
 # ---- Editors / IDE ----
 .idea/
 .vscode/

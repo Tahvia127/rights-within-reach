@@ -1,0 +1,13 @@
+# Nixpacks build for the Rights Within Reach backend (Railway).
+# Python + requirements are auto-detected from the root requirements.txt.
+#
+# The extra build step bakes the Chroma vector store INTO the image from the
+# committed raw sources (data/raw/**), so no Railway volume is needed: the store
+# is read-only at runtime and rebuilt fresh on every deploy. (Trade-off: the
+# build embeds ~180 pages with sentence-transformers, so first deploys are slow.)
+
+[phases.build]
+cmds = ["python -m backend.ingest.load_to_chroma"]
+
+[start]
+cmd = "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"

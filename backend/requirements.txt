@@ -1,16 +1,28 @@
+# Backend runtime dependencies.
+# Install: pip install -r backend/requirements.txt
+
+# web framework
 fastapi
 uvicorn[standard]
-psycopg2-binary
-sqlalchemy
-pgvector
+slowapi          # per-IP rate limiting
 python-dotenv
-sentence-transformers
-anthropic
-deepl
-google-cloud-translate
-redis
+
+# retrieval / RAG
+chromadb         # vector store (data/chroma, collection "rwr_docs")
+sentence-transformers  # local embeddings (all-MiniLM-L6-v2)
+
+# LLM
+anthropic        # /ask answering + question translation
+
+# ingestion
 beautifulsoup4
 pdfplumber
 requests
-slowapi
+
+# tests
 pytest
+
+# not used yet -- re-add when implemented
+# psycopg2-binary sqlalchemy pgvector  -- switched to Chroma
+# deepl google-cloud-translate         -- Phase 4 translation
+# redis                                -- Phase 4 cache
