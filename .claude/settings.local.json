@@ -130,7 +130,32 @@
       "Bash(grep -E '\\\\.pyc$')",
       "Bash(grep -E '\\\\.pyc$|immigration|\\\\.csv\\\\.csv')",
       "Bash(git commit --no-verify -q -m 'Merge origin/main: reconcile remote data/parser work with local analytics+deploy *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(npx tsc *)",
+      "Bash(python scripts/fetch_sources.py data/new_sources_2026-06-26.csv)",
+      "Bash(python -c \"import chromadb; print\\(chromadb.PersistentClient\\(path='data/chroma'\\).get_collection\\('rwr_docs'\\).count\\(\\)\\)\")",
+      "Bash(python -m backend.ingest.load_to_chroma)",
+      "WebFetch(domain:www.illinoislegalaid.org)",
+      "Bash(python scripts/fetch_sources.py data/new_sources_2026-06-26b.csv)",
+      "Bash(python -c ' *)",
+      "Bash(xargs kill)",
+      "Bash(uvicorn backend.main:app --host 0.0.0.0 --port 8000 --log-level warning)",
+      "Bash(curl -s --retry 15 --retry-delay 2 --retry-connrefused http://localhost:8000/health)",
+      "Bash(curl -s \"http://localhost:8000/api/search?q=domestic%20violence%20break%20my%20lease&k=1\")",
+      "Bash(python -c \"import sys,json;r=json.load\\(sys.stdin\\)['results'];print\\(' ->',r[0]['source_name'] if r else 'none'\\)\")",
+      "Bash(curl -s \"http://localhost:8000/api/search?q=court%20fee%20waiver%20cannot%20afford&k=1\")",
+      "Bash(cp \"/Users/latahviawilliams/Downloads/rwr_resources_research.md\" docs/research/rwr_resources_research.md)",
+      "Bash(cp \"/Users/latahviawilliams/Downloads/rwr_resources_research_part2.md\" docs/research/rwr_resources_research_part2.md)",
+      "Bash(python scripts/fetch_sources.py data/new_sources_2026-06-26c.csv)",
+      "Bash(python scripts/update_sources_tracker.py)",
+      "Bash(grep -cE '^\\\\?\\\\? data/raw/.*\\\\.html$')",
+      "Bash(git switch *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m ' *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('answer:', d['answer'][:90]\\); print\\('next_steps:', d.get\\('next_steps'\\)\\); print\\('contact:', {k:d['contact'][k] for k in \\('name','phone','why'\\)} if d.get\\('contact'\\) else None\\); print\\('disclaimer set:', bool\\(d.get\\('disclaimer'\\)\\)\\); print\\('sources:', len\\(d.get\\('sources',[]\\)\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('answer_es:', d['answer'][:80]\\); print\\('step1_es:', \\(d.get\\('next_steps'\\) or ['—']\\)[0][:80]\\); print\\('why_es:', \\(d.get\\('contact'\\) or {}\\).get\\('why',''\\)[:80]\\); print\\('disclaimer_es:', d.get\\('disclaimer',''\\)[:60]\\)\")",
+      "Bash(disown)",
+      "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8000/health)"
     ]
   }
 }
