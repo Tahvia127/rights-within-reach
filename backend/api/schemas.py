@@ -28,15 +28,36 @@ class RefusalOrg(BaseModel):
     hours: str = ""
 
 
+class Contact(BaseModel):
+    """"Who to contact & how" card shown with a normal (non-refused) answer.
+    name/sub/phone/hours/url come from our verified org data; why/how are written
+    by the model in the user's language."""
+    name: str
+    sub: str = ""
+    why: str = ""
+    how: str = ""
+    phone: str = ""
+    hours: str = ""
+    url: str = ""
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., max_length=2000, description="the user's question")
     language: str = "en"
+    # Optional triage inputs (Phase 2). area: chicago|suburban_cook|collar|elsewhere;
+    # subject: housing|money|repairs|benefits. They refine retrieval + org routing.
+    area: str | None = None
+    zip: str | None = Field(None, max_length=10)
+    subject: str | None = None
 
 
 class AskResponse(BaseModel):
     refused: bool
     reason: str | None = None
     answer: str
+    disclaimer: str = ""
+    next_steps: list[str] = []
+    contact: Contact | None = None
     sources: list[Source] = []
     topic: str = ""
     refusal_org: RefusalOrg | None = None

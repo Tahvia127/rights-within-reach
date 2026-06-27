@@ -25,6 +25,7 @@ from backend.analytics import record
 from backend.api.schemas import AskRequest, AskResponse
 from backend.limiter import limiter
 from backend.services.retriever import search as retrieve
+from backend.services.routing import SUBJECT_TO_TOPIC, resolve_region, contact_for
 
 # Load backend/.env so ANTHROPIC_API_KEY is available when run via uvicorn.
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
@@ -52,6 +53,89 @@ DISCLAIMER = (
     "may not apply to your situation. For advice about your specific "
     "circumstances, talk to a lawyer or a legal aid organization."
 )
+
+# Fixed, pre-translated disclaimer returned as its own field (shown top + bottom
+# of the answer and read aloud). Machine-drafted, pending native-speaker review.
+DISCLAIMER_I18N = {
+    "en": DISCLAIMER,
+    "es": (
+        "Rights Within Reach no es un abogado y no da asesoría legal. Comparte "
+        "información legal neutral para ayudarte a entender la ley y defenderte por "
+        "ti mismo. Puede no reflejar los cambios más recientes de la ley y puede no "
+        "aplicarse a tu situación. Para asesoría sobre tu caso específico, habla con "
+        "un abogado o una organización de ayuda legal."
+    ),
+    "zh": (
+        "Rights Within Reach 不是律师，也不提供法律建议。它提供中立的法律信息，帮助您"
+        "理解法律并为自己发声。它可能不反映法律的最新变化，也可能不适用于您的情况。"
+        "有关您具体情况的建议，请咨询律师或法律援助机构。"
+    ),
+    "tl": (
+        "Ang Rights Within Reach ay hindi abogado at hindi nagbibigay ng legal na "
+        "payo. Nagbabahagi ito ng neutral na legal na impormasyon para tulungan kang "
+        "maintindihan ang batas at ipagtanggol ang iyong sarili. Maaaring hindi nito "
+        "masalamin ang pinakabagong pagbabago sa batas at maaaring hindi ito naaangkop "
+        "sa iyong sitwasyon. Para sa payo tungkol sa iyong partikular na sitwasyon, "
+        "kumausap sa abogado o organisasyon ng tulong legal."
+    ),
+    "vi": (
+        "Rights Within Reach không phải là luật sư và không đưa ra tư vấn pháp lý. Nó "
+        "cung cấp thông tin pháp lý trung lập để giúp bạn hiểu luật và tự bảo vệ mình. "
+        "Nó có thể không phản ánh những thay đổi mới nhất của luật và có thể không áp "
+        "dụng cho tình huống của bạn. Để được tư vấn về trường hợp cụ thể của bạn, hãy "
+        "nói chuyện với luật sư hoặc tổ chức trợ giúp pháp lý."
+    ),
+}
+
+# "Who to contact & how" routing for a normal answer, by topic. Phase 1 routes by
+# topic only; Phase 2 will refine by ZIP/jurisdiction. Contacts are verified orgs;
+# the model fills in the why/how in the user's language.
+_CARPLS = {"name": "CARPLS Legal Aid Hotline", "sub": "Free legal help · Cook County",
+           "phone": "312-738-9200", "hours": "Mon–Fri, 9–4:30", "url": ""}
+_LEGAL_AID_CHICAGO = {"name": "Legal Aid Chicago", "sub": "Public benefits, appeals & more",
+                      "phone": "312-341-1070", "hours": "Mon–Fri, 9–5", "url": ""}
+CONTACT_BY_TOPIC = {
+    "housing": _CARPLS,
+    "money_debt": _CARPLS,
+    "housing_repair": _CARPLS,
+    "benefits": _LEGAL_AID_CHICAGO,
+    "resources": _CARPLS,
+}
+DEFAULT_CONTACT = _CARPLS
+
+# Tool that forces Claude to return the answer as structured fields.
+ANSWER_TOOL = {
+    "name": "answer",
+    "description": "Return the structured legal-information answer to the user.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "answer": {
+                "type": "string",
+                "description": "The direct, plain-language answer grounded ONLY in the "
+                "sources. Lead with the answer in the first sentence. No markdown "
+                "headings, no citation markers like [1], no closing disclaimer.",
+            },
+            "next_steps": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "2 to 5 short, concrete next actions the person can take. "
+                "Each one short imperative sentence. Empty list if none apply.",
+            },
+            "contact_why": {
+                "type": "string",
+                "description": "One or two sentences on why the referral organization "
+                "fits this person's situation.",
+            },
+            "contact_how": {
+                "type": "string",
+                "description": "One or two sentences on how to use them — what to ask "
+                "for and what to bring.",
+            },
+        },
+        "required": ["answer", "next_steps", "contact_why", "contact_how"],
+    },
+}
 
 # Out-of-scope / danger categories. Keyword pre-filter; the system prompt is the
 # backstop for anything the keywords miss. Each category maps to a short title
@@ -182,8 +266,10 @@ debt. If the question is about immigration, criminal law, or family law (divorce
 child support), do not answer it — briefly say it's out of scope and that a referral \
 follows.
 
-5. END EVERY ANSWER with this exact disclaimer on its own line:
-{DISCLAIMER}
+5. RETURN STRUCTURED OUTPUT via the `answer` tool. Put the plain-language answer in \
+`answer` (no disclaimer — the app adds it separately), 2-5 concrete actions in \
+`next_steps`, and short `contact_why` / `contact_how` text about the referral \
+organization named below. Do not write the disclaimer anywhere.
 """
 
 
@@ -234,6 +320,7 @@ def _refuse(category: str, language: str = "en") -> dict:
         "refused": True,
         "reason": category,
         "answer": title,
+        "disclaimer": DISCLAIMER_I18N.get(language, DISCLAIMER),
         "sources": [],
         "topic": category,
         "refusal_org": REFERRAL_ORGS[category],
@@ -271,19 +358,21 @@ def _cache_put(key: tuple, value: dict) -> None:
 def ask(request: Request, req: AskRequest):
     question = (req.question or "").strip()
     language = req.language if req.language in LANG_NAMES else "en"
+    area, zip_code, subject = req.area, req.zip, req.subject
     if not question:
         # Not a refusal — just a gentle nudge; no org card needed.
         record(request, kind="ask", language=language, reason="empty", query_chars=0)
         return {"refused": False, "reason": "empty",
                 "answer": "Please type a question.", "sources": [], "topic": ""}
 
-    key = (question.lower(), language)
+    # Triage inputs change the answer, so they are part of the cache key.
+    key = (question.lower(), language, area or "", (zip_code or "")[:5], subject or "")
     cached = _cache_get(key)
     if cached is not None:
         _record_ask(request, language, question, cached, cached=True)
         return cached
 
-    result = _handle(question, language)
+    result = _handle(question, language, area, zip_code, subject)
     if result.get("reason") != "error":  # never cache a transient failure
         _cache_put(key, result)
     _record_ask(request, language, question, result, cached=False)
@@ -308,8 +397,10 @@ def _record_ask(request, language: str, question: str, result: dict, cached: boo
     )
 
 
-def _handle(question: str, language: str) -> dict:
-    """The full answer pipeline: translate -> filter -> retrieve -> answer."""
+def _handle(question: str, language: str, area: str | None = None,
+            zip_code: str | None = None, subject: str | None = None) -> dict:
+    """The full answer pipeline: translate -> filter -> retrieve -> answer.
+    Optional triage inputs (area/zip/subject) refine retrieval and org routing."""
     # Translate to English for retrieval + the keyword pre-filter (the corpus
     # and embedding model are English). The answer is still written in `language`.
     q_en = _to_english(question, language)
@@ -319,13 +410,21 @@ def _handle(question: str, language: str) -> dict:
     if cat:
         return _refuse(cat, language)
 
-    # 2. Retrieve. Refuse politely if nothing is relevant enough.
-    chunks = retrieve(q_en, k=TOP_K)
-    chunks = [c for c in chunks if c["score"] >= MIN_SCORE]
+    # 2. Retrieve. The triage subject narrows retrieval to that topic; if that
+    # comes back empty, retry unfiltered before giving up.
+    subject_topic = SUBJECT_TO_TOPIC.get((subject or "").strip())
+    chunks = [c for c in retrieve(q_en, k=TOP_K, topic=subject_topic) if c["score"] >= MIN_SCORE]
+    if not chunks and subject_topic:
+        chunks = [c for c in retrieve(q_en, k=TOP_K) if c["score"] >= MIN_SCORE]
     if not chunks:
         return _refuse("no_results", language)
 
-    # 3. Build the grounded prompt (model sees [n]-labelled context blocks).
+    # 3. Pick the "who to contact" org by topic + region (Phase 2 routing).
+    top_topic = subject_topic or Counter(c["topic"] for c in chunks).most_common(1)[0][0]
+    region = resolve_region(area, zip_code)
+    contact_org = contact_for(top_topic, region)
+
+    # 4. Build the grounded prompt (model sees [n]-labelled context blocks).
     blocks = []
     for i, c in enumerate(chunks, start=1):
         blocks.append(f"[{i}] {c['source_name']} ({c['url']})\n{c['text']}")
@@ -333,18 +432,20 @@ def _handle(question: str, language: str) -> dict:
     user_content = (
         f"Sources:\n\n{context}\n\n"
         f"Question: {q_en}\n\n"
-        "Answer using only the sources above."
+        f"Referral organization (for contact_why / contact_how): "
+        f"{contact_org['name']} — {contact_org['sub']}, phone {contact_org['phone']}.\n\n"
+        "Use the `answer` tool. Ground everything only in the sources above."
     )
 
-    # Sources are written in English; the answer can be in the user's language.
+    # Sources are in English; the structured fields can be in the user's language.
     system = SYSTEM_PROMPT
     if language != "en":
         lang = LANG_NAMES[language]
         system += (
-            f"\n\n6. LANGUAGE: Write your ENTIRE response — every sentence, including "
-            f"the closing disclaimer — in {lang}. Use simple, everyday {lang} that a "
-            f"non-lawyer can read easily. The sources are in English; translate the "
-            f"meaning faithfully and do not include any English text in your answer."
+            f"\n\n6. LANGUAGE: Write EVERY tool field (answer, next_steps, contact_why, "
+            f"contact_how) in {lang}. Use simple, everyday {lang} a non-lawyer can read "
+            f"easily. The sources are in English; translate the meaning faithfully and "
+            f"do not include any English text."
         )
 
     try:
@@ -352,21 +453,35 @@ def _handle(question: str, language: str) -> dict:
         resp = client.messages.create(
             model=MODEL,
             max_tokens=1024,
-            thinking={"type": "adaptive"},
             system=system,
             messages=[{"role": "user", "content": user_content}],
+            tools=[ANSWER_TOOL],
+            tool_choice={"type": "tool", "name": "answer"},
         )
-        answer = "".join(b.text for b in resp.content if b.type == "text").strip()
     except anthropic.APIError as e:
         # Don't 500 on the user — return a friendly, language-appropriate message.
         print(f"[ask] Anthropic API error: {e}")
         return {
             "refused": False, "reason": "error",
             "answer": ERROR_MESSAGES.get(language, ERROR_MESSAGES["en"]),
-            "sources": [], "topic": "",
+            "disclaimer": DISCLAIMER_I18N.get(language, DISCLAIMER), "topic": "",
         }
 
-    # 4. Build the frontend's source cards: one per distinct source.
+    # 5. Parse the structured tool output, falling back to plain text on any mismatch.
+    tool = next((b for b in resp.content if b.type == "tool_use" and b.name == "answer"), None)
+    if tool and isinstance(tool.input, dict):
+        data = tool.input
+        answer = (data.get("answer") or "").strip()
+        next_steps = [s.strip() for s in (data.get("next_steps") or []) if isinstance(s, str) and s.strip()]
+        contact_why = (data.get("contact_why") or "").strip()
+        contact_how = (data.get("contact_how") or "").strip()
+    else:
+        answer = "".join(b.text for b in resp.content if b.type == "text").strip()
+        next_steps, contact_why, contact_how = [], "", ""
+
+    contact = {**contact_org, "why": contact_why, "how": contact_how}
+
+    # 6. Build the frontend's source cards: one per distinct source.
     sources = []
     seen = set()
     for c in chunks:
@@ -380,12 +495,14 @@ def _handle(question: str, language: str) -> dict:
             "topic": c["topic"],
             "score": c["score"],
         })
-    top_topic = Counter(c["topic"] for c in chunks).most_common(1)[0][0]
 
     return {
         "refused": False,
         "reason": None,
         "answer": answer,
+        "disclaimer": DISCLAIMER_I18N.get(language, DISCLAIMER),
+        "next_steps": next_steps,
+        "contact": contact,
         "sources": sources,
         "topic": top_topic,
     }

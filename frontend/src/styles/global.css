@@ -353,6 +353,64 @@ abbr[title] {
 .key-text { font-size: 1.05rem; color: var(--ink); }
 .answer-note { margin: 0; font-size: 1rem; color: var(--ink); }
 
+/* Structured answer: Disclaimer / Answer / Next steps / Who to contact */
+.answer-section { margin: 0 0 18px; }
+.answer-section:last-child { margin-bottom: 0; }
+.answer-section-head { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; }
+.answer-section-title {
+  margin: 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--burgundy);
+}
+.answer-section-head .read-aloud-btn { margin-left: auto; min-height: 32px; padding: 5px 11px; font-size: 0.76rem; }
+.next-steps-list { margin: 0; padding-left: 1.3rem; font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
+.next-steps-list li { margin-bottom: 6px; }
+.next-steps-list li:last-child { margin-bottom: 0; }
+
+.answer-disclaimer { font-size: 0.9rem; line-height: 1.5; color: var(--mute); }
+.answer-disclaimer-top {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--bone); border-radius: 12px; padding: 12px 14px; margin: 0 0 16px;
+}
+.answer-disclaimer-top p { margin: 0; }
+.answer-disclaimer-top .read-aloud-btn { margin-left: 0; flex-shrink: 0; min-height: 32px; padding: 5px 10px; font-size: 0.74rem; }
+.answer-disclaimer-bottom { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line, #e6dccd); }
+
+.contact-card { background: var(--bone); border-radius: 14px; padding: 16px 18px; }
+.contact-name { margin: 0; font-size: 1.2rem; color: var(--midnight); }
+.contact-sub { margin: 2px 0 8px; font-size: 0.85rem; color: var(--mute); }
+.contact-why, .contact-how { margin: 0 0 8px; font-size: 1rem; line-height: 1.5; color: var(--ink); }
+
+/* Guided triage funnel (Phase 2) */
+.triage-panel { padding: 16px 18px 18px; border-top: 1px solid var(--line, #e6dccd); background: var(--cream); }
+.triage-q { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 12px; }
+.triage-prompt { margin: 0; font-size: 1.12rem; font-weight: 600; color: var(--ink); line-height: 1.45; }
+.triage-q .read-aloud-btn { margin-left: auto; flex-shrink: 0; min-height: 32px; padding: 5px 11px; font-size: 0.76rem; }
+.triage-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.triage-option {
+  background: var(--bone); color: var(--midnight);
+  border: 1.5px solid var(--midnight); border-radius: 50px;
+  padding: 11px 18px; min-height: 48px; font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.triage-option:hover { background: var(--midnight); color: var(--bone); }
+.triage-zip-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.triage-zip-input {
+  flex: 1; min-width: 140px; min-height: 48px;
+  border: 1.5px solid var(--midnight); border-radius: 12px;
+  padding: 10px 14px; font-size: 1.1rem; background: var(--bone); color: var(--ink);
+}
+.triage-skip {
+  display: inline-block; margin-top: 14px; background: none; border: none;
+  color: var(--burgundy); font-size: 0.95rem; font-weight: 700; cursor: pointer; padding: 6px 0;
+}
+.triage-skip:hover { text-decoration: underline; }
+.triage-summary {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 8px 18px; font-size: 0.88rem; color: var(--mute);
+}
+.triage-edit { background: none; border: none; color: var(--burgundy); font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+.triage-edit:hover { text-decoration: underline; }
+
 /* Read-aloud (text-to-speech) control on each answer */
 .answer-card-top { display: flex; align-items: center; gap: 12px; margin: -2px 0 12px; min-height: 26px; }
 .read-aloud-btn {
