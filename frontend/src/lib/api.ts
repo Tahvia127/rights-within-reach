@@ -13,8 +13,21 @@ export interface Source {
   score?: number
 }
 
+export interface Contact {
+  name: string
+  sub?: string
+  why?: string
+  how?: string
+  phone?: string
+  hours?: string
+  url?: string
+}
+
 export interface AskResponse {
   answer: string
+  disclaimer?: string
+  next_steps?: string[]
+  contact?: Contact
   key_points?: Array<{ label: string; text: string }>
   note?: string
   sources: Source[]
@@ -32,6 +45,9 @@ export interface AskResponse {
 export interface AskRequest {
   question: string
   language?: string
+  area?: string
+  zip?: string
+  subject?: string
 }
 
 export class ApiError extends Error {
@@ -43,11 +59,11 @@ export class ApiError extends Error {
   }
 }
 
-export async function ask({ question, language = 'en' }: AskRequest): Promise<AskResponse> {
+export async function ask({ question, language = 'en', area, zip, subject }: AskRequest): Promise<AskResponse> {
   const res = await fetch(`${API_URL}/api/ask`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question, language }),
+    body: JSON.stringify({ question, language, area, zip, subject }),
   })
   if (!res.ok) {
     const errorText = await res.text().catch(() => 'Unknown error')
