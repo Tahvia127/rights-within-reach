@@ -4,15 +4,18 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { BigTextProvider } from './components/BigTextProvider'
 import { LanguageProvider } from './lib/translations'
+import { SpeechProvider } from './lib/speech'
 import './styles/global.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <LanguageProvider>
-        <BigTextProvider>
-          <App />
-        </BigTextProvider>
+        <SpeechProvider>
+          <BigTextProvider>
+            <App />
+          </BigTextProvider>
+        </SpeechProvider>
       </LanguageProvider>
     </BrowserRouter>
   </StrictMode>,

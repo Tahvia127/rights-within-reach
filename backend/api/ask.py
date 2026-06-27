@@ -46,10 +46,11 @@ LANG_NAMES = {
 }
 
 DISCLAIMER = (
-    "This is legal information, not legal advice. It may not reflect the most "
-    "recent changes to the law and may not apply to your situation. For advice "
-    "about your specific circumstances, talk to a lawyer or a legal aid "
-    "organization."
+    "Rights Within Reach is not an attorney and does not give legal advice. It "
+    "shares neutral legal information to help you understand the law and speak "
+    "up for yourself. It may not reflect the most recent changes to the law and "
+    "may not apply to your situation. For advice about your specific "
+    "circumstances, talk to a lawyer or a legal aid organization."
 )
 
 # Out-of-scope / danger categories. Keyword pre-filter; the system prompt is the

@@ -5,6 +5,8 @@ import { LanguageStrip } from './LanguageStrip'
 import { SiteHeader } from './SiteHeader'
 import { SiteFooter } from './SiteFooter'
 import { Icon, IconName } from '../lib/icons'
+import { useLanguage } from '../lib/translations'
+import { ReadAloud } from './ReadAloud'
 
 export interface FAQ {
   q: string
@@ -51,6 +53,7 @@ export interface TopicPageProps {
 
 export function TopicPage(props: TopicPageProps) {
   const { parentLabel, eyebrow, title, sub, iconName, quickNav, summary, faqs, programs, steps, referral } = props
+  const { t } = useLanguage()
 
   return (
     <>
@@ -61,7 +64,7 @@ export function TopicPage(props: TopicPageProps) {
       <header className="topic-page-hero" role="banner">
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
-            <Link to="/">Home</Link> · {parentLabel}
+            <Link to="/">{t('nav.home')}</Link> · {parentLabel}
           </nav>
           <div className="topic-hero-row">
             <div className="topic-hero-icon-wrap" aria-hidden="true">
@@ -87,25 +90,27 @@ export function TopicPage(props: TopicPageProps) {
       <main id="main" className="topic-content" role="main">
         <div className="topic-content-inner">
 
-          <section className="tc-section" id="summary" aria-labelledby="summary-h">
-            <p className="tc-eyebrow">Quick summary</p>
-            <h2 id="summary-h" className="serif">What you need to know.</h2>
+          <section className="tc-section" id="summary" aria-labelledby="summary-h" data-readable>
+            <p className="tc-eyebrow">{t('topic.summaryEyebrow')}</p>
+            <h2 id="summary-h" className="serif">{t('topic.summaryTitle')}</h2>
+            <ReadAloud id="sec-summary" />
             <p>{summary}</p>
             <div className="callout">
-              <p className="callout-label">★ Start here</p>
-              <p>If you only have time to read one thing, read the FAQ below. Each answer cites the law it comes from.</p>
+              <p className="callout-label">{t('topic.startHere')}</p>
+              <p>{t('topic.startHereBody')}</p>
             </div>
           </section>
 
-          <section className="tc-section" id="questions" aria-labelledby="questions-h">
-            <p className="tc-eyebrow">Common questions</p>
-            <h2 id="questions-h" className="serif">The questions people ask most.</h2>
+          <section className="tc-section" id="questions" aria-labelledby="questions-h" data-readable>
+            <p className="tc-eyebrow">{t('topic.faqEyebrow')}</p>
+            <h2 id="questions-h" className="serif">{t('topic.faqTitle')}</h2>
+            <ReadAloud id="sec-questions" />
             {faqs.map((faq, i) => (
               <article key={i} className="faq-item">
                 <h3 className="faq-q">{faq.q}</h3>
                 <p className="faq-a">{faq.a}</p>
                 <p className="faq-source">
-                  <strong>Source:</strong>{' '}
+                  <strong>{t('topic.source')}</strong>{' '}
                   <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
                     {faq.source}
                   </a>
@@ -114,9 +119,10 @@ export function TopicPage(props: TopicPageProps) {
             ))}
           </section>
 
-          <section className="tc-section" id="programs" aria-labelledby="programs-h">
-            <p className="tc-eyebrow">Programs &amp; rules</p>
-            <h2 id="programs-h" className="serif">What is available and how to apply.</h2>
+          <section className="tc-section" id="programs" aria-labelledby="programs-h" data-readable>
+            <p className="tc-eyebrow">{t('topic.programsEyebrow')}</p>
+            <h2 id="programs-h" className="serif">{t('topic.programsTitle')}</h2>
+            <ReadAloud id="sec-programs" />
             {programs.map((p, i) => (
               <article key={i} className="program-card">
                 <div className="program-head">
@@ -141,10 +147,11 @@ export function TopicPage(props: TopicPageProps) {
             ))}
           </section>
 
-          <section className="tc-section" id="action" aria-labelledby="action-h">
-            <p className="tc-eyebrow">How to use this information</p>
-            <h2 id="action-h" className="serif">Step-by-step next actions.</h2>
-            <p>Reading the law is the first step. Here is what to do with what you just learned.</p>
+          <section className="tc-section" id="action" aria-labelledby="action-h" data-readable>
+            <p className="tc-eyebrow">{t('topic.actionEyebrow')}</p>
+            <h2 id="action-h" className="serif">{t('topic.actionTitle')}</h2>
+            <ReadAloud id="sec-action" />
+            <p>{t('topic.actionIntro')}</p>
             <ol className="step-list">
               {steps.map((s, i) => (
                 <li key={i}>
@@ -155,16 +162,17 @@ export function TopicPage(props: TopicPageProps) {
             </ol>
           </section>
 
-          <section className="tc-section" id="help" aria-labelledby="help-h">
-            <p className="tc-eyebrow">Get help</p>
-            <h2 id="help-h" className="serif">Talk to a real person.</h2>
-            <p>If your situation is urgent, complicated, or you want someone to review your case, these organizations help Illinois residents for free.</p>
+          <section className="tc-section" id="help" aria-labelledby="help-h" data-readable>
+            <p className="tc-eyebrow">{t('topic.helpEyebrow')}</p>
+            <h2 id="help-h" className="serif">{t('topic.helpTitle')}</h2>
+            <ReadAloud id="sec-help" />
+            <p>{t('topic.helpIntro')}</p>
 
             {referral}
 
             <div style={{ display: 'flex', gap: '0.7rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
-              <Link to="/resources" className="btn btn-clover">See all resources →</Link>
-              <Link to="/chat" className="btn btn-outline">Ask another question</Link>
+              <Link to="/resources" className="btn btn-clover">{t('topic.seeAll')}</Link>
+              <Link to="/chat" className="btn btn-outline">{t('topic.askAnother')}</Link>
             </div>
           </section>
 
