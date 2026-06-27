@@ -7,12 +7,34 @@ import { ChatHeader } from '../components/ChatHeader'
 import { SiteFooter } from '../components/SiteFooter'
 import { Icon } from '../lib/icons'
 import { ask, AskResponse } from '../lib/api'
-import { useLanguage } from '../lib/translations'
+import { useLanguage, Language } from '../lib/translations'
+import { useSpeech, useSpeechContext } from '../lib/speech'
 
 interface DemoMessage {
   user: string
   bot: AskResponse
   topicLink?: { slug: string; label: string; sub: string }
+}
+
+type Speech = ReturnType<typeof useSpeech>
+
+// Flatten an answer into one natural string for the read-aloud feature:
+// the answer, then each key point ("label: text"), then the closing note. For
+// a refusal, read the message plus the referral org's contact details.
+function spokenText(bot: AskResponse): string {
+  if (bot.refused) {
+    const org = bot.refusal_org
+    return [
+      bot.answer,
+      org && `${org.name}. ${org.description} Phone: ${org.phone}. Hours: ${org.hours}.`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }
+  const parts = [bot.answer]
+  if (bot.key_points) parts.push(...bot.key_points.map((k) => `${k.label}: ${k.text}`))
+  if (bot.note) parts.push(bot.note)
+  return parts.join('. ')
 }
 
 const DEMO_MESSAGES: DemoMessage[] = [
@@ -76,7 +98,12 @@ export default function Chat() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { language, t } = useLanguage()
+  const speech = useSpeechContext()
   const formRef = useRef<HTMLFormElement>(null)
+
+  const lastMessage = messages[messages.length - 1]
+  const readPage = () =>
+    speech.toggle('page', lastMessage ? spokenText(lastMessage.bot) : '', language)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -100,7 +127,10 @@ export default function Chat() {
     <div className="chat-page">
       <SkipLink />
       <LanguageStrip />
-      <ChatHeader />
+      <ChatHeader
+        onReadAloud={speech.supported ? readPage : undefined}
+        reading={speech.speakingId === 'page'}
+      />
 
       <div className="chat-topic-strip">
         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
@@ -112,7 +142,7 @@ export default function Chat() {
 
       <main id="main" className="chat-body" role="main" aria-label={t('chat.conversationAria')}>
         {messages.map((m, i) => (
-          <Exchange key={i} message={m} />
+          <Exchange key={i} message={m} id={String(i)} speech={speech} language={language} />
         ))}
         {loading && <LoadingMessage />}
         {error && <ErrorMessage message={error} />}
@@ -151,7 +181,7 @@ export default function Chat() {
   )
 }
 
-function Exchange({ message }: { message: DemoMessage }) {
+function Exchange({ message, id, speech, language }: { message: DemoMessage; id: string; speech: Speech; language: Language }) {
   const { user, bot, topicLink } = message
   const { t } = useLanguage()
   return (
@@ -167,9 +197,9 @@ function Exchange({ message }: { message: DemoMessage }) {
         </div>
 
         {bot.refused ? (
-          <RefusalCard bot={bot} />
+          <RefusalCard bot={bot} id={id} speech={speech} language={language} />
         ) : (
-          <AnswerCard bot={bot} />
+          <AnswerCard bot={bot} id={id} speech={speech} language={language} />
         )}
 
         {topicLink && !bot.refused && (
@@ -209,11 +239,14 @@ function Exchange({ message }: { message: DemoMessage }) {
   )
 }
 
-function AnswerCard({ bot }: { bot: AskResponse }) {
+function AnswerCard({ bot, id, speech, language }: { bot: AskResponse; id: string; speech: Speech; language: Language }) {
   const { t } = useLanguage()
   return (
     <article className="answer-card" aria-label="Answer">
-      <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
+      <div className="answer-card-top">
+        <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
+        <ReadAloudButton id={id} text={spokenText(bot)} speech={speech} language={language} />
+      </div>
       <div className="answer-text"><ReactMarkdown>{bot.answer}</ReactMarkdown></div>
       {bot.key_points && bot.key_points.length > 0 && (
         <ul className="answer-key" style={{ listStyle: 'none', padding: '1.1rem 1.2rem', margin: '0 0 1rem' }}>
@@ -230,12 +263,34 @@ function AnswerCard({ bot }: { bot: AskResponse }) {
   )
 }
 
-function RefusalCard({ bot }: { bot: AskResponse }) {
+function ReadAloudButton({ id, text, speech, language }: { id: string; text: string; speech: Speech; language: Language }) {
+  const { t } = useLanguage()
+  if (!speech.supported) return null
+  const active = speech.speakingId === id
+  const label = active ? t('chat.stopReading') : t('chat.readAnswer')
+  return (
+    <button
+      type="button"
+      className={`read-aloud-btn${active ? ' is-reading' : ''}`}
+      onClick={() => speech.toggle(id, text, language)}
+      aria-pressed={active}
+      aria-label={label}
+    >
+      <Icon name="volume" size={18} aria-hidden="true" />
+      <span>{label}</span>
+    </button>
+  )
+}
+
+function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: string; speech: Speech; language: Language }) {
   const { t } = useLanguage()
   const org = bot.refusal_org!
   return (
     <article className="refuse-card" aria-label="Out of scope, please call this organization">
-      <p className="serif refuse-title">{bot.answer}</p>
+      <div className="answer-card-top">
+        <p className="serif refuse-title" style={{ margin: 0 }}>{bot.answer}</p>
+        <ReadAloudButton id={id} text={spokenText(bot)} speech={speech} language={language} />
+      </div>
       <p className="refuse-body">{t('chat.refuseBody')}</p>
 
       <div className="refuse-org-card">

@@ -5,10 +5,14 @@ import { useLanguage } from '../lib/translations'
 
 interface Props {
   backTo?: string
+  /** Read the latest answer aloud. Omitted when the browser has no speech support. */
+  onReadAloud?: () => void
+  /** Whether the page read-aloud is currently playing. */
+  reading?: boolean
 }
 
 // Slim header for the Chat screen: back button, logo, and A+/volume controls.
-export function ChatHeader({ backTo = '/' }: Props) {
+export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props) {
   const navigate = useNavigate()
   const { toggleBigText, bigText } = useBigText()
   const { t } = useLanguage()
@@ -42,9 +46,16 @@ export function ChatHeader({ backTo = '/' }: Props) {
         >
           A+
         </button>
-        <button className="big-text-btn" aria-label={t('chat.readAloud')}>
-          <Icon name="volume" size={20} />
-        </button>
+        {onReadAloud && (
+          <button
+            className="big-text-btn"
+            onClick={onReadAloud}
+            aria-label={reading ? t('chat.stopReading') : t('chat.readAloud')}
+            aria-pressed={reading}
+          >
+            <Icon name="volume" size={20} />
+          </button>
+        )}
       </div>
     </header>
   )
