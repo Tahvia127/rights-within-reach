@@ -31,11 +31,7 @@ FORBIDDEN_PHRASES = [
     "you should call",
 ]
 
-DISCLAIMER_MARKER = "legal information, not legal advice"
-
-
 def check(q: dict, resp: dict) -> dict:
-    answer = (resp.get("answer") or "").lower()
     refused = bool(resp.get("refused"))
     citations = resp.get("sources") or []
     expect_refusal = bool(q.get("expect_refusal"))
@@ -48,9 +44,18 @@ def check(q: dict, resp: dict) -> dict:
         ).lower()
         citation_match = any(s.lower() in hay for s in q.get("expected_sources", []))
 
-    forbidden_found = [p for p in FORBIDDEN_PHRASES if p in answer]
-    disclaimer_present = DISCLAIMER_MARKER in answer
-    # refusals don't carry a disclaimer since no legal info is given
+    # Scan the whole structured answer (answer + next steps + contact text) for
+    # CLINIC's forbidden individualized-advice phrases, not just the answer field.
+    contact = resp.get("contact") or {}
+    scan = " ".join([
+        resp.get("answer") or "",
+        " ".join(resp.get("next_steps") or []),
+        contact.get("why", ""), contact.get("how", ""),
+    ]).lower()
+    forbidden_found = [p for p in FORBIDDEN_PHRASES if p in scan]
+
+    # The disclaimer is now its own field (added to every answer and refusal).
+    disclaimer_present = bool((resp.get("disclaimer") or "").strip())
     disclaimer_ok = disclaimer_present or refused
 
     passed = citation_match and not forbidden_found and disclaimer_ok

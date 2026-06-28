@@ -28,6 +28,7 @@ export interface AskResponse {
   disclaimer?: string
   next_steps?: string[]
   contact?: Contact
+  follow_ups?: string[]
   key_points?: Array<{ label: string; text: string }>
   note?: string
   sources: Source[]

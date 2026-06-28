@@ -132,8 +132,14 @@ ANSWER_TOOL = {
                 "description": "One or two sentences on how to use them — what to ask "
                 "for and what to bring.",
             },
+            "follow_ups": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "2 to 3 short follow-up questions the person might ask "
+                "next, each phrased as a question they would tap. Empty list if none fit.",
+            },
         },
-        "required": ["answer", "next_steps", "contact_why", "contact_how"],
+        "required": ["answer", "next_steps", "contact_why", "contact_how", "follow_ups"],
     },
 }
 
@@ -369,20 +375,25 @@ def ask(request: Request, req: AskRequest):
     key = (question.lower(), language, area or "", (zip_code or "")[:5], subject or "")
     cached = _cache_get(key)
     if cached is not None:
-        _record_ask(request, language, question, cached, cached=True)
+        _record_ask(request, language, question, cached, cached=True,
+                    area=area, subject=subject, zip_code=zip_code)
         return cached
 
     result = _handle(question, language, area, zip_code, subject)
     if result.get("reason") != "error":  # never cache a transient failure
         _cache_put(key, result)
-    _record_ask(request, language, question, result, cached=False)
+    _record_ask(request, language, question, result, cached=False,
+                area=area, subject=subject, zip_code=zip_code)
     return result
 
 
-def _record_ask(request, language: str, question: str, result: dict, cached: bool) -> None:
+def _record_ask(request, language: str, question: str, result: dict, cached: bool,
+                area: str | None = None, subject: str | None = None,
+                zip_code: str | None = None) -> None:
     """Log one /ask outcome for analytics. Privacy-safe fields only; the raw
     question is gated behind ANALYTICS_LOG_QUESTIONS (dropped by the middleware
-    when that flag is off)."""
+    when that flag is off). Triage fields (area/subject/zip_given) measure how
+    much the guided funnel is used vs skipped — ZIP is logged as a boolean only."""
     record(
         request,
         kind="ask",
@@ -393,6 +404,10 @@ def _record_ask(request, language: str, question: str, result: dict, cached: boo
         reason=result.get("reason"),
         topic=result.get("topic") or None,
         n_sources=len(result.get("sources") or []),
+        triaged=bool(area or subject),
+        area=area or None,
+        subject=subject or None,
+        zip_given=bool(zip_code),
         question=question,
     )
 
@@ -443,9 +458,9 @@ def _handle(question: str, language: str, area: str | None = None,
         lang = LANG_NAMES[language]
         system += (
             f"\n\n6. LANGUAGE: Write EVERY tool field (answer, next_steps, contact_why, "
-            f"contact_how) in {lang}. Use simple, everyday {lang} a non-lawyer can read "
-            f"easily. The sources are in English; translate the meaning faithfully and "
-            f"do not include any English text."
+            f"contact_how, follow_ups) in {lang}. Use simple, everyday {lang} a non-lawyer "
+            f"can read easily. The sources are in English; translate the meaning faithfully "
+            f"and do not include any English text."
         )
 
     try:
@@ -469,15 +484,19 @@ def _handle(question: str, language: str, area: str | None = None,
 
     # 5. Parse the structured tool output, falling back to plain text on any mismatch.
     tool = next((b for b in resp.content if b.type == "tool_use" and b.name == "answer"), None)
+    def _clean_list(v):
+        return [s.strip() for s in (v or []) if isinstance(s, str) and s.strip()]
+
     if tool and isinstance(tool.input, dict):
         data = tool.input
         answer = (data.get("answer") or "").strip()
-        next_steps = [s.strip() for s in (data.get("next_steps") or []) if isinstance(s, str) and s.strip()]
+        next_steps = _clean_list(data.get("next_steps"))
         contact_why = (data.get("contact_why") or "").strip()
         contact_how = (data.get("contact_how") or "").strip()
+        follow_ups = _clean_list(data.get("follow_ups"))[:3]
     else:
         answer = "".join(b.text for b in resp.content if b.type == "text").strip()
-        next_steps, contact_why, contact_how = [], "", ""
+        next_steps, contact_why, contact_how, follow_ups = [], "", "", []
 
     contact = {**contact_org, "why": contact_why, "how": contact_how}
 
@@ -503,6 +522,7 @@ def _handle(question: str, language: str, area: str | None = None,
         "disclaimer": DISCLAIMER_I18N.get(language, DISCLAIMER),
         "next_steps": next_steps,
         "contact": contact,
+        "follow_ups": follow_ups,
         "sources": sources,
         "topic": top_topic,
     }

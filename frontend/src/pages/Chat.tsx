@@ -138,6 +138,12 @@ export default function Chat() {
   const readPage = () =>
     speech.toggle('page', lastMessage ? spokenText(lastMessage.bot) : '', language)
 
+  // Suggestion chips: the latest answer's model-generated follow-ups when present,
+  // otherwise the static starter suggestions.
+  const followUps = lastMessage && !lastMessage.bot.refused && lastMessage.bot.follow_ups?.length
+    ? lastMessage.bot.follow_ups
+    : [t('chat.suggest1'), t('chat.suggest2'), t('chat.suggest3')]
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!input.trim() || loading) return
@@ -206,9 +212,9 @@ export default function Chat() {
           <section className="suggest-block" aria-label="Suggested follow-up questions">
             <p className="suggest-label">{t('chat.tryNext')}</p>
             <div className="suggest-chips">
-              <button className="suggest-chip" onClick={() => setInput(t('chat.suggest1'))}>{t('chat.suggest1')} →</button>
-              <button className="suggest-chip" onClick={() => setInput(t('chat.suggest2'))}>{t('chat.suggest2')} →</button>
-              <button className="suggest-chip" onClick={() => setInput(t('chat.suggest3'))}>{t('chat.suggest3')} →</button>
+              {followUps.map((q, i) => (
+                <button key={i} className="suggest-chip" onClick={() => setInput(q)}>{q} →</button>
+              ))}
             </div>
           </section>
 

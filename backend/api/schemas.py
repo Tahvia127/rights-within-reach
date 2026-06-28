@@ -58,6 +58,7 @@ class AskResponse(BaseModel):
     disclaimer: str = ""
     next_steps: list[str] = []
     contact: Contact | None = None
+    follow_ups: list[str] = []
     sources: list[Source] = []
     topic: str = ""
     refusal_org: RefusalOrg | None = None
