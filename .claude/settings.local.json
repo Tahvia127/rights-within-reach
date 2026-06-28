@@ -155,7 +155,19 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('answer:', d['answer'][:90]\\); print\\('next_steps:', d.get\\('next_steps'\\)\\); print\\('contact:', {k:d['contact'][k] for k in \\('name','phone','why'\\)} if d.get\\('contact'\\) else None\\); print\\('disclaimer set:', bool\\(d.get\\('disclaimer'\\)\\)\\); print\\('sources:', len\\(d.get\\('sources',[]\\)\\)\\)\")",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('answer_es:', d['answer'][:80]\\); print\\('step1_es:', \\(d.get\\('next_steps'\\) or ['—']\\)[0][:80]\\); print\\('why_es:', \\(d.get\\('contact'\\) or {}\\).get\\('why',''\\)[:80]\\); print\\('disclaimer_es:', d.get\\('disclaimer',''\\)[:60]\\)\")",
       "Bash(disown)",
-      "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8000/health)"
+      "Bash(curl -s --retry 20 --retry-delay 2 --retry-connrefused http://localhost:8000/health)",
+      "Bash(curl -s --retry 10 --retry-delay 2 --retry-connrefused http://localhost:8000/health)",
+      "Bash(python -c \"import json;print\\(len\\(json.load\\(open\\('data/eval/benchmark.json'\\)\\)['questions']\\),'questions'\\)\")",
+      "Bash(python scripts/eval.py)",
+      "Bash(ANALYTICS_LOG_PATH=/tmp/rwr_p3.jsonl uvicorn backend.main:app --host 0.0.0.0 --port 8000 --log-level warning)",
+      "Bash(python -c \"import sys,json;d=json.load\\(sys.stdin\\);print\\('follow_ups:',d.get\\('follow_ups'\\)\\);print\\('contact:',\\(d.get\\('contact'\\) or {}\\).get\\('name'\\)\\)\")",
+      "Bash(python -c \"import json;[print\\({k:r.get\\(k\\) for k in \\('path','triaged','area','subject','zip_given','topic'\\)}\\) for r in \\(json.loads\\(l\\) for l in open\\('/tmp/rwr_p3.jsonl'\\)\\) if r.get\\('path'\\)=='/api/ask']\")",
+      "Bash(curl -s -m 20 https://api.rightswithinreach.org/health)",
+      "Bash(curl -s -m 30 \"https://api.rightswithinreach.org/api/search?q=eviction%20notice&k=2\")",
+      "Bash(python3 -c \"import sys,json;d=json.load\\(sys.stdin\\);print\\('count:',d.get\\('count'\\),'| first:',\\(d.get\\('results'\\) or [{}]\\)[0].get\\('source_name'\\)\\)\")",
+      "Bash(curl -s -m 20 -o /dev/null -w \"HTTP %{http_code}, %{size_download} bytes\\\\n\" https://www.rightswithinreach.org/)",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('/tmp/ask_resp.json'\\)\\);print\\('answer:',d['answer'][:70]\\);print\\('next_steps:',len\\(d.get\\('next_steps',[]\\)\\)\\);print\\('contact:',\\(d.get\\('contact'\\) or {}\\).get\\('name'\\)\\);print\\('follow_ups:',len\\(d.get\\('follow_ups',[]\\)\\)\\);print\\('disclaimer:',bool\\(d.get\\('disclaimer'\\)\\)\\);print\\('sources:',len\\(d.get\\('sources',[]\\)\\)\\)\")",
+      "Bash(python3 -c \"import json;d=json.load\\(open\\('/tmp/ask2.json'\\)\\);print\\('answer:',d['answer'][:75]\\);print\\('reason:',d.get\\('reason'\\)\\);print\\('next_steps:',len\\(d.get\\('next_steps',[]\\)\\)\\);print\\('contact:',\\(d.get\\('contact'\\) or {}\\).get\\('name'\\)\\);print\\('follow_ups:',len\\(d.get\\('follow_ups',[]\\)\\)\\);print\\('sources:',len\\(d.get\\('sources',[]\\)\\)\\)\")"
     ]
   }
 }
