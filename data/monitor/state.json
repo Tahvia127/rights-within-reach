@@ -1,0 +1,909 @@
+{
+  "generated_at": "2026-06-28",
+  "sources": {
+    "https://www.illinoislegalaid.org/legal-information/aabd-benefits-older-adults-and-people-disabilities": {
+      "source_name": "AABD Benefits for Older Adults and People with Disabilities (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "1c4b5b074a924122f24533222ca46a3c0f311a8e7f85d8efcacea1c906d1a6c6",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/appealing-ides-unemployment-decision": {
+      "source_name": "Appealing an Unemployment Denial (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "93314e7183b74f46b332b0e359bace8d6b20328d5bf26a7253a7b7db3cb9d456",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/apply-ssi-and-ssdi-local-social-security-office": {
+      "source_name": "Apply for SSI and SSDI (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "9167184d5a82b98caa361d39168fc14809e830f9f8f56e0959819d3b1104c5ed",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/applying-food-stamps-snap-benefits": {
+      "source_name": "Applying for SNAP Benefits (ILAO)",
+      "topic": "benefits",
+      "status": "minor",
+      "live_sha": "10dcce44760d020bcb310b9f43b8d96437f652f1455c78f8af03c0869be1baf6",
+      "ratio_vs_baseline": 0.9466,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/applying-tanf-benefits": {
+      "source_name": "Applying for TANF Benefits (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "6e70cb9d696e52471c2071189e1fdb02b272a14360a323a1808b57e480283a88",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/government-benefits-immigrants": {
+      "source_name": "Medicaid for Immigrants Illinois",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "5fbfe9405f5321150c74bd401757f43a82a6323b75942c1ce4b539f0354b1e78",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/eligible-supplemental-security-income-or-ssi-benefits": {
+      "source_name": "Eligible for SSI Benefits (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "8a684ccec8476fa34cfc74d2361d9eb261d00ae95d0dc1b024d7f649744a36e7",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/how-can-i-get-cash-assistance-victim-crisis": {
+      "source_name": "Emergency Cash Assistance for Crisis Victims (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "d38579bcb0421c669a5c342944aa04ecfdf2ca189fb1db65b56bfc54a2dc13d1",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://ides.illinois.gov/unemployment/file-a-claim.html": {
+      "source_name": "File an Unemployment Claim (IDES)",
+      "topic": "benefits",
+      "status": "minor",
+      "live_sha": "097c7cb64d3497c1d1b92d6b47dfd0e19b47f88f5f88c22266dd8beef1992a28",
+      "ratio_vs_baseline": 0.9162,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/assistance-women-infants-and-children-or-wic": {
+      "source_name": "Food Assistance for Women Infants and Children WIC (ILAO)",
+      "topic": "benefits",
+      "status": "changed",
+      "live_sha": "4d130bb413e3ef1716d7201cf22b73a519f68ab40960866be5658b51d22b0c97",
+      "ratio_vs_baseline": 0.8959,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/general-assistance-common-questions": {
+      "source_name": "General Assistance (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "7718069f0e7ff0cb704140de374e6beeb51fe72833d992aa44d3d7bff3d8a9e8",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://getcovered.illinois.gov/": {
+      "source_name": "Get Covered Illinois Marketplace",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "8d802a0fcf036771d2c2a9ae5b661d825bf9a7ac4cbad16d4b8db68538b3b6c4",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/getting-temporary-financial-help-tanf": {
+      "source_name": "Getting Temporary Financial Help with TANF (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "c236fbfc16693f92fb862f7b57ab6eb37d6cec4d0af9f2cacd282dd1badbc304",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/health-insurance-under-affordable-care-act": {
+      "source_name": "Health Insurance under the Affordable Care Act (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "5c6cc7af5d3b1962049b6fbe8aa44fb5d52777d0ad440a490f4403e21d543e5c",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://hfs.illinois.gov/medicalprograms/allkids.html": {
+      "source_name": "All Kids Illinois",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "89656b66699c8afe9f29f839840ee232aac790b9634db2fefa874dfde4a22b74",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.dhs.state.il.us/page.aspx?item=104995": {
+      "source_name": "Illinois Child Care Assistance Program CCAP (IDHS)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "9ea37de1f5839595607927f1eb5facb452d8d74b4601b9c96c1c6376202040b4",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://dceo.illinois.gov/communityservices/utilitybillassistance.html": {
+      "source_name": "Illinois LIHEAP Program (utility assistance)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "699b174323c8dd038172466c03393abdd24e86bf70bb1135ca2fb6207587bc61",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://hfs.illinois.gov/medicalclients/medicalprograms.html": {
+      "source_name": "Illinois Medicaid Eligibility",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "339104b1d627827ed21d431af131437af47aa5a8841ee71ce43371fa3b344569",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.dhs.state.il.us/page.aspx?item=30357": {
+      "source_name": "TANF Illinois (IDHS)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "d05cb202b0c1bd956d7b84c0cc3839085c8aafb19b9c6064c16be2d4bd5ef0b3",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/medicaid-common-questions": {
+      "source_name": "Medicaid Common Questions (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "7ef6aaf63fe9258f117d756b80f985e4432d67bdf769399cc0e09a2a606c1aad",
+      "ratio_vs_baseline": 0.9998,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/no-surprises-acts": {
+      "source_name": "No Surprises Act (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "423816958d1d053d1abe8747d0bbb314cba57b066c0b90624d288e2e7ede1e9b",
+      "ratio_vs_baseline": 0.9986,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/overview-social-security-programs": {
+      "source_name": "Overview of Social Security Programs (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "e0589ac5cb93f93989cb811e8e1c22e957640d96611621eb6f5cce75bb407532",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.fna.usda.gov/snap/recipient/eligibility/non-citizen": {
+      "source_name": "SNAP for Non-Citizens (USDA)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "45c8316a43986e0185f966502d7b9d4d26922f7ebaa6b60dcfba59ee3e32c195",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/snap-work-requirements": {
+      "source_name": "SNAP Work Requirements (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "ad1e5e5a929401292b33e956fe69093707a61e07ddcd1e0235226ae8962e1b4a",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/social-security-benefit-basics": {
+      "source_name": "Social Security Benefit Basics (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "9e4af08740fb5831118d68b941977302ed8b82cc8ab0f4fd37d465d166b8ff72",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/tanf-payment-levels": {
+      "source_name": "TANF Payment Levels (ILAO)",
+      "topic": "benefits",
+      "status": "unchanged",
+      "live_sha": "2f9052003c332c4ca2c2f8acee337f0ac898c35b6d91c0e2f67660649cd772c1",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://ides.illinois.gov/unemployment/insurance/ui-eligibility.html": {
+      "source_name": "Unemployment Insurance Eligibility (IDES)",
+      "topic": "benefits",
+      "status": "minor",
+      "live_sha": "71d720f35fd8622f2a584b2fb02a210263537a834b561f450ccbe0f51901dfcf",
+      "ratio_vs_baseline": 0.9249,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/addressing-lease-violations": {
+      "source_name": "Addressing Lease Violations (ILAO)",
+      "topic": "housing",
+      "status": "minor",
+      "live_sha": "e44e2b15c5966a187d3b26256c28b6b1cb3d41f845142639aa805e4b31d753d3",
+      "ratio_vs_baseline": 0.9893,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/can-my-landlord-evict-me-being-immigrant": {
+      "source_name": "Can My Landlord Evict Me for Being an Immigrant (ILAO)",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "09467e9c46284a434410e30c6357db0d47af983b4566831eecf6836458d2059b",
+      "ratio_vs_baseline": 0.887,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.chicago.gov/city/en/depts/doh/provdrs/renters/svcs/rents-rights.html": {
+      "source_name": "Chicago Renting Right (City of Chicago)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "6b5052d7c42a2655cd5d45ac0a975188eb9fd4efd649eb3b4f9e86709340a473",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/chicago-residential-landlord-tenant-ordinance-or-rlto": {
+      "source_name": "Chicago Residential Landlord Tenant Ordinance RLTO (ILAO)",
+      "topic": "housing",
+      "status": "minor",
+      "live_sha": "62e008b2f0d43df38df223049969666062524ce757f078697bb1c664df1b04d5",
+      "ratio_vs_baseline": 0.9895,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/common-eviction-defenses": {
+      "source_name": "Common Eviction Defenses (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "167585261d8c860145f514f421489180409d583e88bdef0dd7fcc7b71d7254f1",
+      "ratio_vs_baseline": 0.9996,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.cookcountyil.gov/content/just-housing-amendment-human-rights-ordinance": {
+      "source_name": "Cook County Just Housing Amendment",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "23e47869b0b89e5cb45fc35768593194779eb1f6c4f6428c028eef803d93f738",
+      "ratio_vs_baseline": 0.9961,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/ending-lease": {
+      "source_name": "Ending a Lease (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "4efff02def09a58003b34fb70f8aa8e9a940ff4d826ee160e5175ef12884c9e2",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/evicting-friends-unmarried-partners-and-adult-family-members": {
+      "source_name": "Evicting Friends Unmarried Partners and Family Members (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "3f490711d51b50581e311eebd00e4e5a99c4e37be74642a8041c5b08c1588441",
+      "ratio_vs_baseline": 0.9994,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/eviction-mobile-home-park": {
+      "source_name": "Eviction in a Mobile Home Park (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "c4768633e03e8525ce04755fc7081ce8710c44c80bda441b8e5610151a734c4e",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/fair-housing-illinois": {
+      "source_name": "Fair Housing in Illinois (ILAO)",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "09467e9c46284a434410e30c6357db0d47af983b4566831eecf6836458d2059b",
+      "ratio_vs_baseline": 0.887,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/getting-or-returning-security-deposit": {
+      "source_name": "Getting or Returning a Security Deposit (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "78c42ba9527bf1cc4ef4aa9e807f624498f548808aaeb7e0c7665d15498cb7f7",
+      "ratio_vs_baseline": 0.9994,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/understanding-eviction-tenant": {
+      "source_name": "Going to Court for an Eviction Case (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "b5fd4066496da9a95b863a854aba922a122cad908e296705dba6154bc2fdc935",
+      "ratio_vs_baseline": 0.999,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/housing-assistance-and-public-housing": {
+      "source_name": "Housing Assistance and Public Housing (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "38fa6cefd6a8cc89b2d502d6b63910dddca8891130d7bc2114082e063b502d3e",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/housing-choice-voucher-hcv-program": {
+      "source_name": "Housing Choice Voucher HCV Program (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "6890d30aec338b45e74d760795c8af0806e8b225a7d64646986bc6dd591c0045",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/housing-discrimination-basics": {
+      "source_name": "Housing Discrimination Basics (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "a1fba27d7444cf624d85f0e179defc2f14a786edd158d3658a5d637c0e0dce1a",
+      "ratio_vs_baseline": 0.9983,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/housing-programs-minors-and-people-disabilities": {
+      "source_name": "Housing Programs for Minors and People with Disabilities (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "84346ba7d809c94d283b5ef8bddfa154b1f22f2fa3f34d75370b40cea3a26cb8",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/housing-protections-survivors-domestic-violence-dating-violence-stalking-and": {
+      "source_name": "Housing Protections for Survivors of Domestic Violence (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "197bec8afec94476cf38bcd200c806ab93273b8c2a8e1b002622f3a7db5bae72",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.hud.gov/topics/rental_assistance/tenantrights": {
+      "source_name": "HUD Tenant Rights Guide",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "23924c86a0a272fb97105a43f72d85756bdf3906002d8e4225bb557e00c4e204",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/eviction": {
+      "source_name": "Illinois Eviction Process Guide (ILAO)",
+      "topic": "housing",
+      "status": "minor",
+      "live_sha": "a3598bcc5d4a4a655f6ad44dada46b9d48b5a2c7b21268346e56b57a19138bc2",
+      "ratio_vs_baseline": 0.9635,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/ilcs5.asp?ActID=2017": {
+      "source_name": "Illinois Landlord Tenant Act",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "6743b6c1cb7b4a1c9feb19c56903c04004b50b6e1a372990ab632a0c7fab1631",
+      "ratio_vs_baseline": 0.0174,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2202&ChapterID=62": {
+      "source_name": "Illinois Security Deposit Return Act",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "6c745c0e56382877991539637cb6e88a217dad5461e33e4c083d6993d13314b6",
+      "ratio_vs_baseline": 0.0598,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/keeping-section-8-housing-voucher": {
+      "source_name": "Keeping a Section 8 Housing Voucher (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "ad68fa88147988c560caeba1915d978cad625b616041cf126c05820f56b74128",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/landlord-tenant-laws": {
+      "source_name": "Landlord-Tenant Laws (ILAO)",
+      "topic": "housing",
+      "status": "minor",
+      "live_sha": "62e008b2f0d43df38df223049969666062524ce757f078697bb1c664df1b04d5",
+      "ratio_vs_baseline": 0.9895,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/living-mobile-home-park": {
+      "source_name": "Living in a Mobile Home Park (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "2b905ec72f930efbc7d945fe606ff0d9c0ace11735b31b3a186ac600e1b7ba1c",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/lockouts": {
+      "source_name": "Lockouts and Emergency Rental Repairs (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "6def8212d825e9c36eca69bf11af0f25b783e1d7feae0850769c15e462fd81ef",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/losing-section-8-voucher": {
+      "source_name": "Losing a Section 8 Voucher (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "6100a8db06fe0b657624766c1b04fe6c90a3cb7226804bdc1ac68fccf94977b4",
+      "ratio_vs_baseline": 0.9991,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/rent-changes-subsidized-housing": {
+      "source_name": "Rent Changes in Subsidized Housing (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "3f3268742dd41f0f23a7ef08c62ff7084cc89a15ac6537d726bcd9a2d3fd8e72",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/rental-living-conditions": {
+      "source_name": "Rental Living Conditions (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "430932f4e21faa3fa50e76dccc49dc98b4608b7f23bbb6a1b16902f2fe02121d",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/rental-repair-rights-and-landlord-access": {
+      "source_name": "Rental Repair Rights and Landlord Access (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "b1be8d618a701436a17747cc479486a67a5b525502a6f4dee0132ff993ac5959",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/requesting-rental-repairs": {
+      "source_name": "Requesting Rental Repairs (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "1151501cc5af6c32a49845d4345de4c4f0c134803ce37033ed89421539048ebe",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/responding-eviction-papers": {
+      "source_name": "Responding to Eviction Papers (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "95a5cf9b3acdcd2530c0fd68a6fa07e114f28bcb0a7ed2850ea56c69ee595aa3",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/source-income-protections-renters": {
+      "source_name": "Source of Income Protections for Renters (ILAO)",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "09467e9c46284a434410e30c6357db0d47af983b4566831eecf6836458d2059b",
+      "ratio_vs_baseline": 0.8952,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/tenants-rights-and-rental-housing": {
+      "source_name": "Tenants Rights and Rental Housing (ILAO)",
+      "topic": "housing",
+      "status": "changed",
+      "live_sha": "5290bb29895d909d1873f86e7fcdc89b33decae1a393a6157a1790bd62bc457e",
+      "ratio_vs_baseline": 0.8916,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/utility-shut-my-landlord": {
+      "source_name": "Utility Shut Off by My Landlord (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/what-happens-if-i-have-eviction-my-record": {
+      "source_name": "What Happens If I Have an Eviction on My Record (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "b4fd0d9cafd9efbef4411a0ef1ef9772e2c545db4484a7a170177993fed09991",
+      "ratio_vs_baseline": 0.9992,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/written-eviction-notices": {
+      "source_name": "Written Eviction Notices (ILAO)",
+      "topic": "housing",
+      "status": "unchanged",
+      "live_sha": "3bea4a77f8cafcda5a3015d505b6ed0db54b7c168737d4700eaa176d83ab12a3",
+      "ratio_vs_baseline": 0.992,
+      "checked_at": "2026-06-28"
+    },
+    "https://chicagolandhabitat.org/hafhr/": {
+      "source_name": "Chicagoland Habitat for Humanity Repair Programs",
+      "topic": "housing_repair",
+      "status": "changed",
+      "live_sha": "01bf26d47af0b3671afec89f288fd508d0b4c66399633be54f73b4301440a674",
+      "ratio_vs_baseline": 0.8963,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home-repair-program.html": {
+      "source_name": "City of Chicago Home Repair Program",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "9ee5b10fd2a50ff6589ce7d8ca3420031a12ba191b88b032d79b46a7e6758aa1",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/homeowner-resources.html": {
+      "source_name": "City of Chicago Homeowner Resources",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "0012508e67a6bc2819c83713ece47eef355664bc6088331dd1f5941480c83d0c",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.comed.com/WaysToSave/ForYourHome/Pages/IncomeEligibleProgram.aspx": {
+      "source_name": "ComEd Income Eligible Energy Efficiency",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.chicagobungalow.org/programs": {
+      "source_name": "Critical Home Improvement Program (CHIP)",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "7e947268eb413f2b60541ba43e2a275a5e6f9799cffa37e7ead35311fbec36f0",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.hud.gov/hud-partners/single-family-mortgage-programs-203k": {
+      "source_name": "HUD FHA 203(k) Rehabilitation Mortgage",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "65925fbca3548ab02d6311c254aeae3d17f3c4d7b6b23f80d66c2fec44ed0bbf",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.hud.gov/program_offices/housing/sfh/203k": {
+      "source_name": "HUD Section 203(k) Rehab Mortgage",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "a5979853ce3697f54658590b0b88b6c0e9d23c2010a78453c78a1d61aa7ad98d",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.dhs.state.il.us/page.aspx?item=32042": {
+      "source_name": "IDHS Trust Fund Home Modification Program",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "41067c7163f7882ceee8a8481054a81c241271011a3ad01614a26740455836f9",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ihda.org/my-community/revitalization-programs/": {
+      "source_name": "IHDA Homeowner Assistance Fund Home Repair (HAFHR)",
+      "topic": "housing_repair",
+      "status": "changed",
+      "live_sha": "a8a1129186c2ec558294dfaf6912e63cb21a043b0709d809aa7dd04a67a06b51",
+      "ratio_vs_baseline": 0.8642,
+      "checked_at": "2026-06-28"
+    },
+    "https://dceo.illinois.gov/communityservices/homeweatherization.html": {
+      "source_name": "Illinois Home Weatherization Assistance Program (DCEO)",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "278f03d08159217cacb4c423818c041870ab36ecec3a49a8fa7681f78b5347ec",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://illinoissfa.com": {
+      "source_name": "Illinois Solar for All",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://keepwarm.illinois.gov/state-assistance/families-and-individuals.html": {
+      "source_name": "Keep Warm Illinois - Families and Individuals",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "b7e4f7008c29eea39c5a940a024242936af7c010734e6ce9a3104e0084177136",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://nhschicago.org/home-repair-program/": {
+      "source_name": "NHS Chicago HAF Home Repair",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "13adb6e677d662980edd35358f353b9bae16acab7f445b79fd1ddcead873c5a5",
+      "ratio_vs_baseline": 0.9994,
+      "checked_at": "2026-06-28"
+    },
+    "http://www.rebuildingtogether-chi.com/": {
+      "source_name": "Rebuilding Together Metro Chicago",
+      "topic": "housing_repair",
+      "status": "unchanged",
+      "live_sha": "f61bcdc1ca8264c7dc29d41f32c1b83e3f816d3f1df69de14754ab4b54b5459b",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/filing-bankruptcy-0": {
+      "source_name": "Bankruptcy Basics (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "0df83b1c3d1c4a7a3f2274b96501b1a507f87a0ea1e9a22840350ea580d8035b",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/basics-public-utilities-during-winter": {
+      "source_name": "Basics of Public Utilities During Winter (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "806cbc099d21c4229d281db1bf4b54560f99a8a5b4747a23f91ba21caeef009f",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/can-collection-agency-sue-you": {
+      "source_name": "Can a Debt Collector Sue You (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "b9cca3ca70462f2ee04d3b49d4abce255183c7bad8fc2cb97c7ca40f7ff09af2",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.carpls.org": {
+      "source_name": "CARPLS Legal Aid Hotline",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "8b0ca8f823832723d374f4c28ff7bd34f52335c0f42ddfec3358c006c419ccf7",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/chapter-13-versus-chapter-7-bankruptcy": {
+      "source_name": "Chapter 13 versus Chapter 7 Bankruptcy (ILAO)",
+      "topic": "money_debt",
+      "status": "minor",
+      "live_sha": "52d6dabc05568f6e908b43410c97f0c42d2d74dbab7bde28fb649a8286e9a242",
+      "ratio_vs_baseline": 0.9513,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/collecting-unpaid-wages": {
+      "source_name": "Collecting Unpaid Wages (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "891a251e84348417b9a517ce15a0b3474a9f0a91a287aa49c59681bb313f6520",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.comed.com/SmartEnergy/SmartIdeas/Pages/IncomeEligible.aspx": {
+      "source_name": "ComEd CHAMP and PIPP Programs",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/debt-collections": {
+      "source_name": "Debt Collections Resources (ILAO)",
+      "topic": "money_debt",
+      "status": "changed",
+      "live_sha": "c3aaf0890c5d704a8f16bfc84d96f0e4db4298eec2e3487c404b37c7e2bf9289",
+      "ratio_vs_baseline": 0.7891,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/information-included-credit-report": {
+      "source_name": "Disputing Inaccurate Information on Your Credit Report (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "2c6b381ce774a8d90e96bd2c96dc1738be4dd21f4bc057d9c8806bab2210d3ac",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/exempt-assets-bankruptcy": {
+      "source_name": "Exempt Assets in Bankruptcy (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "004f4d7b64169400020638a439ca62024e27c7d5b125dfa15b5482366e643fc3",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.consumerfinance.gov/rules-policy/regulations/1006/": {
+      "source_name": "Federal Fair Debt Collection Practices Act (FDCPA)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "f84880d348a2394e1ea5a53e07a4c9bb48dcd0dc2d9020f8ae5e54d5cfcb4449",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/handling-wage-garnishment-or-third-party-citation": {
+      "source_name": "Handling a Wage Garnishment or Third Party Citation (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "d23d6f300becdbd3671c691171a37c8f26d8013b8e26c9945c72ca051fc81ccd",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/how-prevent-fraud": {
+      "source_name": "How to Prevent Fraud (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "80fd4fa017e865c74fb408c77e000b3a2a7e67d4fdcf0276aa951fd33d2341f6",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/identity-theft-and-coerced-debt": {
+      "source_name": "Identity Theft and Coerced Debt (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "6c83bae7fc7fb809ebfdb76e56104654c58f666cdd1dcc7d5e8468a0a3d3566f",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ihda.org/my-home/saving-my-home/": {
+      "source_name": "IHDA Saving My Home - Foreclosure Prevention",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "477be04d1151c586d4f7c9d90087f334c6339dc495d7dea7aa83ad8530ec85ef",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://illinoisattorneygeneral.gov/consumer-protection/finance-and-credit/": {
+      "source_name": "Illinois AG Consumer Protection - Finance and Credit",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "b8d809314027f939dcf4cb6b163b53083ab2af1c218e2835c879edba5733724b",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=1325&ChapterID=24": {
+      "source_name": "Illinois Collection Agency Act",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "9ac3633b5b17c54928c7849a11d203516f54d86d569c0b443331027ccbe5cddb",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=4138&ChapterID=20": {
+      "source_name": "Illinois Predatory Loan Prevention Act",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "6fc567804f8bd8a455b472a172659d4a283ab00ec5942e1f2ba21828aed30675",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=073500050K12-803": {
+      "source_name": "Illinois Wage Garnishment Exemptions (735 ILCS 5/12-803)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "b66bc027f324dc6aaed15d8f4dc4ac25e81bbe67ce68eb938defb7246e925ae1",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2402&ChapterID=68": {
+      "source_name": "Illinois Wage Payment and Collection Act",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "6b76d21358827089d375deddce31599b785cd52d2df427509721b000082b1e46",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/medical-bills-and-debt": {
+      "source_name": "Medical Bills and Debt (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "423816958d1d053d1abe8747d0bbb314cba57b066c0b90624d288e2e7ede1e9b",
+      "ratio_vs_baseline": 0.9986,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/money-and-property-debtors-can-protect-collection-agent": {
+      "source_name": "Money and Property Debtors Can Protect (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "c35a228f1dace531783ece831e82afabd0eb6dbe531931830d8e6097b7c32cf9",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/receiving-debt-collection-lawsuit-basics": {
+      "source_name": "Receiving a Debt Collection Lawsuit (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "1057eaa6de1af8b18e7efe0dda3a458267e954619d8de1f6f072ef5863f04ce9",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/responding-car-repossession": {
+      "source_name": "Responding to a Car Repossession (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "1a158a622cd71aef35f3761b23cde41a64ce32fd75e43ebd83637aa9a5151d9e",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/responding-debt-collection-lawsuit-basics": {
+      "source_name": "Responding to a Debt Collection Lawsuit (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "7f55db8ee024d6e10daa856e1dacde365f86b375229d12a179b57442805cd957",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/my-rights-under-fair-debt-collection-practices-act": {
+      "source_name": "Responding to Debt Collectors (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "cff9a2e81a52f887494a8ca71c4060f93def74ecdef639db5aab3c3a674f64ab",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/starting-case-get-back-unpaid-wages": {
+      "source_name": "Starting a Case to Get Back Unpaid Wages (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "9dcc794580c14029bc74765c2e1b9a34f8c0215615b8ad5fe702324a48862e31",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/understanding-car-repossession": {
+      "source_name": "Understanding Car Repossession (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "db7b85b135910b6f1e40d104c22f1601c2ad028543044a1687ccefd261024574",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/understanding-collection-proof-status": {
+      "source_name": "Understanding Collection-Proof Status (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "0984041470d8e9aa930e5a8d03cfb2f6291eb4405db0cce9dd9cd6402b3525ed",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/utility-shutoff-chicago": {
+      "source_name": "Utility Shutoff in Chicago (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "510be2e195c35eafbe59010569516d0593dae66ed5cc6f23e6ce3ddea42ad09d",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/what-are-payday-loans": {
+      "source_name": "What Are Payday Loans (ILAO)",
+      "topic": "money_debt",
+      "status": "unchanged",
+      "live_sha": "053cbf210464b4425f3502b7dbd705c86a658b9919afc1650b6c6070d8b18176",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/court-fees-and-fee-waivers-basics": {
+      "source_name": "Court Fees and Fee Waivers Basics (ILAO)",
+      "topic": "resources",
+      "status": "unchanged",
+      "live_sha": "df7c35cb33666667b0c46a40f0a398b6ba58e93bea555b2f7b4fa4a9973ee0d3",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/filing-court-papers-free": {
+      "source_name": "Filing Court Papers for Free (ILAO)",
+      "topic": "resources",
+      "status": "unchanged",
+      "live_sha": "70b24f0de6d9103a8b825d7e15c69564c8bb7cae0a0f2bdff879063bf8b0c05f",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/can-i-receive-free-civil-legal-aid": {
+      "source_name": "Free Civil Legal Aid (ILAO)",
+      "topic": "resources",
+      "status": "unchanged",
+      "live_sha": "7f43374068914f74ae3f62e2785eb6f362676de5e6f07ffaa64d57ef8093b0a5",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/get-legal-help": {
+      "source_name": "Get Legal Help (ILAO)",
+      "topic": "resources",
+      "status": "unchanged",
+      "live_sha": "475fb10b1999f2c12ae8e842c785ba14612d35aa3ae88c34b165499feace6fe0",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    },
+    "https://www.illinoislegalaid.org/legal-information/get-legal-help-cook-county": {
+      "source_name": "Get Legal Help in Cook County (ILAO)",
+      "topic": "resources",
+      "status": "unchanged",
+      "live_sha": "92c5b128cedf09c8922d9449f9dddcf3a144ff1dae2f10c04bdec6dc36453e7b",
+      "ratio_vs_baseline": 1.0,
+      "checked_at": "2026-06-28"
+    }
+  }
+}

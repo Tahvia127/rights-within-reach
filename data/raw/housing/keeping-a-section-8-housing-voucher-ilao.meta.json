@@ -4,7 +4,7 @@
   "topic": "housing",
   "jurisdiction": "illinois",
   "priority": "High",
-  "downloaded_at": "2026-06-26",
+  "downloaded_at": "2026-06-28",
   "file_type": "html",
-  "notes": "obligations to avoid losing an HCV voucher"
+  "notes": "replaced login-gated ILAO page with fetchable equivalent"
 }

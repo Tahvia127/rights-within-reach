@@ -42,6 +42,8 @@ export interface TopicPageProps {
   title: string
   sub: string
   iconName: IconName
+  /** Topic identity color, matching this topic's card on the home directory. */
+  accent?: string
   quickNav: QuickNavItem[]
   summary: ReactNode
   faqs: FAQ[]
@@ -52,7 +54,7 @@ export interface TopicPageProps {
 }
 
 export function TopicPage(props: TopicPageProps) {
-  const { parentLabel, eyebrow, title, sub, iconName, quickNav, summary, faqs, programs, steps, referral } = props
+  const { parentLabel, eyebrow, title, sub, iconName, accent, quickNav, summary, faqs, programs, steps, referral } = props
   const { t } = useLanguage()
 
   return (
@@ -61,19 +63,18 @@ export function TopicPage(props: TopicPageProps) {
       <LanguageStrip />
       <SiteHeader />
 
-      <header className="topic-page-hero" role="banner">
+      <header className="topic-page-hero" role="banner" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {parentLabel}
           </nav>
-          <div className="topic-hero-row">
-            <div className="topic-hero-icon-wrap" aria-hidden="true">
-              <Icon name={iconName} size={36} />
-            </div>
-            <div>
-              <p className="eyebrow">{eyebrow}</p>
-              <h1 className="serif topic-page-title">{title}</h1>
-            </div>
+          <div className="topic-hero-icon-wrap" aria-hidden="true" style={accent ? { background: accent } : undefined}>
+            <Icon name={iconName} size={36} />
+          </div>
+          <p className="eyebrow">{eyebrow}</p>
+          <div className="section-head">
+            <h1 className="serif topic-page-title">{title}</h1>
+            <ReadAloud id="topic-hero" />
           </div>
           <p className="topic-page-sub">{sub}</p>
         </div>
@@ -92,8 +93,10 @@ export function TopicPage(props: TopicPageProps) {
 
           <section className="tc-section" id="summary" aria-labelledby="summary-h" data-readable>
             <p className="tc-eyebrow">{t('topic.summaryEyebrow')}</p>
-            <h2 id="summary-h" className="serif">{t('topic.summaryTitle')}</h2>
-            <ReadAloud id="sec-summary" />
+            <div className="section-head">
+              <h2 id="summary-h" className="serif">{t('topic.summaryTitle')}</h2>
+              <ReadAloud id="sec-summary" />
+            </div>
             <p>{summary}</p>
             <div className="callout">
               <p className="callout-label">{t('topic.startHere')}</p>
@@ -103,54 +106,64 @@ export function TopicPage(props: TopicPageProps) {
 
           <section className="tc-section" id="questions" aria-labelledby="questions-h" data-readable>
             <p className="tc-eyebrow">{t('topic.faqEyebrow')}</p>
-            <h2 id="questions-h" className="serif">{t('topic.faqTitle')}</h2>
-            <ReadAloud id="sec-questions" />
-            {faqs.map((faq, i) => (
-              <article key={i} className="faq-item">
-                <h3 className="faq-q">{faq.q}</h3>
-                <p className="faq-a">{faq.a}</p>
-                <p className="faq-source">
-                  <strong>{t('topic.source')}</strong>{' '}
-                  <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
-                    {faq.source}
-                  </a>
-                </p>
-              </article>
-            ))}
+            <div className="section-head">
+              <h2 id="questions-h" className="serif">{t('topic.faqTitle')}</h2>
+              <ReadAloud id="sec-questions" />
+            </div>
+            <div className="faq-grid">
+              {faqs.map((faq, i) => (
+                <article key={i} className="faq-item">
+                  <h3 className="faq-q">{faq.q}</h3>
+                  <p className="faq-a">{faq.a}</p>
+                  <p className="faq-source">
+                    <strong>{t('topic.source')}</strong>{' '}
+                    <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
+                      {faq.source}
+                    </a>
+                  </p>
+                </article>
+              ))}
+            </div>
           </section>
 
           <section className="tc-section" id="programs" aria-labelledby="programs-h" data-readable>
             <p className="tc-eyebrow">{t('topic.programsEyebrow')}</p>
-            <h2 id="programs-h" className="serif">{t('topic.programsTitle')}</h2>
-            <ReadAloud id="sec-programs" />
-            {programs.map((p, i) => (
-              <article key={i} className="program-card">
-                <div className="program-head">
-                  <h3 className="program-name">{p.name}</h3>
-                  {p.amount && <span className="program-amount">{p.amount}</span>}
-                </div>
-                <p className="program-meta">{p.meta}</p>
-                <p className="program-body">{p.body}</p>
-                <div className="program-foot">
-                  <a
-                    href={p.ctaUrl ?? '#'}
-                    className="btn btn-clover external"
-                    target="_blank"
-                    rel="noopener"
-                    style={{ fontSize: '0.92rem', padding: '0.65rem 1.1rem', minHeight: 0 }}
-                  >
-                    {p.cta}
-                  </a>
-                  {p.meta2 && <span style={{ fontSize: '0.92rem', color: 'var(--mute)' }}>{p.meta2}</span>}
-                </div>
-              </article>
-            ))}
+            <div className="section-head">
+              <h2 id="programs-h" className="serif">{t('topic.programsTitle')}</h2>
+              <ReadAloud id="sec-programs" />
+            </div>
+            <div className="program-grid">
+              {programs.map((p, i) => (
+                <article key={i} className="program-card">
+                  <div className="program-head">
+                    <h3 className="program-name">{p.name}</h3>
+                    {p.amount && <span className="program-amount">{p.amount}</span>}
+                  </div>
+                  <p className="program-meta">{p.meta}</p>
+                  <p className="program-body">{p.body}</p>
+                  <div className="program-foot">
+                    <a
+                      href={p.ctaUrl ?? '#'}
+                      className="btn btn-clover external"
+                      target="_blank"
+                      rel="noopener"
+                      style={{ fontSize: '0.92rem', padding: '0.65rem 1.1rem', minHeight: 0 }}
+                    >
+                      {p.cta}
+                    </a>
+                    {p.meta2 && <span style={{ fontSize: '0.92rem', color: 'var(--mute)' }}>{p.meta2}</span>}
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
 
           <section className="tc-section" id="action" aria-labelledby="action-h" data-readable>
             <p className="tc-eyebrow">{t('topic.actionEyebrow')}</p>
-            <h2 id="action-h" className="serif">{t('topic.actionTitle')}</h2>
-            <ReadAloud id="sec-action" />
+            <div className="section-head">
+              <h2 id="action-h" className="serif">{t('topic.actionTitle')}</h2>
+              <ReadAloud id="sec-action" />
+            </div>
             <p>{t('topic.actionIntro')}</p>
             <ol className="step-list">
               {steps.map((s, i) => (
@@ -164,8 +177,10 @@ export function TopicPage(props: TopicPageProps) {
 
           <section className="tc-section" id="help" aria-labelledby="help-h" data-readable>
             <p className="tc-eyebrow">{t('topic.helpEyebrow')}</p>
-            <h2 id="help-h" className="serif">{t('topic.helpTitle')}</h2>
-            <ReadAloud id="sec-help" />
+            <div className="section-head">
+              <h2 id="help-h" className="serif">{t('topic.helpTitle')}</h2>
+              <ReadAloud id="sec-help" />
+            </div>
             <p>{t('topic.helpIntro')}</p>
 
             {referral}

@@ -1,5 +1,6 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { useBigText } from './BigTextProvider'
+import { DarkModeToggle } from './DarkModeToggle'
 import { useLanguage } from '../lib/translations'
 
 const TOPIC_PATHS = ['/housing', '/money', '/repairs', '/benefits']
@@ -10,11 +11,12 @@ export function SiteHeader() {
   const navigate = useNavigate()
   const location = useLocation()
   const { toggleBigText, bigText } = useBigText()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   const isTopic = TOPIC_PATHS.includes(location.pathname)
 
   return (
+    <>
     <header className="site-header" role="banner">
       <a
         className="brand"
@@ -24,16 +26,18 @@ export function SiteHeader() {
       >
         <span className="brand-wordmark-img" role="img" aria-label="Rights Within Reach" />
       </a>
-      <nav className="nav-links" role="navigation" aria-label="Main">
-        <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
+      <nav className="nav-links" role="navigation" aria-label={t('nav.mainAria')}>
+        <NavLink to="/" end className={({ isActive }) => 'nav-collapse' + (isActive ? ' active' : '')}>
           {t('nav.home')}
         </NavLink>
-        <NavLink to="/housing" className={isTopic ? 'active' : ''}>
+        <NavLink to="/housing" className={'nav-collapse' + (isTopic ? ' active' : '')}>
           {t('nav.topics')}
         </NavLink>
-        <NavLink to="/resources" className={({ isActive }) => isActive ? 'active' : ''}>
+        <NavLink to="/resources" className={({ isActive }) => 'nav-collapse' + (isActive ? ' active' : '')}>
           {t('nav.resources')}
         </NavLink>
+      </nav>
+      <div className="nav-utils">
         <button
           className="big-text-btn"
           onClick={toggleBigText}
@@ -42,10 +46,15 @@ export function SiteHeader() {
         >
           A+
         </button>
-        <NavLink to="/chat" className="cta">
+        <DarkModeToggle />
+        <NavLink to="/chat" className="cta nav-cta">
           {t('nav.askQuestion')}
         </NavLink>
-      </nav>
+      </div>
     </header>
+    {language !== 'en' && (
+      <p className="mt-notice" role="note">{t('mt.notice')}</p>
+    )}
+    </>
   )
 }

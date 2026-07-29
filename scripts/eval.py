@@ -1,9 +1,6 @@
 # eval.py
 # Runs the accuracy benchmark against a live /ask server.
-# Scores three things per question:
-#   citation_match     -- expected source in citations, or correct refusal
-#   forbidden_language -- none of CLINIC's individualized-advice phrases present
-#   disclaimer_present -- required disclaimer appears in the answer
+# Scores per question: citation_match, forbidden_language, disclaimer_present, confidence_ok.
 #
 # Usage (server must be running):
 #   uvicorn backend.main:app --reload   # terminal 1
@@ -14,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 import requests
@@ -31,6 +29,12 @@ FORBIDDEN_PHRASES = [
     "you should call",
 ]
 
+
+def _norm(s: str) -> str:
+    """Normalize to lowercase words so 'fair debt' matches '.../fair-debt-collection-practices-act'."""
+    return re.sub(r"[^a-z0-9]+", " ", s.lower())
+
+
 def check(q: dict, resp: dict) -> dict:
     refused = bool(resp.get("refused"))
     citations = resp.get("sources") or []
@@ -39,13 +43,10 @@ def check(q: dict, resp: dict) -> dict:
     if expect_refusal:
         citation_match = refused
     else:
-        hay = " ".join(
-            f"{c.get('title','')} {c.get('url','')}" for c in citations
-        ).lower()
-        citation_match = any(s.lower() in hay for s in q.get("expected_sources", []))
+        hay = _norm(" ".join(f"{c.get('title','')} {c.get('url','')}" for c in citations))
+        citation_match = any(_norm(s) in hay for s in q.get("expected_sources", []))
 
-    # Scan the whole structured answer (answer + next steps + contact text) for
-    # CLINIC's forbidden individualized-advice phrases, not just the answer field.
+    # Scan the full structured answer for forbidden phrases, not just the answer field.
     contact = resp.get("contact") or {}
     scan = " ".join([
         resp.get("answer") or "",
@@ -54,11 +55,14 @@ def check(q: dict, resp: dict) -> dict:
     ]).lower()
     forbidden_found = [p for p in FORBIDDEN_PHRASES if p in scan]
 
-    # The disclaimer is now its own field (added to every answer and refusal).
     disclaimer_present = bool((resp.get("disclaimer") or "").strip())
     disclaimer_ok = disclaimer_present or refused
 
-    passed = citation_match and not forbidden_found and disclaimer_ok
+    # Refusals don't carry a confidence rating; answered questions must.
+    confidence = (resp.get("confidence") or "").strip().lower()
+    confidence_ok = refused or confidence in ("high", "medium", "low")
+
+    passed = citation_match and not forbidden_found and disclaimer_ok and confidence_ok
     return {
         "id": q["id"],
         "topic": q.get("topic", ""),
@@ -66,6 +70,8 @@ def check(q: dict, resp: dict) -> dict:
         "citation_match": citation_match,
         "forbidden_phrases_found": forbidden_found,
         "disclaimer_present": disclaimer_present,
+        "confidence": confidence or None,
+        "confidence_ok": confidence_ok,
         "refused": refused,
     }
 
@@ -81,26 +87,22 @@ def main() -> None:
     results = []
     for q in questions:
         try:
-            r = requests.post(
-                f"{args.url}/api/ask",
-                json={"question": q["question"]},
-                timeout=120,
-            )
+            r = requests.post(f"{args.url}/api/ask", json={"question": q["question"]}, timeout=120)
             r.raise_for_status()
             resp = r.json()
         except Exception as e:
             print(f"  {q['id']}: REQUEST FAILED -> {e}")
-            results.append({"id": q["id"], "topic": q.get("topic", ""),
-                            "passed": False, "error": str(e)})
+            results.append({"id": q["id"], "topic": q.get("topic", ""), "passed": False, "error": str(e)})
             continue
 
         res = check(q, resp)
         results.append(res)
         mark = "PASS" if res["passed"] else "FAIL"
         bits = []
-        if not res["citation_match"]:       bits.append("no-citation")
-        if res["forbidden_phrases_found"]:  bits.append(f"forbidden={res['forbidden_phrases_found']}")
-        if not res["disclaimer_present"]:   bits.append("no-disclaimer")
+        if not res["citation_match"]:      bits.append("no-citation")
+        if res["forbidden_phrases_found"]: bits.append(f"forbidden={res['forbidden_phrases_found']}")
+        if not res["disclaimer_present"]:  bits.append("no-disclaimer")
+        if not res["confidence_ok"]:       bits.append("no-confidence")
         print(f"  {mark}  {q['id']:<18} {' '.join(bits)}")
 
     passed = sum(1 for r in results if r.get("passed"))

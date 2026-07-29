@@ -12,16 +12,17 @@ import Money from './pages/Money'
 import Repairs from './pages/Repairs'
 import Benefits from './pages/Benefits'
 import Resources from './pages/Resources'
+import Deadline from './pages/Deadline'
 import { MovingNav } from './components/MovingNav'
 
 const PAGE_TITLES: Record<string, string> = {
-  '/': 'Rights Within Reach — Free legal information for Illinois',
-  '/chat': 'Chat — Rights Within Reach',
-  '/housing': 'Housing & Rent — Rights Within Reach',
-  '/money': 'Money & Debt — Rights Within Reach',
-  '/repairs': 'Home Repairs — Rights Within Reach',
-  '/benefits': 'Public Benefits — Rights Within Reach',
-  '/resources': 'Resources — Rights Within Reach',
+  '/': 'Rights Within Reach, Free legal information for Illinois',
+  '/chat': 'Chat, Rights Within Reach',
+  '/housing': 'Housing & Rent, Rights Within Reach',
+  '/money': 'Money & Debt, Rights Within Reach',
+  '/repairs': 'Home Repairs, Rights Within Reach',
+  '/benefits': 'Public Benefits, Rights Within Reach',
+  '/resources': 'Resources, Rights Within Reach',
 }
 
 // Updates page title and scrolls to top on each route change (WCAG 2.4.2).
@@ -67,6 +68,7 @@ export default function App() {
         <Route path="/repairs" element={<Repairs />} />
         <Route path="/benefits" element={<Benefits />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/deadline" element={<Deadline />} />
       </Routes>
       <MovingNav />
     </>

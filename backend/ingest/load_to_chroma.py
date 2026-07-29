@@ -46,8 +46,18 @@ def html_to_text(html: str) -> str:
     soup = BeautifulSoup(html, "html.parser")
     for tag in soup(DROP_TAGS):
         tag.decompose()
-    root = soup.find("main") or soup.body or soup  # prefer <main> if it exists
-    lines = [re.sub(r"[ \t]+", " ", ln).strip() for ln in root.get_text(separator="\n").splitlines()]
+    # Drop Google-Translate widgets and Bootstrap modals (nav/dialog chrome that
+    # otherwise pollutes gov pages like ILGA's).
+    for tag in soup.select('#google_translate_element, .skiptranslate, .modal, [class*="goog-te"]'):
+        tag.decompose()
+    # Prefer <main>, but fall back to the full body when <main> is only a thin
+    # wrapper (e.g., ILGA's restructured site renders statute text outside <main>).
+    main = soup.find("main")
+    body = soup.body or soup
+    main_txt = main.get_text(separator="\n") if main else ""
+    body_txt = body.get_text(separator="\n")
+    root_txt = body_txt if len(main_txt) < 0.6 * len(body_txt) else main_txt
+    lines = [re.sub(r"[ \t]+", " ", ln).strip() for ln in root_txt.splitlines()]
     return "\n".join(ln for ln in lines if ln)
 
 

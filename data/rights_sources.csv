@@ -11,7 +11,7 @@ ComEd CHAMP and PIPP Programs,https://www.comed.com/SmartEnergy/SmartIdeas/Pages
 Peoples Gas Share the Warmth,https://www.peoplesgasdelivery.com/save-money-energy/payment-assistance,money_debt,illinois,Medium,dead,,0,2026-06-26,,gas bill assistance program
 ILAO Debt Collection Self Help,https://www.illinoislegalaid.org/legal-information/debt-and-money,money_debt,illinois,Medium,dead,,0,2026-06-26,,plain language guide from ILAO
 CARPLS Legal Aid Hotline,https://www.carpls.org,money_debt,chicago-il,High,live,2026-06-26,2,2026-06-26,,Cook County free legal advice hotline referral
-City of Chicago Home Repair Program,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home_repair_program.html,housing_repair,chicago-il,High,live,2026-06-26,2,2026-06-26,,grants up to 50 percent AMI for porch and roof
+City of Chicago Home Repair Program,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/home-repair-program.html,housing_repair,chicago-il,High,live,2026-06-26,2,2026-06-28,,grants up to 50 percent AMI for porch and roof; url slug fixed (underscores→hyphens)
 Small Accessible Repairs for Seniors (SARFS),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/small_accessible_repairsforseniors.html,housing_repair,chicago-il,High,dead,,0,2026-06-26,,for Chicago residents 60+ at 80 percent AMI
 Emergency Heating Repair Program (EHRP),https://www.chicago.gov/city/en/depts/fss/provdrs/serv/svcs/emergency_heatingrepairprogram.html,housing_repair,chicago-il,High,dead,,0,2026-06-26,,winter heating system emergency grants
 Critical Home Improvement Program (CHIP),https://www.chicagobungalow.org/programs,housing_repair,chicago-il,High,live,2026-06-26,17,2026-06-26,,up to 15k in select South Side neighborhoods
@@ -39,8 +39,8 @@ Chicago Fair Notice Ordinance,https://www.chicago.gov/city/en/depts/doh/provdrs/
 Chicago RLTO Full Text,https://www.chicago.gov/content/dam/city/depts/doh/RLTO/RLTO%20Summary_2023_EN_FINAL.pdf,housing,chicago-il,High,live,2026-06-26,14,2026-06-26,,
 HUD Tenant Rights Guide,https://www.hud.gov/topics/rental_assistance/tenantrights,housing,federal,High,thin,2026-06-24,1,2026-06-26,,
 Illinois Eviction Process Guide (ILAO),https://www.illinoislegalaid.org/legal-information/eviction,housing,illinois,High,live,2026-06-26,4,2026-06-26,,
-Illinois Landlord Tenant Act,https://www.ilga.gov/legislation/ilcs/ilcs5.asp?ActID=2017,housing,illinois,High,thin,2026-06-24,1,2026-06-26,,
-Illinois Security Deposit Return Act,https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2202&ChapterID=62,housing,illinois,High,thin,2026-06-24,1,2026-06-26,,
+Illinois Landlord Tenant Act,https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2201&ChapterID=62&Print=True,housing,illinois,High,live,2026-06-24,1,2026-06-28,,url fixed after ILGA restructure; Print=True returns clean full text (was ilcs5.asp?ActID=2017)
+Illinois Security Deposit Return Act,https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2202&ChapterID=62&Print=True,housing,illinois,High,live,2026-06-24,1,2026-06-28,,url fixed after ILGA restructure; Print=True returns clean full text
 Getting or Returning a Security Deposit (ILAO),https://www.illinoislegalaid.org/legal-information/getting-or-returning-security-deposit,housing,illinois,High,live,2026-06-26,9,2026-06-26,,fuller security deposit content; replaces 239-char thin page
 Tenants' Rights and Rental Housing (ILAO),https://www.illinoislegalaid.org/legal-information/tenants-rights-and-rental-housing,housing,illinois,High,dead,2026-06-25,0,2026-06-26,,tenant rights hub; bolsters thin landlord-tenant source
 City of Chicago Homeowner Resources,https://www.chicago.gov/city/en/depts/doh/provdrs/homeowners/svcs/homeowner-resources.html,housing_repair,chicago-il,Medium,live,2026-06-26,5,2026-06-26,,directory of repair programs (EHRP and others)
@@ -64,7 +64,7 @@ Chicago Residential Landlord Tenant Ordinance RLTO (ILAO),https://www.illinoisle
 Common Eviction Defenses (ILAO),https://www.illinoislegalaid.org/legal-information/common-eviction-defenses,housing,illinois,High,live,2026-06-26,13,2026-06-26,,defenses to an eviction
 Cook County Just Housing Amendment,https://www.cookcountyil.gov/content/just-housing-amendment-human-rights-ordinance,housing,cook-county-il,Medium,live,2026-06-26,9,2026-06-26,,criminal-history screening protections
 Going to Court for an Eviction Case (ILAO),https://www.illinoislegalaid.org/legal-information/understanding-eviction-tenant,housing,illinois,High,live,2026-06-26,6,2026-06-26,,eviction process and court steps
-Housing Choice Voucher HCV Program (ILAO),https://www.illinoislegalaid.org/legal-information/housing-choice-voucher-hcv-program,housing,illinois,High,empty,,0,2026-06-26,,Section 8 voucher basics
+Keeping a Section 8 Housing Voucher (ILAO),https://www.illinoislegalaid.org/legal-information/keeping-section-8-housing-voucher,housing,illinois,High,live,2026-06-28,1,2026-06-28,,replaced login-gated HCV overview page with fetchable how-to
 Housing Discrimination Basics (ILAO),https://www.illinoislegalaid.org/legal-information/housing-discrimination-basics,housing,illinois,Medium,live,2026-06-26,4,2026-06-26,,fair housing protections
 Landlord-Tenant Laws (ILAO),https://www.illinoislegalaid.org/legal-information/landlord-tenant-laws,housing,illinois,Medium,live,2026-06-26,19,2026-06-26,,general landlord-tenant FAQ
 Lockouts and Emergency Rental Repairs (ILAO),https://www.illinoislegalaid.org/legal-information/lockouts,housing,illinois,High,live,2026-06-26,29,2026-06-26,,illegal lockout remedies
@@ -75,7 +75,7 @@ Requesting Rental Repairs (ILAO),https://www.illinoislegalaid.org/legal-informat
 Responding to Eviction Papers (ILAO),https://www.illinoislegalaid.org/legal-information/responding-eviction-papers,housing,illinois,High,live,2026-06-26,13,2026-06-26,,how to answer an eviction
 Source of Income Protections for Renters (ILAO),https://www.illinoislegalaid.org/legal-information/source-income-protections-renters,housing,illinois,High,live,2026-06-26,16,2026-06-26,,voucher/source-of-income discrimination
 Tenants Rights and Rental Housing (ILAO),https://www.illinoislegalaid.org/legal-information/tenants-rights-and-rental-housing,housing,illinois,High,live,2026-06-26,3,2026-06-26,,tenant rights hub
-Utility Shut Off by My Landlord (ILAO),https://www.illinoislegalaid.org/legal-information/utility-shut-my-landlord,housing,illinois,Medium,empty,,0,2026-06-26,,landlord utility shutoff is illegal
+Paying Public Utilities Through My Landlord (ILAO),https://www.illinoislegalaid.org/legal-information/paying-public-utilities-through-my-landlord,housing,illinois,Medium,live,2026-06-28,1,2026-06-28,,replaced login-gated utility-shut page with fetchable equivalent
 Illinois Home Weatherization Assistance Program (DCEO),https://dceo.illinois.gov/communityservices/homeweatherization.html,housing_repair,illinois,High,live,2026-06-26,3,2026-06-26,,free energy efficiency upgrades for low-income
 Keep Warm Illinois - Families and Individuals,https://keepwarm.illinois.gov/state-assistance/families-and-individuals.html,housing_repair,illinois,Medium,live,2026-06-26,2,2026-06-26,,energy bill and weatherization help
 Immigration Court Process (EOIR),https://www.justice.gov/eoir/policy-manual-eoir/part-II/icpm,immigration,federal,High,dead,,0,2026-06-26,,

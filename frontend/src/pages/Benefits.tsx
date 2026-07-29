@@ -40,11 +40,11 @@ const CONTENT: Record<Language, TopicContent> = {
       { q: 'My SNAP benefits were cut off. Can I appeal?', a: 'Yes. You have 90 days from the date of the notice to request an appeal hearing. If you appeal within 10 days, your benefits continue during the appeal. You have a right to free legal help at the hearing.', source: 'IDHS Appeal Rights, 89 Ill. Adm. Code 14' },
     ],
     programs: [
-      { name: 'SNAP — Supplemental Nutrition Assistance Program', amount: 'Monthly', meta: 'Federal/state · Income-based', body: 'Provides a monthly benefit on an EBT card for groceries. Benefit amount depends on household size and income. You can apply online at ABE.illinois.gov.', cta: 'Apply for SNAP', meta2: 'Up to 200% of poverty level' },
+      { name: 'SNAP, Supplemental Nutrition Assistance Program', amount: 'Monthly', meta: 'Federal/state · Income-based', body: 'Provides a monthly benefit on an EBT card for groceries. Benefit amount depends on household size and income. You can apply online at ABE.illinois.gov.', cta: 'Apply for SNAP', meta2: 'Up to 200% of poverty level' },
       { name: 'Medicaid for Adults', amount: 'Free coverage', meta: 'Federal/state · Income-based', body: 'Health insurance for adults up to 138% of federal poverty level. Covers doctor visits, prescriptions, hospital care, mental health, and more. No monthly premium for most enrollees.', cta: 'Apply for Medicaid', meta2: 'Up to 138% of poverty level' },
       { name: 'All Kids', amount: 'Low premium', meta: 'State of Illinois · Children only', body: 'Health coverage for all children in Illinois regardless of immigration status. Premiums range from $0 to $80 per month per child based on income. Covers doctor visits, dental, vision, prescriptions, and more.', cta: 'Apply for All Kids', meta2: 'All Illinois children' },
-      { name: 'TANF — Temporary Assistance for Needy Families', amount: 'Monthly cash', meta: 'Federal/state · Families with children', body: 'Cash assistance for low-income families with children. Comes with work requirements and time limits. Often combined with SNAP and Medicaid.', cta: 'Apply for TANF', meta2: 'Lifetime 60-month limit' },
-      { name: 'WIC — Women, Infants, and Children', amount: 'Food benefits', meta: 'Federal · Pregnant + young children', body: 'Nutrition support for pregnant women, new mothers, and children up to age 5. Available regardless of immigration status. Income limit up to 185% of poverty level.', cta: 'Apply for WIC', meta2: 'Birth to age 5' },
+      { name: 'TANF, Temporary Assistance for Needy Families', amount: 'Monthly cash', meta: 'Federal/state · Families with children', body: 'Cash assistance for low-income families with children. Comes with work requirements and time limits. Often combined with SNAP and Medicaid.', cta: 'Apply for TANF', meta2: 'Lifetime 60-month limit' },
+      { name: 'WIC, Women, Infants, and Children', amount: 'Food benefits', meta: 'Federal · Pregnant + young children', body: 'Nutrition support for pregnant women, new mothers, and children up to age 5. Available regardless of immigration status. Income limit up to 185% of poverty level.', cta: 'Apply for WIC', meta2: 'Birth to age 5' },
     ],
     steps: [
       { title: 'Apply for everything at once.', body: 'ABE.illinois.gov lets you apply for SNAP, Medicaid, All Kids, TANF, and other benefits in a single application. There is no penalty for applying.' },
@@ -54,10 +54,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Get free help with the application.', body: 'Community organizations and federally qualified health centers offer free help with benefits applications. You do not have to navigate ABE alone.' },
     ],
     referral: {
-      sticker: '★ Start here', title: 'Legal Aid Chicago — Public Benefits Practice',
+      sticker: 'Start here', title: 'Legal Aid Chicago, Public Benefits Practice',
       orgName: 'Legal Aid Chicago', orgSub: 'Public benefits, appeals, and reinstatement',
       orgDesc: 'Legal Aid Chicago helps Illinois residents who have been denied or cut off from SNAP, Medicaid, TANF, or other benefits. They represent clients at appeal hearings and help with the application process for free.',
-      phoneLabel: 'Phone', phone: '312-341-1070', hoursLabel: 'Hours', hours: 'Mon–Fri, 9–5',
+      phoneLabel: 'Phone', phone: '312-341-1070', hoursLabel: 'Hours', hours: 'Mon to Fri, 9 to 5',
       bringLabel: 'Bring these with you', bring: ['Denial letter', 'Photo ID', 'Proof of income', 'Social Security cards', 'Application copy'],
       callBtn: 'Call Legal Aid Chicago →', otherBtn: 'Find another org',
     },
@@ -83,11 +83,11 @@ const CONTENT: Record<Language, TopicContent> = {
       { q: 'Me cortaron los beneficios de SNAP. ¿Puedo apelar?', a: 'Sí. Tienes 90 días desde la fecha del aviso para pedir una audiencia de apelación. Si apelas dentro de 10 días, tus beneficios continúan durante la apelación. Tienes derecho a ayuda legal gratis en la audiencia.', source: 'IDHS Appeal Rights, 89 Ill. Adm. Code 14' },
     ],
     programs: [
-      { name: 'SNAP — Supplemental Nutrition Assistance Program', amount: 'Mensual', meta: 'Federal/estatal · Según ingresos', body: 'Provee un beneficio mensual en una tarjeta EBT para comestibles. El monto depende del tamaño del hogar y el ingreso. Puedes solicitar en línea en ABE.illinois.gov.', cta: 'Solicitar SNAP', meta2: 'Hasta 200% del nivel de pobreza' },
+      { name: 'SNAP, Supplemental Nutrition Assistance Program', amount: 'Mensual', meta: 'Federal/estatal · Según ingresos', body: 'Provee un beneficio mensual en una tarjeta EBT para comestibles. El monto depende del tamaño del hogar y el ingreso. Puedes solicitar en línea en ABE.illinois.gov.', cta: 'Solicitar SNAP', meta2: 'Hasta 200% del nivel de pobreza' },
       { name: 'Medicaid for Adults', amount: 'Cobertura gratis', meta: 'Federal/estatal · Según ingresos', body: 'Seguro médico para adultos hasta el 138% del nivel federal de pobreza. Cubre consultas médicas, recetas, atención hospitalaria, salud mental y más. Sin prima mensual para la mayoría.', cta: 'Solicitar Medicaid', meta2: 'Hasta 138% del nivel de pobreza' },
       { name: 'All Kids', amount: 'Prima baja', meta: 'Estado de Illinois · Solo niños', body: 'Cobertura de salud para todos los niños en Illinois sin importar su estatus migratorio. Las primas van de $0 a $80 por mes por niño según el ingreso. Cubre consultas, dental, visión, recetas y más.', cta: 'Solicitar All Kids', meta2: 'Todos los niños de Illinois' },
-      { name: 'TANF — Temporary Assistance for Needy Families', amount: 'Efectivo mensual', meta: 'Federal/estatal · Familias con hijos', body: 'Ayuda en efectivo para familias de bajos ingresos con hijos. Incluye requisitos de trabajo y límites de tiempo. A menudo se combina con SNAP y Medicaid.', cta: 'Solicitar TANF', meta2: 'Límite de por vida de 60 meses' },
-      { name: 'WIC — Women, Infants, and Children', amount: 'Beneficios de comida', meta: 'Federal · Embarazadas + niños pequeños', body: 'Apoyo nutricional para mujeres embarazadas, nuevas madres y niños hasta los 5 años. Disponible sin importar el estatus migratorio. Límite de ingreso hasta 185% del nivel de pobreza.', cta: 'Solicitar WIC', meta2: 'Del nacimiento a los 5 años' },
+      { name: 'TANF, Temporary Assistance for Needy Families', amount: 'Efectivo mensual', meta: 'Federal/estatal · Familias con hijos', body: 'Ayuda en efectivo para familias de bajos ingresos con hijos. Incluye requisitos de trabajo y límites de tiempo. A menudo se combina con SNAP y Medicaid.', cta: 'Solicitar TANF', meta2: 'Límite de por vida de 60 meses' },
+      { name: 'WIC, Women, Infants, and Children', amount: 'Beneficios de comida', meta: 'Federal · Embarazadas + niños pequeños', body: 'Apoyo nutricional para mujeres embarazadas, nuevas madres y niños hasta los 5 años. Disponible sin importar el estatus migratorio. Límite de ingreso hasta 185% del nivel de pobreza.', cta: 'Solicitar WIC', meta2: 'Del nacimiento a los 5 años' },
     ],
     steps: [
       { title: 'Solicita todo a la vez.', body: 'ABE.illinois.gov te permite solicitar SNAP, Medicaid, All Kids, TANF y otros beneficios en una sola solicitud. No hay penalización por solicitar.' },
@@ -97,10 +97,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Consigue ayuda gratis con la solicitud.', body: 'Organizaciones comunitarias y centros de salud calificados federalmente ofrecen ayuda gratis con las solicitudes de beneficios. No tienes que navegar ABE solo.' },
     ],
     referral: {
-      sticker: '★ Empieza aquí', title: 'Legal Aid Chicago — Public Benefits Practice',
+      sticker: 'Empieza aquí', title: 'Legal Aid Chicago, Public Benefits Practice',
       orgName: 'Legal Aid Chicago', orgSub: 'Beneficios públicos, apelaciones y reinstalación',
       orgDesc: 'Legal Aid Chicago ayuda a los residentes de Illinois a quienes les negaron o cortaron SNAP, Medicaid, TANF u otros beneficios. Representan a clientes en audiencias de apelación y ayudan con el proceso de solicitud gratis.',
-      phoneLabel: 'Teléfono', phone: '312-341-1070', hoursLabel: 'Horario', hours: 'Lun–Vie, 9–5',
+      phoneLabel: 'Teléfono', phone: '312-341-1070', hoursLabel: 'Horario', hours: 'Lun to Vie, 9 to 5',
       bringLabel: 'Lleva esto contigo', bring: ['Carta de negación', 'Identificación con foto', 'Comprobante de ingresos', 'Tarjetas de Seguro Social', 'Copia de la solicitud'],
       callBtn: 'Llamar a Legal Aid Chicago →', otherBtn: 'Buscar otra organización',
     },
@@ -126,11 +126,11 @@ const CONTENT: Record<Language, TopicContent> = {
       { q: '我的 SNAP 福利被切断了。我能上诉吗？', a: '能。您有从通知日期起90天的时间申请上诉听证会。如果您在10天内上诉，您的福利在上诉期间继续。您有权在听证会上获得免费法律帮助。', source: 'IDHS Appeal Rights, 89 Ill. Adm. Code 14' },
     ],
     programs: [
-      { name: 'SNAP — Supplemental Nutrition Assistance Program', amount: '每月', meta: '联邦/州 · 按收入', body: '在 EBT 卡上提供每月福利用于购买食品杂货。福利金额取决于家庭人数和收入。您可以在 ABE.illinois.gov 在线申请。', cta: '申请 SNAP', meta2: '最高贫困线200%' },
+      { name: 'SNAP, Supplemental Nutrition Assistance Program', amount: '每月', meta: '联邦/州 · 按收入', body: '在 EBT 卡上提供每月福利用于购买食品杂货。福利金额取决于家庭人数和收入。您可以在 ABE.illinois.gov 在线申请。', cta: '申请 SNAP', meta2: '最高贫困线200%' },
       { name: 'Medicaid for Adults', amount: '免费保险', meta: '联邦/州 · 按收入', body: '为收入达联邦贫困线138%的成年人提供医疗保险。涵盖看医生、处方、住院、心理健康等。大多数参保人无月保费。', cta: '申请 Medicaid', meta2: '最高贫困线138%' },
       { name: 'All Kids', amount: '低保费', meta: '伊利诺伊州 · 仅儿童', body: '为伊利诺伊州所有儿童提供医疗保险，不论移民身份。保费根据收入从每名儿童每月 $0 到 $80 不等。涵盖看医生、牙科、视力、处方等。', cta: '申请 All Kids', meta2: '伊利诺伊州所有儿童' },
-      { name: 'TANF — Temporary Assistance for Needy Families', amount: '每月现金', meta: '联邦/州 · 有子女家庭', body: '为有子女的低收入家庭提供现金援助。附带工作要求和时间限制。常与 SNAP 和 Medicaid 结合。', cta: '申请 TANF', meta2: '终身60个月限制' },
-      { name: 'WIC — Women, Infants, and Children', amount: '食品福利', meta: '联邦 · 孕妇+幼儿', body: '为孕妇、新妈妈和5岁以下儿童提供营养支持。不论移民身份均可申请。收入限额最高贫困线185%。', cta: '申请 WIC', meta2: '出生至5岁' },
+      { name: 'TANF, Temporary Assistance for Needy Families', amount: '每月现金', meta: '联邦/州 · 有子女家庭', body: '为有子女的低收入家庭提供现金援助。附带工作要求和时间限制。常与 SNAP 和 Medicaid 结合。', cta: '申请 TANF', meta2: '终身60个月限制' },
+      { name: 'WIC, Women, Infants, and Children', amount: '食品福利', meta: '联邦 · 孕妇+幼儿', body: '为孕妇、新妈妈和5岁以下儿童提供营养支持。不论移民身份均可申请。收入限额最高贫困线185%。', cta: '申请 WIC', meta2: '出生至5岁' },
     ],
     steps: [
       { title: '一次申请所有项目。', body: 'ABE.illinois.gov 让您在一份申请中申请 SNAP、Medicaid、All Kids、TANF 和其他福利。申请没有惩罚。' },
@@ -140,10 +140,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: '获取免费的申请帮助。', body: '社区组织和联邦合格健康中心提供免费的福利申请帮助。您不必独自应对 ABE。' },
     ],
     referral: {
-      sticker: '★ 从这里开始', title: 'Legal Aid Chicago — Public Benefits Practice',
+      sticker: '从这里开始', title: 'Legal Aid Chicago, Public Benefits Practice',
       orgName: 'Legal Aid Chicago', orgSub: '公共福利、上诉和恢复',
       orgDesc: 'Legal Aid Chicago 帮助被拒或被切断 SNAP、Medicaid、TANF 或其他福利的伊利诺伊州居民。他们在上诉听证会上代表客户，并免费协助申请流程。',
-      phoneLabel: '电话', phone: '312-341-1070', hoursLabel: '时间', hours: '周一至周五, 9–5',
+      phoneLabel: '电话', phone: '312-341-1070', hoursLabel: '时间', hours: '周一至周五, 9 to 5',
       bringLabel: '请带上这些', bring: ['拒绝信', '带照片的身份证件', '收入证明', '社会安全卡', '申请副本'],
       callBtn: '致电 Legal Aid Chicago →', otherBtn: '查找其他机构',
     },
@@ -169,11 +169,11 @@ const CONTENT: Record<Language, TopicContent> = {
       { q: 'Pinutol ang aking benepisyo sa SNAP. Maaari ba akong mag-apela?', a: 'Oo. May 90 araw ka mula sa petsa ng abiso para humiling ng pagdinig ng apela. Kung mag-apela ka sa loob ng 10 araw, magpapatuloy ang iyong benepisyo habang nakabinbin ang apela. May karapatan ka sa libreng tulong legal sa pagdinig.', source: 'IDHS Appeal Rights, 89 Ill. Adm. Code 14' },
     ],
     programs: [
-      { name: 'SNAP — Supplemental Nutrition Assistance Program', amount: 'Buwanan', meta: 'Pederal/estado · Batay sa kita', body: 'Nagbibigay ng buwanang benepisyo sa EBT card para sa grocery. Ang halaga ng benepisyo ay nakadepende sa laki ng sambahayan at kita. Maaari kang mag-apply online sa ABE.illinois.gov.', cta: 'Mag-apply sa SNAP', meta2: 'Hanggang 200% ng antas ng kahirapan' },
+      { name: 'SNAP, Supplemental Nutrition Assistance Program', amount: 'Buwanan', meta: 'Pederal/estado · Batay sa kita', body: 'Nagbibigay ng buwanang benepisyo sa EBT card para sa grocery. Ang halaga ng benepisyo ay nakadepende sa laki ng sambahayan at kita. Maaari kang mag-apply online sa ABE.illinois.gov.', cta: 'Mag-apply sa SNAP', meta2: 'Hanggang 200% ng antas ng kahirapan' },
       { name: 'Medicaid for Adults', amount: 'Libreng saklaw', meta: 'Pederal/estado · Batay sa kita', body: 'Segurong pangkalusugan para sa mga adultong hanggang 138% ng pederal na antas ng kahirapan. Saklaw ang pagpunta sa doktor, reseta, ospital, kalusugang pangkaisipan, at iba pa. Walang buwanang premium para sa karamihan.', cta: 'Mag-apply sa Medicaid', meta2: 'Hanggang 138% ng antas ng kahirapan' },
       { name: 'All Kids', amount: 'Mababang premium', meta: 'Estado ng Illinois · Mga bata lang', body: 'Saklaw na pangkalusugan para sa lahat ng bata sa Illinois anuman ang katayuan sa imigrasyon. Ang premium ay mula $0 hanggang $80 kada buwan kada bata batay sa kita. Saklaw ang doktor, ngipin, mata, reseta, at iba pa.', cta: 'Mag-apply sa All Kids', meta2: 'Lahat ng bata sa Illinois' },
-      { name: 'TANF — Temporary Assistance for Needy Families', amount: 'Buwanang cash', meta: 'Pederal/estado · Pamilyang may anak', body: 'Tulong na cash para sa mga pamilyang mababa ang kita na may anak. May kasamang kinakailangan sa trabaho at limitasyon sa oras. Madalas pinagsasama sa SNAP at Medicaid.', cta: 'Mag-apply sa TANF', meta2: 'Habambuhay na limitasyong 60 buwan' },
-      { name: 'WIC — Women, Infants, and Children', amount: 'Benepisyo sa pagkain', meta: 'Pederal · Buntis + maliliit na bata', body: 'Suporta sa nutrisyon para sa mga buntis, bagong ina, at bata hanggang edad 5. Available anuman ang katayuan sa imigrasyon. Limitasyon sa kita hanggang 185% ng antas ng kahirapan.', cta: 'Mag-apply sa WIC', meta2: 'Kapanganakan hanggang edad 5' },
+      { name: 'TANF, Temporary Assistance for Needy Families', amount: 'Buwanang cash', meta: 'Pederal/estado · Pamilyang may anak', body: 'Tulong na cash para sa mga pamilyang mababa ang kita na may anak. May kasamang kinakailangan sa trabaho at limitasyon sa oras. Madalas pinagsasama sa SNAP at Medicaid.', cta: 'Mag-apply sa TANF', meta2: 'Habambuhay na limitasyong 60 buwan' },
+      { name: 'WIC, Women, Infants, and Children', amount: 'Benepisyo sa pagkain', meta: 'Pederal · Buntis + maliliit na bata', body: 'Suporta sa nutrisyon para sa mga buntis, bagong ina, at bata hanggang edad 5. Available anuman ang katayuan sa imigrasyon. Limitasyon sa kita hanggang 185% ng antas ng kahirapan.', cta: 'Mag-apply sa WIC', meta2: 'Kapanganakan hanggang edad 5' },
     ],
     steps: [
       { title: 'Mag-apply sa lahat nang sabay.', body: 'Hinahayaan ka ng ABE.illinois.gov na mag-apply sa SNAP, Medicaid, All Kids, TANF, at iba pang benepisyo sa isang aplikasyon. Walang parusa sa pag-apply.' },
@@ -183,10 +183,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Humingi ng libreng tulong sa aplikasyon.', body: 'Ang mga organisasyon sa komunidad at mga federally qualified health center ay nag-aalok ng libreng tulong sa mga aplikasyon ng benepisyo. Hindi mo kailangang harapin ang ABE nang mag-isa.' },
     ],
     referral: {
-      sticker: '★ Magsimula dito', title: 'Legal Aid Chicago — Public Benefits Practice',
+      sticker: 'Magsimula dito', title: 'Legal Aid Chicago, Public Benefits Practice',
       orgName: 'Legal Aid Chicago', orgSub: 'Pampublikong benepisyo, apela, at pagbabalik',
       orgDesc: 'Tinutulungan ng Legal Aid Chicago ang mga residente ng Illinois na tinanggihan o pinutol sa SNAP, Medicaid, TANF, o iba pang benepisyo. Kinakatawan nila ang mga kliyente sa pagdinig ng apela at tumutulong sa proseso ng aplikasyon nang libre.',
-      phoneLabel: 'Telepono', phone: '312-341-1070', hoursLabel: 'Oras', hours: 'Lun–Biy, 9–5',
+      phoneLabel: 'Telepono', phone: '312-341-1070', hoursLabel: 'Oras', hours: 'Lun to Biy, 9 to 5',
       bringLabel: 'Dalhin ang mga ito', bring: ['Liham ng pagtanggi', 'ID na may litrato', 'Patunay ng kita', 'Mga Social Security card', 'Kopya ng aplikasyon'],
       callBtn: 'Tawagan ang Legal Aid Chicago →', otherBtn: 'Maghanap ng ibang organisasyon',
     },
@@ -212,11 +212,11 @@ const CONTENT: Record<Language, TopicContent> = {
       { q: 'Phúc lợi SNAP của tôi bị cắt. Tôi có thể kháng cáo không?', a: 'Có. Bạn có 90 ngày kể từ ngày thông báo để yêu cầu một buổi điều trần kháng cáo. Nếu bạn kháng cáo trong vòng 10 ngày, phúc lợi của bạn tiếp tục trong thời gian kháng cáo. Bạn có quyền được trợ giúp pháp lý miễn phí tại buổi điều trần.', source: 'IDHS Appeal Rights, 89 Ill. Adm. Code 14' },
     ],
     programs: [
-      { name: 'SNAP — Supplemental Nutrition Assistance Program', amount: 'Hằng tháng', meta: 'Liên bang/bang · Theo thu nhập', body: 'Cung cấp phúc lợi hằng tháng trên thẻ EBT để mua thực phẩm. Số tiền tùy theo quy mô hộ và thu nhập. Bạn có thể đăng ký trực tuyến tại ABE.illinois.gov.', cta: 'Đăng ký SNAP', meta2: 'Lên đến 200% mức nghèo' },
+      { name: 'SNAP, Supplemental Nutrition Assistance Program', amount: 'Hằng tháng', meta: 'Liên bang/bang · Theo thu nhập', body: 'Cung cấp phúc lợi hằng tháng trên thẻ EBT để mua thực phẩm. Số tiền tùy theo quy mô hộ và thu nhập. Bạn có thể đăng ký trực tuyến tại ABE.illinois.gov.', cta: 'Đăng ký SNAP', meta2: 'Lên đến 200% mức nghèo' },
       { name: 'Medicaid for Adults', amount: 'Bảo hiểm miễn phí', meta: 'Liên bang/bang · Theo thu nhập', body: 'Bảo hiểm y tế cho người lớn đến 138% mức nghèo liên bang. Bao gồm khám bác sĩ, thuốc theo toa, chăm sóc bệnh viện, sức khỏe tâm thần, và hơn thế. Hầu hết người tham gia không có phí hằng tháng.', cta: 'Đăng ký Medicaid', meta2: 'Lên đến 138% mức nghèo' },
       { name: 'All Kids', amount: 'Phí thấp', meta: 'Bang Illinois · Chỉ trẻ em', body: 'Bảo hiểm y tế cho mọi trẻ em ở Illinois bất kể tình trạng nhập cư. Phí từ $0 đến $80 mỗi tháng cho mỗi trẻ tùy theo thu nhập. Bao gồm khám bác sĩ, nha khoa, mắt, thuốc, và hơn thế.', cta: 'Đăng ký All Kids', meta2: 'Mọi trẻ em ở Illinois' },
-      { name: 'TANF — Temporary Assistance for Needy Families', amount: 'Tiền mặt hằng tháng', meta: 'Liên bang/bang · Gia đình có con', body: 'Trợ cấp tiền mặt cho các gia đình thu nhập thấp có con. Đi kèm yêu cầu làm việc và giới hạn thời gian. Thường kết hợp với SNAP và Medicaid.', cta: 'Đăng ký TANF', meta2: 'Giới hạn trọn đời 60 tháng' },
-      { name: 'WIC — Women, Infants, and Children', amount: 'Phúc lợi thực phẩm', meta: 'Liên bang · Mang thai + trẻ nhỏ', body: 'Hỗ trợ dinh dưỡng cho phụ nữ mang thai, bà mẹ mới sinh, và trẻ em đến 5 tuổi. Có sẵn bất kể tình trạng nhập cư. Giới hạn thu nhập đến 185% mức nghèo.', cta: 'Đăng ký WIC', meta2: 'Từ sơ sinh đến 5 tuổi' },
+      { name: 'TANF, Temporary Assistance for Needy Families', amount: 'Tiền mặt hằng tháng', meta: 'Liên bang/bang · Gia đình có con', body: 'Trợ cấp tiền mặt cho các gia đình thu nhập thấp có con. Đi kèm yêu cầu làm việc và giới hạn thời gian. Thường kết hợp với SNAP và Medicaid.', cta: 'Đăng ký TANF', meta2: 'Giới hạn trọn đời 60 tháng' },
+      { name: 'WIC, Women, Infants, and Children', amount: 'Phúc lợi thực phẩm', meta: 'Liên bang · Mang thai + trẻ nhỏ', body: 'Hỗ trợ dinh dưỡng cho phụ nữ mang thai, bà mẹ mới sinh, và trẻ em đến 5 tuổi. Có sẵn bất kể tình trạng nhập cư. Giới hạn thu nhập đến 185% mức nghèo.', cta: 'Đăng ký WIC', meta2: 'Từ sơ sinh đến 5 tuổi' },
     ],
     steps: [
       { title: 'Đăng ký mọi thứ cùng lúc.', body: 'ABE.illinois.gov cho phép bạn đăng ký SNAP, Medicaid, All Kids, TANF, và các phúc lợi khác trong một đơn duy nhất. Không có hình phạt khi đăng ký.' },
@@ -226,10 +226,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Nhận trợ giúp miễn phí với đơn đăng ký.', body: 'Các tổ chức cộng đồng và trung tâm y tế đủ điều kiện liên bang cung cấp trợ giúp miễn phí với đơn phúc lợi. Bạn không phải tự mình xử lý ABE.' },
     ],
     referral: {
-      sticker: '★ Bắt đầu ở đây', title: 'Legal Aid Chicago — Public Benefits Practice',
+      sticker: 'Bắt đầu ở đây', title: 'Legal Aid Chicago, Public Benefits Practice',
       orgName: 'Legal Aid Chicago', orgSub: 'Phúc lợi công, kháng cáo, và khôi phục',
       orgDesc: 'Legal Aid Chicago giúp cư dân Illinois bị từ chối hoặc bị cắt SNAP, Medicaid, TANF, hoặc các phúc lợi khác. Họ đại diện cho khách hàng tại các buổi điều trần kháng cáo và giúp với quá trình đăng ký miễn phí.',
-      phoneLabel: 'Điện thoại', phone: '312-341-1070', hoursLabel: 'Giờ', hours: 'Thứ 2–Thứ 6, 9–5',
+      phoneLabel: 'Điện thoại', phone: '312-341-1070', hoursLabel: 'Giờ', hours: 'Thứ 2 to Thứ 6, 9 to 5',
       bringLabel: 'Mang theo những thứ này', bring: ['Thư từ chối', 'Giấy tờ tùy thân có ảnh', 'Bằng chứng thu nhập', 'Thẻ An sinh Xã hội', 'Bản sao đơn đăng ký'],
       callBtn: 'Gọi Legal Aid Chicago →', otherBtn: 'Tìm tổ chức khác',
     },
@@ -247,6 +247,7 @@ export default function Benefits() {
       title={c.title}
       sub={c.sub}
       iconName="benefits"
+      accent="#B8451F"
       quickNav={c.quickNav}
       summary={<>{c.summary}</>}
       faqs={c.faqs}

@@ -11,7 +11,7 @@ export function SiteFooter() {
           <p>{t('footer.tagline')}</p>
         </div>
         <div className="footer-col">
-          <h4>{t('footer.topics')}</h4>
+          <h3>{t('footer.topics')}</h3>
           <ul>
             <li><Link to="/housing">{t('footer.housingRent')}</Link></li>
             <li><Link to="/money">{t('footer.moneyDebt')}</Link></li>
@@ -20,15 +20,16 @@ export function SiteFooter() {
           </ul>
         </div>
         <div className="footer-col">
-          <h4>{t('footer.help')}</h4>
+          <h3>{t('footer.help')}</h3>
           <ul>
             <li><Link to="/chat">{t('footer.askQuestion')}</Link></li>
             <li><Link to="/resources">{t('footer.findHelp')}</Link></li>
+            <li><Link to="/deadline">{t('footer.deadline')}</Link></li>
             <li><Link to="/">{t('footer.howToUse')}</Link></li>
           </ul>
         </div>
         <div className="footer-col">
-          <h4>{t('footer.about')}</h4>
+          <h3>{t('footer.about')}</h3>
           <ul>
             <li><Link to="/">{t('footer.whoWeAre')}</Link></li>
             <li><Link to="/">{t('footer.ourPartners')}</Link></li>

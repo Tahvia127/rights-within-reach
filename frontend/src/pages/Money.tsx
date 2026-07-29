@@ -42,7 +42,7 @@ const CONTENT: Record<Language, TopicContent> = {
     programs: [
       { name: 'Fair Debt Collection Practices Act (FDCPA)', amount: 'Federal', meta: '15 USC §1692', body: 'This federal law limits when and how debt collectors can contact you. It prohibits harassment, false statements, and unfair practices. You can sue for violations and recover damages plus attorney fees.', cta: 'Read the law', meta2: 'Applies in all 50 states' },
       { name: 'Illinois Wage Deduction Act', amount: 'Statewide', meta: '735 ILCS 5/12-803', body: 'Limits how much of your wages can be garnished and protects certain types of income entirely. Many public benefits like SNAP, SSI, and Social Security are fully exempt from garnishment.', cta: 'Read the law', meta2: 'Garnishment limits in Illinois' },
-      { name: 'LIHEAP — Low Income Home Energy Assistance Program', amount: 'Up to $1,000+', meta: 'Federal/state program', body: 'LIHEAP helps low-income households pay heating and cooling bills. It can prevent utility shutoffs, restore service that was cut off, or pay for emergency repairs. Application opens annually in October.', cta: 'Apply for LIHEAP', meta2: 'Income-based eligibility' },
+      { name: 'LIHEAP, Low Income Home Energy Assistance Program', amount: 'Up to $1,000+', meta: 'Federal/state program', body: 'LIHEAP helps low-income households pay heating and cooling bills. It can prevent utility shutoffs, restore service that was cut off, or pay for emergency repairs. Application opens annually in October.', cta: 'Apply for LIHEAP', meta2: 'Income-based eligibility' },
     ],
     steps: [
       { title: 'Demand verification in writing.', body: 'When a debt collector first contacts you, send a written request for verification within 30 days. They must pause collection until they provide proof.' },
@@ -52,10 +52,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Talk to a free credit counselor.', body: 'Nonprofit credit counselors can review your debts and help you negotiate. Avoid for-profit debt settlement companies that charge fees up front.' },
     ],
     referral: {
-      sticker: '★ Start here', title: 'CARPLS — Free Legal Aid Hotline',
+      sticker: 'Start here', title: 'CARPLS, Free Legal Aid Hotline',
       orgName: 'Cook County legal hotline', orgSub: 'Free advice on debt, consumer issues, and more',
       orgDesc: 'Call to speak with a lawyer about debt collection, garnishment, or utility shutoffs. CARPLS handles thousands of consumer cases each year and can tell you whether a collector is breaking the law.',
-      phoneLabel: 'Phone', phone: '312-738-9200', hoursLabel: 'Hours', hours: 'Mon–Fri, 9–4:30',
+      phoneLabel: 'Phone', phone: '312-738-9200', hoursLabel: 'Hours', hours: 'Mon to Fri, 9 to 4:30',
       bringLabel: 'Have these ready', bring: ['Account statements', 'Collection letters', 'A call log', 'Pay stubs'],
       callBtn: 'Call CARPLS →', otherBtn: 'See other orgs',
     },
@@ -83,7 +83,7 @@ const CONTENT: Record<Language, TopicContent> = {
     programs: [
       { name: 'Fair Debt Collection Practices Act (FDCPA)', amount: 'Federal', meta: '15 USC §1692', body: 'Esta ley federal limita cuándo y cómo te pueden contactar los cobradores. Prohíbe el acoso, las declaraciones falsas y las prácticas injustas. Puedes demandar por las violaciones y recuperar daños más honorarios de abogado.', cta: 'Leer la ley', meta2: 'Aplica en los 50 estados' },
       { name: 'Illinois Wage Deduction Act', amount: 'Estatal', meta: '735 ILCS 5/12-803', body: 'Limita cuánto de tu salario se puede embargar y protege ciertos tipos de ingresos por completo. Muchos beneficios públicos como SNAP, SSI y el Seguro Social están totalmente exentos del embargo.', cta: 'Leer la ley', meta2: 'Límites de embargo en Illinois' },
-      { name: 'LIHEAP — Low Income Home Energy Assistance Program', amount: 'Hasta $1,000+', meta: 'Programa federal/estatal', body: 'LIHEAP ayuda a los hogares de bajos ingresos a pagar las facturas de calefacción y aire. Puede evitar cortes de servicio, restablecer un servicio cortado, o pagar reparaciones de emergencia. La solicitud abre cada año en octubre.', cta: 'Solicitar LIHEAP', meta2: 'Elegibilidad según ingresos' },
+      { name: 'LIHEAP, Low Income Home Energy Assistance Program', amount: 'Hasta $1,000+', meta: 'Programa federal/estatal', body: 'LIHEAP ayuda a los hogares de bajos ingresos a pagar las facturas de calefacción y aire. Puede evitar cortes de servicio, restablecer un servicio cortado, o pagar reparaciones de emergencia. La solicitud abre cada año en octubre.', cta: 'Solicitar LIHEAP', meta2: 'Elegibilidad según ingresos' },
     ],
     steps: [
       { title: 'Exige verificación por escrito.', body: 'Cuando un cobrador te contacte por primera vez, envía una solicitud de verificación por escrito dentro de 30 días. Deben pausar el cobro hasta que den la prueba.' },
@@ -93,10 +93,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Habla con un consejero de crédito gratis.', body: 'Los consejeros de crédito sin fines de lucro pueden revisar tus deudas y ayudarte a negociar. Evita las empresas de liquidación de deudas con fines de lucro que cobran por adelantado.' },
     ],
     referral: {
-      sticker: '★ Empieza aquí', title: 'CARPLS — Free Legal Aid Hotline',
+      sticker: 'Empieza aquí', title: 'CARPLS, Free Legal Aid Hotline',
       orgName: 'Línea legal del Condado de Cook', orgSub: 'Consejo gratis sobre deudas, problemas del consumidor y más',
       orgDesc: 'Llama para hablar con un abogado sobre cobro de deudas, embargo o cortes de servicios. CARPLS maneja miles de casos de consumidores cada año y puede decirte si un cobrador está violando la ley.',
-      phoneLabel: 'Teléfono', phone: '312-738-9200', hoursLabel: 'Horario', hours: 'Lun–Vie, 9–4:30',
+      phoneLabel: 'Teléfono', phone: '312-738-9200', hoursLabel: 'Horario', hours: 'Lun to Vie, 9 to 4:30',
       bringLabel: 'Ten esto a la mano', bring: ['Estados de cuenta', 'Cartas de cobro', 'Un registro de llamadas', 'Talones de pago'],
       callBtn: 'Llamar a CARPLS →', otherBtn: 'Ver otras organizaciones',
     },
@@ -124,7 +124,7 @@ const CONTENT: Record<Language, TopicContent> = {
     programs: [
       { name: 'Fair Debt Collection Practices Act (FDCPA)', amount: '联邦', meta: '15 USC §1692', body: '这条联邦法律限制催债人何时以及如何联系您。它禁止骚扰、虚假陈述和不公平做法。您可以就违规行为提起诉讼，并追回赔偿金加律师费。', cta: '阅读法律', meta2: '适用于所有50个州' },
       { name: 'Illinois Wage Deduction Act', amount: '全州', meta: '735 ILCS 5/12-803', body: '限制您工资可被扣押的金额，并完全保护某些类型的收入。许多公共福利，如 SNAP、SSI 和社会保障，完全免于扣押。', cta: '阅读法律', meta2: '伊利诺伊州的扣押限额' },
-      { name: 'LIHEAP — Low Income Home Energy Assistance Program', amount: '最高 $1,000+', meta: '联邦/州项目', body: 'LIHEAP 帮助低收入家庭支付取暖和制冷费用。它可以防止停水停电、恢复被切断的服务，或支付紧急维修费用。申请每年10月开放。', cta: '申请 LIHEAP', meta2: '按收入决定资格' },
+      { name: 'LIHEAP, Low Income Home Energy Assistance Program', amount: '最高 $1,000+', meta: '联邦/州项目', body: 'LIHEAP 帮助低收入家庭支付取暖和制冷费用。它可以防止停水停电、恢复被切断的服务，或支付紧急维修费用。申请每年10月开放。', cta: '申请 LIHEAP', meta2: '按收入决定资格' },
     ],
     steps: [
       { title: '要求书面核实。', body: '催债人第一次联系您时，在30天内发送书面核实请求。在他们提供证明之前，必须暂停催收。' },
@@ -134,10 +134,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: '与免费信用顾问交谈。', body: '非营利信用顾问可以审查您的债务并帮助您协商。避免那些预先收费的营利性债务和解公司。' },
     ],
     referral: {
-      sticker: '★ 从这里开始', title: 'CARPLS — Free Legal Aid Hotline',
+      sticker: '从这里开始', title: 'CARPLS, Free Legal Aid Hotline',
       orgName: '库克县法律热线', orgSub: '关于债务、消费者问题等的免费咨询',
       orgDesc: '致电与律师讨论债务催收、工资扣押或停水停电问题。CARPLS 每年处理数千起消费者案件，可以告诉您催债人是否违法。',
-      phoneLabel: '电话', phone: '312-738-9200', hoursLabel: '时间', hours: '周一至周五, 9–4:30',
+      phoneLabel: '电话', phone: '312-738-9200', hoursLabel: '时间', hours: '周一至周五, 9 to 4:30',
       bringLabel: '请准备好这些', bring: ['账户对账单', '催收信件', '通话记录', '工资单'],
       callBtn: '致电 CARPLS →', otherBtn: '查看其他机构',
     },
@@ -165,7 +165,7 @@ const CONTENT: Record<Language, TopicContent> = {
     programs: [
       { name: 'Fair Debt Collection Practices Act (FDCPA)', amount: 'Pederal', meta: '15 USC §1692', body: 'Nililimitahan ng pederal na batas na ito kung kailan at paano ka maaaring kontakin ng mga maniningil. Ipinagbabawal nito ang panghaharass, maling pahayag, at hindi patas na mga gawi. Maaari kang magdemanda para sa mga paglabag at mabawi ang danyos kasama ang bayad sa abogado.', cta: 'Basahin ang batas', meta2: 'Naaangkop sa lahat ng 50 estado' },
       { name: 'Illinois Wage Deduction Act', amount: 'Buong estado', meta: '735 ILCS 5/12-803', body: 'Nililimitahan kung magkano sa iyong sahod ang maaaring i-garnish at ganap na pinoprotektahan ang ilang uri ng kita. Maraming pampublikong benepisyo tulad ng SNAP, SSI, at Social Security ay ganap na exempt sa garnishment.', cta: 'Basahin ang batas', meta2: 'Mga limitasyon sa garnishment sa Illinois' },
-      { name: 'LIHEAP — Low Income Home Energy Assistance Program', amount: 'Hanggang $1,000+', meta: 'Programa ng pederal/estado', body: 'Tumutulong ang LIHEAP sa mga sambahayang may mababang kita na magbayad ng mga bayarin sa pampainit at pampalamig. Maaari nitong maiwasan ang pagputol ng utility, maibalik ang serbisyong pinutol, o mabayaran ang emergency na pag-aayos. Bumubukas ang aplikasyon kada Oktubre.', cta: 'Mag-apply sa LIHEAP', meta2: 'Pagiging karapat-dapat batay sa kita' },
+      { name: 'LIHEAP, Low Income Home Energy Assistance Program', amount: 'Hanggang $1,000+', meta: 'Programa ng pederal/estado', body: 'Tumutulong ang LIHEAP sa mga sambahayang may mababang kita na magbayad ng mga bayarin sa pampainit at pampalamig. Maaari nitong maiwasan ang pagputol ng utility, maibalik ang serbisyong pinutol, o mabayaran ang emergency na pag-aayos. Bumubukas ang aplikasyon kada Oktubre.', cta: 'Mag-apply sa LIHEAP', meta2: 'Pagiging karapat-dapat batay sa kita' },
     ],
     steps: [
       { title: 'Humingi ng verification nang nakasulat.', body: 'Kapag unang kinontak ka ng maniningil, magpadala ng nakasulat na kahilingan para sa verification sa loob ng 30 araw. Dapat nilang ihinto ang pangongolekta hanggang magbigay sila ng patunay.' },
@@ -175,10 +175,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Kausapin ang isang libreng credit counselor.', body: 'Maaaring suriin ng mga nonprofit na credit counselor ang iyong mga utang at tulungan kang makipag-negosasyon. Iwasan ang mga for-profit na kompanya ng debt settlement na naniningil nang paunang bayad.' },
     ],
     referral: {
-      sticker: '★ Magsimula dito', title: 'CARPLS — Free Legal Aid Hotline',
+      sticker: 'Magsimula dito', title: 'CARPLS, Free Legal Aid Hotline',
       orgName: 'Legal hotline ng Cook County', orgSub: 'Libreng payo sa utang, mga isyu ng mamimili, at iba pa',
       orgDesc: 'Tumawag para makausap ang isang abogado tungkol sa pangongolekta ng utang, garnishment, o pagputol ng utility. Humahawak ang CARPLS ng libu-libong kaso ng mamimili kada taon at masasabi nila kung lumalabag sa batas ang isang maniningil.',
-      phoneLabel: 'Telepono', phone: '312-738-9200', hoursLabel: 'Oras', hours: 'Lun–Biy, 9–4:30',
+      phoneLabel: 'Telepono', phone: '312-738-9200', hoursLabel: 'Oras', hours: 'Lun to Biy, 9 to 4:30',
       bringLabel: 'Ihanda ang mga ito', bring: ['Mga account statement', 'Mga sulat ng pangongolekta', 'Isang log ng tawag', 'Mga pay stub'],
       callBtn: 'Tawagan ang CARPLS →', otherBtn: 'Tingnan ang ibang organisasyon',
     },
@@ -206,7 +206,7 @@ const CONTENT: Record<Language, TopicContent> = {
     programs: [
       { name: 'Fair Debt Collection Practices Act (FDCPA)', amount: 'Liên bang', meta: '15 USC §1692', body: 'Luật liên bang này giới hạn khi nào và cách người đòi nợ có thể liên hệ bạn. Nó cấm quấy rối, tuyên bố sai sự thật, và các hành vi bất công. Bạn có thể kiện về các vi phạm và đòi bồi thường cộng phí luật sư.', cta: 'Đọc luật', meta2: 'Áp dụng ở tất cả 50 bang' },
       { name: 'Illinois Wage Deduction Act', amount: 'Toàn bang', meta: '735 ILCS 5/12-803', body: 'Giới hạn số tiền lương có thể bị khấu trừ và bảo vệ hoàn toàn một số loại thu nhập. Nhiều phúc lợi công như SNAP, SSI, và An sinh Xã hội được miễn hoàn toàn khỏi việc khấu trừ.', cta: 'Đọc luật', meta2: 'Giới hạn khấu trừ ở Illinois' },
-      { name: 'LIHEAP — Low Income Home Energy Assistance Program', amount: 'Lên đến $1,000+', meta: 'Chương trình liên bang/bang', body: 'LIHEAP giúp các hộ thu nhập thấp trả hóa đơn sưởi và làm mát. Nó có thể ngăn việc cắt tiện ích, khôi phục dịch vụ đã bị cắt, hoặc trả cho sửa chữa khẩn cấp. Đơn đăng ký mở hằng năm vào tháng 10.', cta: 'Đăng ký LIHEAP', meta2: 'Điều kiện theo thu nhập' },
+      { name: 'LIHEAP, Low Income Home Energy Assistance Program', amount: 'Lên đến $1,000+', meta: 'Chương trình liên bang/bang', body: 'LIHEAP giúp các hộ thu nhập thấp trả hóa đơn sưởi và làm mát. Nó có thể ngăn việc cắt tiện ích, khôi phục dịch vụ đã bị cắt, hoặc trả cho sửa chữa khẩn cấp. Đơn đăng ký mở hằng năm vào tháng 10.', cta: 'Đăng ký LIHEAP', meta2: 'Điều kiện theo thu nhập' },
     ],
     steps: [
       { title: 'Yêu cầu xác minh bằng văn bản.', body: 'Khi người đòi nợ liên hệ bạn lần đầu, hãy gửi yêu cầu xác minh bằng văn bản trong vòng 30 ngày. Họ phải tạm dừng đòi nợ cho đến khi cung cấp bằng chứng.' },
@@ -216,10 +216,10 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Nói chuyện với một cố vấn tín dụng miễn phí.', body: 'Các cố vấn tín dụng phi lợi nhuận có thể xem xét các khoản nợ của bạn và giúp bạn thương lượng. Tránh các công ty dàn xếp nợ vì lợi nhuận tính phí trả trước.' },
     ],
     referral: {
-      sticker: '★ Bắt đầu ở đây', title: 'CARPLS — Free Legal Aid Hotline',
+      sticker: 'Bắt đầu ở đây', title: 'CARPLS, Free Legal Aid Hotline',
       orgName: 'Đường dây pháp lý Quận Cook', orgSub: 'Tư vấn miễn phí về nợ, vấn đề người tiêu dùng, và hơn thế nữa',
       orgDesc: 'Gọi để nói chuyện với luật sư về việc đòi nợ, khấu trừ lương, hoặc cắt tiện ích. CARPLS xử lý hàng nghìn vụ người tiêu dùng mỗi năm và có thể cho bạn biết liệu một người đòi nợ có đang vi phạm luật hay không.',
-      phoneLabel: 'Điện thoại', phone: '312-738-9200', hoursLabel: 'Giờ', hours: 'Thứ 2–Thứ 6, 9–4:30',
+      phoneLabel: 'Điện thoại', phone: '312-738-9200', hoursLabel: 'Giờ', hours: 'Thứ 2 to Thứ 6, 9 to 4:30',
       bringLabel: 'Chuẩn bị sẵn những thứ này', bring: ['Sao kê tài khoản', 'Thư đòi nợ', 'Nhật ký cuộc gọi', 'Phiếu lương'],
       callBtn: 'Gọi CARPLS →', otherBtn: 'Xem tổ chức khác',
     },
@@ -237,6 +237,7 @@ export default function Money() {
       title={c.title}
       sub={c.sub}
       iconName="money"
+      accent="var(--clover)"
       quickNav={c.quickNav}
       summary={<>{c.summary}</>}
       faqs={c.faqs}
