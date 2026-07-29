@@ -1,16 +1,59 @@
 """
 schemas.py
-Pydantic response models for the API. Using these as FastAPI `response_model`s
-gives validated, documented output (visible in /docs) and a stable contract the
-frontend can rely on.
+Pydantic models for the API. FastAPI uses these as `response_model`s, which
+validates what we send, documents it in /docs, and gives the frontend a stable
+contract to build against.
 """
 
-from __future__ import annotations
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
 
-# --- /ask -------------------------------------------------------------------
+# what the frontend sends us
+
+class AskRequest(BaseModel):
+    question: str = Field(..., max_length=2000, description="the user's question")
+    language: str = "en"
+    # Optional triage inputs that refine retrieval and org routing.
+    # area: chicago | suburban_cook | collar | elsewhere
+    # subject: housing | money | repairs | benefits
+    # Kept as plain strings so an unexpected value falls back in the handler
+    # instead of failing the whole request.
+    area: str | None = None
+    zip: str | None = Field(None, max_length=10)
+    subject: str | None = None
+
+
+class FeedbackRequest(BaseModel):
+    """One 'was this helpful?' vote. Privacy-first: no raw question is sent."""
+    helpful: bool
+    language: str = "en"
+    topic: str = ""
+
+
+# what we send back
+
+class Org(BaseModel):
+    """Fields shared by both organization cards. Always from verified org data."""
+    name: str
+    sub: str = ""
+    phone: str = ""
+    hours: str = ""
+    url: str = ""
+
+
+class RefusalOrg(Org):
+    """Shown when we can't answer. `description` says why they can help instead."""
+    description: str = ""
+
+
+class Contact(Org):
+    """The who-to-contact card on a normal answer. why/how are written by the
+    model in the user's language; everything else is our own data."""
+    why: str = ""
+    how: str = ""
+
 
 class Source(BaseModel):
     title: str
@@ -18,37 +61,7 @@ class Source(BaseModel):
     url: str = ""
     topic: str = ""
     score: float | None = None
-
-
-class RefusalOrg(BaseModel):
-    name: str
-    sub: str = ""
-    description: str = ""
-    phone: str = ""
-    hours: str = ""
-
-
-class Contact(BaseModel):
-    """"Who to contact & how" card shown with a normal (non-refused) answer.
-    name/sub/phone/hours/url come from our verified org data; why/how are written
-    by the model in the user's language."""
-    name: str
-    sub: str = ""
-    why: str = ""
-    how: str = ""
-    phone: str = ""
-    hours: str = ""
-    url: str = ""
-
-
-class AskRequest(BaseModel):
-    question: str = Field(..., max_length=2000, description="the user's question")
-    language: str = "en"
-    # Optional triage inputs (Phase 2). area: chicago|suburban_cook|collar|elsewhere;
-    # subject: housing|money|repairs|benefits. They refine retrieval + org routing.
-    area: str | None = None
-    zip: str | None = Field(None, max_length=10)
-    subject: str | None = None
+    web: bool = False   # True if from a live web search rather than our corpus
 
 
 class AskResponse(BaseModel):
@@ -62,9 +75,12 @@ class AskResponse(BaseModel):
     sources: list[Source] = []
     topic: str = ""
     refusal_org: RefusalOrg | None = None
+    # How well the sources support the answer. None on refusals and errors,
+    # where we never computed one.
+    confidence: Literal["high", "medium", "low"] | None = None
 
 
-# --- /search ----------------------------------------------------------------
+#  /search only
 
 class SearchResult(BaseModel):
     source_name: str

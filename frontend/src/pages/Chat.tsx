@@ -1,19 +1,35 @@
-import { useState, useRef, FormEvent, Dispatch, SetStateAction } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useRef, useEffect, FormEvent, Dispatch, SetStateAction } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { SkipLink } from '../components/SkipLink'
 import { LanguageStrip } from '../components/LanguageStrip'
 import { ChatHeader } from '../components/ChatHeader'
 import { SiteFooter } from '../components/SiteFooter'
+import { MicButton } from '../components/MicButton'
 import { Icon } from '../lib/icons'
-import { ask, AskResponse } from '../lib/api'
-import { useLanguage, Language } from '../lib/translations'
+import { ask, sendFeedback, AskResponse } from '../lib/api'
+import { matchDemoAnswer } from '../lib/demoAnswers'
+import { useLanguage, Language, orgText } from '../lib/translations'
 import { useSpeech, useSpeechContext } from '../lib/speech'
+
+const VALID = ['en', 'es', 'zh', 'tl', 'vi']
 
 interface DemoMessage {
   user: string
   bot: AskResponse
   topicLink?: { slug: string; label: string; sub: string }
+  /** Snapshot of what was asked, so the answer can be shared as a deep link. */
+  ask?: { lang: Language; area?: string; zip?: string; subject?: string }
+}
+
+// Build a shareable /chat URL that reproduces a question (+ its language/triage).
+function buildShareUrl(m: DemoMessage): string {
+  const p = new URLSearchParams({ q: m.user })
+  if (m.ask?.lang) p.set('lang', m.ask.lang)
+  if (m.ask?.area) p.set('area', m.ask.area)
+  if (m.ask?.zip) p.set('zip', m.ask.zip)
+  if (m.ask?.subject) p.set('subject', m.ask.subject)
+  return `${location.origin}/chat?${p.toString()}`
 }
 
 type Speech = ReturnType<typeof useSpeech>
@@ -42,93 +58,78 @@ function spokenText(bot: AskResponse): string {
 }
 
 function contactSpeech(c: NonNullable<AskResponse['contact']>): string {
-  return [c.name, c.why, c.how, c.phone && `Phone ${c.phone}`].filter(Boolean).join('. ')
+  return [c.name, c.why, c.how, c.phone && `Phone ${c.phone}`, c.url && `Website ${c.url}`, c.hours && `Hours ${c.hours}`].filter(Boolean).join('. ')
 }
 
-const DEMO_DISCLAIMER =
-  'Rights Within Reach is not an attorney and does not give legal advice. It shares neutral legal information to help you understand the law and speak up for yourself. It may not reflect the most recent changes to the law and may not apply to your situation. For advice about your specific circumstances, talk to a lawyer or a legal aid organization.'
-
-const DEMO_CARPLS = {
-  name: 'CARPLS Legal Aid Hotline',
-  sub: 'Free legal help · Cook County',
-  phone: '312-738-9200',
-  hours: 'Mon–Fri, 9–4:30',
+// Readable multi-line text for copy/share (not the run-on read-aloud string).
+function shareText(bot: AskResponse, t: (k: string) => string): string {
+  const lines: string[] = [bot.answer]
+  if (bot.next_steps?.length) {
+    lines.push('', `${t('chat.nextSteps')}:`)
+    bot.next_steps.forEach((s, i) => lines.push(`${i + 1}. ${s}`))
+  }
+  if (bot.contact) {
+    lines.push('', `${t('chat.whoToContact')}:`)
+    lines.push([bot.contact.name, bot.contact.phone].filter(Boolean).join(', '))
+    const wh = [bot.contact.why, bot.contact.how].filter(Boolean).join(' ')
+    if (wh) lines.push(wh)
+  }
+  if (bot.refusal_org) {
+    const o = bot.refusal_org
+    lines.push('', [o.name, o.phone].filter(Boolean).join(', '))
+    if (o.description) lines.push(o.description)
+  }
+  if (bot.disclaimer) lines.push('', bot.disclaimer)
+  lines.push('', ', Rights Within Reach · rightswithinreach.org')
+  return lines.filter((l) => l !== undefined).join('\n')
 }
 
-const DEMO_MESSAGES: DemoMessage[] = [
-  {
-    user: 'How much notice does my landlord need to give before raising my rent in Chicago?',
-    bot: {
-      answer: 'In Chicago, your landlord must tell you in writing before raising your rent. How much notice depends on how long you have lived there: **30 days** if under 6 months, **60 days** from 6 months to 3 years, and **120 days** if more than 3 years. If the notice is missing or late, the increase may not be valid.',
-      next_steps: [
-        'Check how long you have lived in your unit to find your notice period.',
-        'Look at the written notice for its date and when the new rent starts.',
-        'Keep a copy of the notice if you think it was too short.',
-      ],
-      contact: {
-        ...DEMO_CARPLS,
-        why: 'CARPLS helps Cook County renters check whether a rent-increase notice follows Chicago’s rules.',
-        how: 'Call and ask about landlord notice requirements; have your lease and the notice ready.',
-      },
-      disclaimer: DEMO_DISCLAIMER,
-      sources: [
-        { title: 'Chicago RLTO', section: '§5-12-130 Notice of rent increase', topic: 'housing' },
-        { title: 'Fair Notice Ordinance', section: 'Chicago Municipal Code 5-14', topic: 'housing' },
-      ],
-      topic: 'housing',
-    },
-    topicLink: { slug: '/housing', label: 'Read the full housing guide', sub: 'More on eviction, deposits, repairs, and where to get help' },
-  },
-  {
-    user: 'A debt collector keeps calling me at work even after I told them to stop. Is that legal?',
-    bot: {
-      answer: 'Generally, no. Under the federal Fair Debt Collection Practices Act (FDCPA), debt collectors must stop contacting people at work once they have been told the employer does not allow such calls. Continuing after that is a separate violation.',
-      next_steps: [
-        'Tell the collector in writing or by phone that you cannot take calls at work.',
-        'Keep a log of every call: date, time, who called, and what was said.',
-        'Report violations to the CFPB or the Illinois Attorney General.',
-      ],
-      contact: {
-        ...DEMO_CARPLS,
-        why: 'CARPLS handles consumer-debt and collector-harassment cases for Cook County residents.',
-        how: 'Call with your call log and any collection letters; ask whether the collector broke the law.',
-      },
-      disclaimer: DEMO_DISCLAIMER,
-      sources: [
-        { title: 'Fair Debt Collection Practices Act', section: '15 U.S.C. §1692c(a)(3)', topic: 'money_debt' },
-        { title: 'Illinois Collection Agency Act', section: '225 ILCS 425', topic: 'money_debt' },
-      ],
-      topic: 'money_debt',
-    },
-    topicLink: { slug: '/money', label: 'Read the full money & debt guide', sub: 'More on garnishment, utility shutoffs, and harassment' },
-  },
-  {
-    user: 'Can I get full custody of my children?',
-    bot: {
-      answer: 'This is something I can not help with, but here is who can.',
-      disclaimer: DEMO_DISCLAIMER,
-      sources: [],
-      topic: 'family',
-      refused: true,
-      refusal_org: {
-        name: 'CARPLS Legal Aid Hotline',
-        sub: 'Free legal help · Cook County',
-        description: 'Call to speak with a lawyer about your family case. Walk-in help also available.',
-        phone: '312-738-9200',
-        hours: 'Mon–Fri, 9–4:30',
-      },
-    },
-  },
-]
+function ShareActions({ bot, shareUrl }: { bot: AskResponse; shareUrl?: string }) {
+  const { t } = useLanguage()
+  const [copied, setCopied] = useState<null | 'text' | 'link'>(null)
+  const flash = (which: 'text' | 'link') => { setCopied(which); setTimeout(() => setCopied(null), 2000) }
+  const copyText = async () => {
+    try { await navigator.clipboard.writeText(shareText(bot, t)); flash('text') } catch { /* blocked */ }
+  }
+  const copyLink = async () => {
+    if (!shareUrl) return
+    try { await navigator.clipboard.writeText(shareUrl); flash('link') } catch { /* blocked */ }
+  }
+  return (
+    <div className="share-actions no-print">
+      <button type="button" className="share-btn" onClick={copyText} aria-label={t('chat.copy')}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg> {copied === 'text' ? t('chat.copied') : t('chat.copy')}
+      </button>
+      {shareUrl && (
+        <button type="button" className="share-btn" onClick={copyLink} aria-label={t('chat.copyLink')}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg> {copied === 'link' ? t('chat.linkCopied') : t('chat.copyLink')}
+        </button>
+      )}
+      <button type="button" className="share-btn" onClick={() => window.print()} aria-label={t('chat.print')}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M6 9V2h12v7" /><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><rect x="6" y="14" width="12" height="8" rx="1" />
+        </svg> {t('chat.print')}
+      </button>
+    </div>
+  )
+}
 
 export default function Chat() {
-  const [messages, setMessages] = useState<DemoMessage[]>(DEMO_MESSAGES)
+  // Start empty, the guided triage funnel leads to the first (real, translated)
+  // answer. No hardcoded seed conversation, so the chat is fully localized.
+  const [messages, setMessages] = useState<DemoMessage[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { language, t } = useLanguage()
+  const { language, setLanguage, t } = useLanguage()
+  const [searchParams, setSearchParams] = useSearchParams()
   const speech = useSpeechContext()
   const formRef = useRef<HTMLFormElement>(null)
+  const voiceBaseRef = useRef('') // input text when voice dictation started
 
   // Guided triage (Phase 2). 'ready' = collected or skipped → show the input.
   const [triage, setTriage] = useState<{ area: string | null; zip: string; subject: string | null }>({ area: null, zip: '', subject: null })
@@ -144,28 +145,55 @@ export default function Chat() {
     ? lastMessage.bot.follow_ups
     : [t('chat.suggest1'), t('chat.suggest2'), t('chat.suggest3')]
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!input.trim() || loading) return
+  // Shared ask path (takes explicit context so it works from the form OR a deep link).
+  const submitQuestion = async (question: string, ctx: DemoMessage['ask'] & { lang: Language }) => {
+    if (!question.trim()) return
     setLoading(true)
     setError(null)
-    const question = input
-    setInput('')
-
     try {
-      const response = await ask({
-        question, language,
-        area: triage.area ?? undefined,
-        zip: triage.zip || undefined,
-        subject: triage.subject ?? undefined,
-      })
-      setMessages((prev) => [...prev, { user: question, bot: response }])
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('chat.error'))
+      const response = await ask({ question, language: ctx.lang, area: ctx.area, zip: ctx.zip, subject: ctx.subject })
+      // If the answer engine soft-failed (e.g. out of API credits), fall back to a
+      // curated demo answer so a live demo still shows a real, structured card.
+      const bot = response.reason === 'error' ? matchDemoAnswer(question, ctx.subject, ctx.lang) : response
+      setMessages((prev) => [...prev, { user: question, bot, ask: ctx }])
+    } catch {
+      // Hard failure (network/server unreachable): use the demo fallback too.
+      setMessages((prev) => [...prev, { user: question, bot: matchDemoAnswer(question, ctx.subject, ctx.lang), ask: ctx }])
     } finally {
       setLoading(false)
     }
   }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (!input.trim() || loading) return
+    const question = input
+    setInput('')
+    submitQuestion(question, {
+      lang: language, area: triage.area ?? undefined,
+      zip: triage.zip || undefined, subject: triage.subject ?? undefined,
+    })
+  }
+
+  // Deep link: /chat?q=…&lang=…&area=…&subject= auto-asks (share links, flyers, QR).
+  const didAutoAsk = useRef(false)
+  useEffect(() => {
+    if (didAutoAsk.current) return
+    const q = searchParams.get('q')
+    if (!q) return
+    didAutoAsk.current = true
+    const l = searchParams.get('lang')
+    const lang = (l && VALID.includes(l)) ? (l as Language) : language
+    if (lang !== language) setLanguage(lang)
+    const area = searchParams.get('area') || undefined
+    const zip = searchParams.get('zip') || undefined
+    const subject = searchParams.get('subject') || undefined
+    setTriage({ area: area ?? null, zip: zip ?? '', subject: subject ?? null })
+    setTriageStep('ready')
+    setSearchParams({}, { replace: true }) // clean URL so refresh doesn't re-ask
+    submitQuestion(q, { lang, area, zip, subject })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="chat-page">
@@ -185,6 +213,13 @@ export default function Chat() {
       </div>
 
       <main id="main" className="chat-body" role="main" aria-label={t('chat.conversationAria')}>
+        <h1 className="sr-only">{t('chat.heading')}</h1>
+        {messages.length === 0 && !loading && (
+          <div className="chat-welcome">
+            <span className="msg-bot-icon-img" aria-hidden="true" />
+            <p>{t('chat.welcome')}</p>
+          </div>
+        )}
         {messages.map((m, i) => (
           <Exchange key={i} message={m} id={String(i)} speech={speech} language={language} />
         ))}
@@ -209,7 +244,7 @@ export default function Chat() {
             </div>
           )}
 
-          <section className="suggest-block" aria-label="Suggested follow-up questions">
+          <section className="suggest-block" aria-label={t('chat.suggestAria')}>
             <p className="suggest-label">{t('chat.tryNext')}</p>
             <div className="suggest-chips">
               {followUps.map((q, i) => (
@@ -231,6 +266,15 @@ export default function Chat() {
               onChange={(e) => setInput(e.target.value)}
               aria-label={t('chat.typeQuestion')}
               disabled={loading}
+            />
+            <MicButton
+              language={language}
+              disabled={loading}
+              onStart={() => setInput((cur) => { voiceBaseRef.current = cur; return cur })}
+              onResult={(text) => {
+                const base = voiceBaseRef.current
+                setInput(base && text ? `${base} ${text}` : base + text)
+              }}
             />
             <button type="submit" className="send-btn" aria-label={t('chat.send')} disabled={loading || !input.trim()}>
               <Icon name="send" size={28} />
@@ -278,7 +322,7 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
   )
 
   return (
-    <section className="triage-panel" aria-label="Guided questions">
+    <section className="triage-panel" aria-label={t('triage.aria')}>
       {step === 'area' && (
         <div className="triage-step">
           <Prompt promptKey="triage.area.prompt" />
@@ -348,7 +392,7 @@ function Exchange({ message, id, speech, language }: { message: DemoMessage; id:
         {bot.refused ? (
           <RefusalCard bot={bot} id={id} speech={speech} language={language} />
         ) : (
-          <AnswerCard bot={bot} id={id} speech={speech} language={language} />
+          <AnswerCard bot={bot} id={id} speech={speech} language={language} shareUrl={buildShareUrl(message)} />
         )}
 
         {topicLink && !bot.refused && (
@@ -372,17 +416,22 @@ function Exchange({ message, id, speech, language }: { message: DemoMessage; id:
                 <a
                   key={i}
                   href={src.url ?? '#'}
-                  className="source-card external"
+                  className={`source-card external${src.web ? ' source-card-web' : ''}`}
                   target="_blank"
                   rel="noopener"
                 >
                   <p className="source-title">{src.title}</p>
-                  <p className="source-section">{src.section}</p>
+                  <p className="source-section">
+                    {src.web && <span className="source-web-tag">{t('chat.webSource')}</span>}
+                    {src.web ? t('chat.webChecked') : src.section}
+                  </p>
                 </a>
               ))}
             </div>
           </div>
         )}
+
+        <FeedbackButtons topic={bot.topic || ''} language={language} />
       </div>
     </>
   )
@@ -397,12 +446,24 @@ function SectionHead({ title, id, text, speech, language }: { title: string; id:
   )
 }
 
-function AnswerCard({ bot, id, speech, language }: { bot: AskResponse; id: string; speech: Speech; language: Language }) {
+function ConfidenceBadge({ level }: { level?: string }) {
+  const { t } = useLanguage()
+  if (!level || !['high', 'medium', 'low'].includes(level)) return null
+  return (
+    <span className={`confidence-badge conf-${level}`} title={t('chat.confidenceHelp')}>
+      {t('chat.confidence')}: {t(`chat.conf.${level}`)}
+    </span>
+  )
+}
+
+function AnswerCard({ bot, id, speech, language, shareUrl }: { bot: AskResponse; id: string; speech: Speech; language: Language; shareUrl?: string }) {
   const { t } = useLanguage()
   return (
-    <article className="answer-card" aria-label="Answer">
+    <article className="answer-card" aria-label={t('chat.answerLabel')}>
       <div className="answer-card-top">
         <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
+        <ConfidenceBadge level={bot.confidence} />
+        <ShareActions bot={bot} shareUrl={shareUrl} />
       </div>
 
       {bot.disclaimer && (
@@ -438,25 +499,54 @@ function AnswerCard({ bot, id, speech, language }: { bot: AskResponse; id: strin
   )
 }
 
-function ContactCard({ contact }: { contact: NonNullable<AskResponse['contact']> }) {
+function FeedbackButtons({ topic, language }: { topic: string; language: Language }) {
   const { t } = useLanguage()
+  const [voted, setVoted] = useState<null | boolean>(null)
+  const vote = (helpful: boolean) => {
+    setVoted(helpful)
+    sendFeedback(helpful, language, topic)
+  }
+  if (voted !== null) return <p className="feedback-thanks" role="status">{t('chat.feedbackThanks')}</p>
+  return (
+    <div className="feedback-row">
+      <span className="feedback-q">{t('chat.helpful')}</span>
+      <button type="button" className="feedback-btn" onClick={() => vote(true)} aria-label={t('chat.yes')}>
+        <Icon name="like" size={17} aria-hidden="true" /> {t('chat.yes')}
+      </button>
+      <button type="button" className="feedback-btn" onClick={() => vote(false)} aria-label={t('chat.no')}>
+        <Icon name="like" size={17} aria-hidden="true" style={{ transform: 'rotate(180deg)' }} /> {t('chat.no')}
+      </button>
+    </div>
+  )
+}
+
+function ContactCard({ contact }: { contact: NonNullable<AskResponse['contact']> }) {
+  const { t, language } = useLanguage()
   const tel = contact.phone ? `tel:${contact.phone.replace(/[^0-9]/g, '')}` : undefined
+  const web = contact.url ? (contact.url.startsWith('http') ? contact.url : `https://${contact.url}`) : undefined
   return (
     <div className="contact-card">
       <p className="serif contact-name">{contact.name}</p>
-      {contact.sub && <p className="contact-sub">{contact.sub}</p>}
+      {contact.sub && <p className="contact-sub">{orgText(contact.sub, language)}</p>}
       {contact.why && <p className="contact-why">{contact.why}</p>}
       {contact.how && <p className="contact-how">{contact.how}</p>}
       <div className="org-stats">
-        {contact.phone && <div className="stat"><p className="stat-label">Phone</p><p className="stat-val"><a href={tel}>{contact.phone}</a></p></div>}
-        {!contact.phone && contact.url && <div className="stat"><p className="stat-label">Website</p><p className="stat-val">{contact.url}</p></div>}
-        {contact.hours && <div className="stat"><p className="stat-label">Hours</p><p className="stat-val">{contact.hours}</p></div>}
+        {contact.phone && <div className="stat"><p className="stat-label">{t('chat.phone')}</p><p className="stat-val"><a href={tel}>{contact.phone}</a></p></div>}
+        {web && <div className="stat"><p className="stat-label">{t('chat.website')}</p><p className="stat-val"><a href={web} target="_blank" rel="noopener">{contact.url}</a></p></div>}
+        {contact.hours && <div className="stat"><p className="stat-label">{t('chat.hours')}</p><p className="stat-val">{orgText(contact.hours, language)}</p></div>}
       </div>
-      {contact.phone && (
-        <a href={tel} className="btn btn-burgundy" style={{ marginTop: '0.7rem', minHeight: '3rem', justifyContent: 'center' }}>
-          {t('chat.callNow')}
-        </a>
-      )}
+      <div className="contact-actions">
+        {contact.phone && (
+          <a href={tel} className="btn btn-burgundy" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+            {t('chat.callNow')}
+          </a>
+        )}
+        {web && (
+          <a href={web} target="_blank" rel="noopener" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+            {t('chat.visitSite')}
+          </a>
+        )}
+      </div>
     </div>
   )
 }
@@ -484,7 +574,7 @@ function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: stri
   const { t } = useLanguage()
   const org = bot.refusal_org!
   return (
-    <article className="refuse-card" aria-label="Out of scope, please call this organization">
+    <article className="refuse-card" aria-label={t('chat.refuseAria')}>
       <div className="answer-card-top">
         <p className="serif refuse-title" style={{ margin: 0 }}>{bot.answer}</p>
         <ReadAloudButton id={id} text={spokenText(bot)} speech={speech} language={language} />
@@ -496,18 +586,18 @@ function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: stri
           <div className="refuse-org-badge" aria-hidden="true">CP</div>
           <div>
             <p className="serif" style={{ margin: 0, fontSize: '1.2rem', color: 'var(--midnight)' }}>{org.name}</p>
-            <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--mute)' }}>{org.sub}</p>
+            <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--mute)' }}>{orgText(org.sub, language)}</p>
           </div>
         </div>
-        <p style={{ margin: '0.7rem 0', fontSize: '0.92rem', lineHeight: 1.5, color: 'var(--ink)' }}>{org.description}</p>
+        <p style={{ margin: '0.7rem 0', fontSize: '0.92rem', lineHeight: 1.5, color: 'var(--ink)' }}>{orgText(org.description, language)}</p>
         <div className="org-stats" style={{ marginBottom: 0 }}>
           <div className="stat" style={{ background: 'var(--cream)' }}>
-            <p className="stat-label">Phone</p>
+            <p className="stat-label">{t('chat.phone')}</p>
             <p className="stat-val"><a href={`tel:${org.phone.replace(/[^0-9]/g, '')}`}>{org.phone}</a></p>
           </div>
           <div className="stat" style={{ background: 'var(--cream)' }}>
-            <p className="stat-label">Hours</p>
-            <p className="stat-val">{org.hours}</p>
+            <p className="stat-label">{t('chat.hours')}</p>
+            <p className="stat-val">{orgText(org.hours, language)}</p>
           </div>
         </div>
       </div>

@@ -36,8 +36,14 @@ def text_chars(html: str) -> int:
     soup = BeautifulSoup(html, "html.parser")
     for t in soup(DROP):
         t.decompose()
-    root = soup.find("main") or soup.body or soup
-    return len(re.sub(r"\s+", " ", root.get_text(" ")).strip())
+    for t in soup.select('#google_translate_element, .skiptranslate, .modal, [class*="goog-te"]'):
+        t.decompose()
+    main = soup.find("main")
+    body = soup.body or soup
+    main_txt = main.get_text(" ") if main else ""
+    body_txt = body.get_text(" ")
+    root_txt = body_txt if len(main_txt) < 0.6 * len(body_txt) else main_txt
+    return len(re.sub(r"\s+", " ", root_txt).strip())
 
 
 def main() -> None:

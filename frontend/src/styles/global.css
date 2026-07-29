@@ -1,5 +1,5 @@
 /* ========================================================
-   Rights Within Reach — global styles
+   Rights Within Reach, global styles
    Color palette, typography, components, accessibility
    ======================================================== */
 
@@ -18,6 +18,9 @@
   --border: rgba(31, 26, 20, 0.12);
   --border-strong: rgba(21, 35, 62, 0.25);
   --focus: #B8451F;
+  /* Repairs topic identity (navy). A dedicated var so dark mode can lift it to a
+     visible navy instead of flipping to light like --midnight does. */
+  --repairs: #15233E;
 }
 
 * { box-sizing: border-box; }
@@ -92,42 +95,59 @@ abbr[title] {
 }
 
 /* ===== LANGUAGE STRIP ===== */
+/* ===== MENU, one unified midnight bar: language row + header row ===== */
 .lang-strip {
-  background: var(--burgundy);
-  padding: 10px 24px;
+  background: var(--midnight);
+  color: var(--bone);
+  padding: 8px 24px;
   display: flex;
-  gap: 22px;
+  gap: 6px;
   align-items: center;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
   flex-wrap: wrap;
 }
-.lang-strip .label { color: rgba(243, 235, 224, 0.6); }
+.lang-strip .label { color: rgba(243, 235, 224, 0.6); font-size: 0.9rem; margin-right: 4px; }
 .lang-strip button {
   background: none; border: none;
-  color: rgba(243, 235, 224, 0.78);
+  color: rgba(243, 235, 224, 0.82);
   font: inherit; cursor: pointer;
-  padding: 4px 0;
-  letter-spacing: inherit;
+  padding: 6px 13px; border-radius: 50px;
+  min-height: 40px;
 }
-.lang-strip button.active { color: var(--bone); border-bottom: 2px solid var(--bone); }
-.lang-strip button:hover { color: var(--bone); }
+.lang-strip button:hover { color: var(--bone); background: rgba(243, 235, 224, 0.12); }
+.lang-strip button.active { background: var(--bone); color: var(--midnight); font-weight: 700; }
+.lang-strip button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-/* ===== HEADER ===== */
-.site-header {
-  background: var(--bone);
-  padding: 18px 24px;
+.mt-notice {
+  margin: 0;
+  background: #fbf3e0;
+  color: #6b4e13;
   border-bottom: 1px solid var(--border);
-  display: flex;
+  padding: 8px 24px;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* ===== HEADER (second row of the midnight menu) ===== */
+.site-header {
+  background: var(--midnight);
+  padding: 14px 24px;
+  border-top: 1px solid rgba(243, 235, 224, 0.14);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 20px;
 }
+.site-header .brand { justify-self: start; }
+.site-header .nav-links { justify-self: center; }
+.site-header .nav-utils { justify-self: end; display: flex; align-items: center; gap: 6px; }
 .brand { display: flex; align-items: center; cursor: pointer; text-decoration: none; color: inherit; }
 .brand-wordmark-img {
-  width: 15rem;
-  height: 3.6rem;
+  width: 13rem;
+  height: 3.1rem;
   background-image: var(--logo-wordmark-midnight);
   background-size: contain;
   background-repeat: no-repeat;
@@ -144,48 +164,183 @@ abbr[title] {
   display: inline-block;
 }
 .nav-links { display: flex; gap: 6px; align-items: center; }
-.nav-links a {
+.nav-links a, .nav-utils a {
   text-decoration: none;
-  color: var(--midnight);
+  color: var(--bone);
   font-weight: 600;
-  font-size: 1.05rem;
-  padding: 0.7rem 1.1rem;
-  border-radius: 8px;
+  font-size: 1.02rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 9px;
   cursor: pointer;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
 }
-.nav-links a:hover { background: var(--cream); color: var(--midnight); }
-.nav-links a.active { background: var(--midnight); color: var(--bone); }
-.nav-links a.cta { background: var(--clover); color: var(--bone); font-weight: 700; }
-.nav-links a.cta:hover { background: var(--clover-hover); color: var(--bone); }
-.big-text-btn {
+.nav-links a:hover { background: rgba(243, 235, 224, 0.12); color: var(--bone); }
+.nav-links a.active { background: rgba(243, 235, 224, 0.18); color: var(--bone); }
+.nav-utils a.cta { background: var(--burgundy); color: var(--bone); font-weight: 700; margin-left: 4px; }
+.nav-utils a.cta:hover { background: var(--burgundy-hover); color: var(--bone); }
+
+/* A+ / contrast toggles, base rules serve the bone Chat header (midnight ink);
+   the .site-header overrides below recolor them for the midnight menu bar. */
+.big-text-btn,
+.contrast-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
   background: transparent;
   color: var(--midnight);
   border: 2px solid var(--border-strong);
-  min-width: 48px;
-  min-height: 48px;
-  padding: 0 14px;
-  border-radius: 9px;
+  border-radius: 10px;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
+  line-height: 1;
+  cursor: pointer;
 }
+.contrast-btn { font-size: 1.2rem; }
+.big-text-btn[aria-pressed="true"] { background: var(--midnight); color: var(--bone); border-color: var(--midnight); }
+.contrast-btn[aria-pressed="true"] { background: var(--midnight); color: var(--bone); border-color: var(--midnight); }
+
+.site-header .big-text-btn,
+.site-header .contrast-btn { color: var(--bone); border-color: rgba(243, 235, 224, 0.4); }
+.site-header .big-text-btn:hover,
+.site-header .contrast-btn:hover { background: rgba(243, 235, 224, 0.12); }
+.site-header .big-text-btn[aria-pressed="true"],
+.site-header .contrast-btn[aria-pressed="true"] { background: var(--bone); color: var(--midnight); border-color: var(--bone); }
+
+/* ============================================================
+   DARK MODE — flips the whole palette. Light tan/cream surfaces
+   become dark; the previously-dark brand bars become the lightest
+   panels (inverted rhythm); text inverts to light. `--midnight`
+   is repurposed as the light "strong text" color, so the 60+ places
+   that used it for headings/labels go light automatically; the
+   backgrounds that used it are re-pinned to dark below. Toggled on
+   <html> by DarkModeProvider. */
+.dark {
+  --ink: #ECE4D7;
+  --mute: #B4ADA1;
+  --midnight: #E7ECF4;
+  --midnight-hover: #FFFFFF;
+  --border: rgba(236, 228, 215, 0.16);
+  --border-strong: rgba(236, 228, 215, 0.34);
+  --repairs: #35527D;
+}
+.dark body, .dark .chat-page { background: #0F1829; color: var(--ink); }
+
+/* Big light bands become the deepest dark surface. */
+.dark .section-cream, .dark .section-bone, .dark .hero, .dark .topic-page-hero,
+.dark .res-section, .dark .quick-nav, .dark .chat-body, .dark .suggest-block,
+.dark .input-bar { background: #131F33; }
+
+/* Cards / chips / inputs become a slightly raised dark panel. */
+.dark .step-card, .dark .topic-card, .dark .answer-card, .dark .refuse-card,
+.dark .res-card, .dark .faq-item, .dark .program-card, .dark .callout,
+.dark .contact-card, .dark .triage-panel, .dark .referral, .dark .fact-card,
+.dark .source-card, .dark .deadline-result, .dark .answer-key, .dark .stat,
+.dark .refuse-org-card, .dark .referral-org, .dark .suggest-chip,
+.dark .bring-chip, .dark .findhelp-area-btn, .dark .findhelp-card,
+.dark .org-pills li, .dark .input-field, .dark .findhelp-zip input,
+.dark .deadline-field input, .dark .mic-btn, .dark .feedback-btn,
+.dark .share-btn, .dark .conf-medium { background: #1B2840; color: var(--ink); }
+
+/* Previously-dark brand bars become the LIGHTEST panels (the inversion),
+   keeping their existing light text. */
+.dark .lang-strip, .dark .site-header, .dark .chat-header, .dark .footer,
+.dark .ticker-wrap, .dark .section-midnight, .dark .hero-media,
+.dark .topic-hero-icon-wrap, .dark .res-cat-chip, .dark .res-card-tag,
+.dark .msg-user-bubble, .dark .send-btn, .dark .btn-midnight,
+.dark .source-web-tag, .dark .topic-pill, .dark .moving-nav-item.active,
+.dark .findhelp-area-btn.selected { background: #2A3B54; }
+.dark .moving-nav { background: #1B2840; }
+.dark .section-close { background: #4A1B27; }
+
+/* Light-chip-with-dark-text combos: keep the chip light, pin its text dark. */
+.dark .lang-strip button.active, .dark .btn-bone,
+.dark .section-speak--dark, .dark .moving-nav-item:hover,
+.dark .btn-outline:hover, .dark .btn-bone:hover,
+.dark .site-header .big-text-btn[aria-pressed="true"] { color: #15233E; }
+
+/* Accent text (burgundy/clover) lightens so it reads on dark. */
+.dark .eyebrow, .dark .tc-eyebrow, .dark .findhelp-topic, .dark .crumbs a,
+.dark .msg-bot-label span, .dark .suggest-label,
+.dark main a:not(.btn):not(.cta):not(.topic-card):not(.res-card):not(.source-card):not(.findhelp-call):not(.deep-link) { color: #EC9AA4; }
+.dark .section-midnight .eyebrow { color: #EDB2BA; }
+.dark .callout-label { color: #8FCB84; }
+.dark .callout-burgundy .callout-label { color: #EC9AA4; }
+
+/* mt-notice keeps its amber identity but as a dark panel. */
+.dark .mt-notice { background: #2A2313; color: #F0D9A0; border-bottom-color: rgba(236, 228, 215, 0.12); }
+
+/* Solid --midnight borders are now light; soften inputs to translucent. */
+.dark .input-field, .dark .findhelp-zip input, .dark .deadline-field input,
+.dark textarea { border-color: rgba(236, 228, 215, 0.32); }
+
+/* Listen pills read as a raised navy pill with light text in both light-turned-
+   dark sections and dark bars (the base used --midnight bg, now light). */
+.dark .section-speak, .dark .section-speak--dark, .dark .read-aloud-btn {
+  background: #2A3B54; color: var(--ink); border-color: rgba(236, 228, 215, 0.3);
+}
+.dark .section-speak:hover, .dark .read-aloud-btn:hover { background: #34496A; border-color: #34496A; color: var(--ink); }
+.dark .section-speak.is-reading, .dark .read-aloud-btn.is-reading { background: #5E8F58; border-color: #5E8F58; color: #fff; }
+
+/* Header A+/dark toggles: transparent w/ light glyphs; pressed = light chip, dark glyph. */
+.dark .big-text-btn, .dark .contrast-btn { color: var(--ink); border-color: rgba(236, 228, 215, 0.4); }
+.dark .big-text-btn[aria-pressed="true"], .dark .contrast-btn[aria-pressed="true"],
+.dark .site-header .big-text-btn[aria-pressed="true"], .dark .site-header .contrast-btn[aria-pressed="true"],
+.dark .chat-header .big-text-btn[aria-pressed="true"], .dark .chat-header .contrast-btn[aria-pressed="true"] {
+  background: var(--bone); color: #15233E; border-color: var(--bone);
+}
+.dark .chat-header .back-btn { color: var(--ink); }
+
+/* Chat: topic strip band + triage choice buttons. */
+.dark .chat-topic-strip { background: #131F33; }
+.dark .triage-option { background: #1B2840; color: var(--ink); border-color: rgba(236, 228, 215, 0.3); }
+.dark .triage-option:hover, .dark .triage-option.selected { background: #2A3B54; color: var(--ink); border-color: #2A3B54; }
+
+/* ===== Deadline helper ===== */
+.deadline-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.deadline-field label { font-weight: 700; color: var(--midnight); font-size: 0.95rem; }
+.deadline-field input { min-height: 48px; padding: 10px 12px; border: 1.5px solid var(--midnight); border-radius: 10px; font: inherit; font-size: 1rem; background: #fff; color: var(--ink); }
+.deadline-check { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 0.95rem; cursor: pointer; }
+.deadline-check input { width: 22px; height: 22px; flex: none; }
+.deadline-result { margin-top: 18px; padding: 16px; background: var(--cream); border: 2px solid var(--clover); border-radius: 12px; text-align: center; }
+.deadline-result-label { margin: 0 0 4px; font-size: 0.9rem; color: var(--mute); font-weight: 600; }
+.deadline-result-date { margin: 0; font-size: 1.5rem; color: var(--midnight); line-height: 1.2; }
+.deadline-disclaimer { margin: 16px 0 0; font-size: 0.85rem; line-height: 1.5; color: var(--mute); }
 
 /* ===== HERO ===== */
-.hero { background: var(--bone); padding: 56px 24px 44px; position: relative; overflow: hidden; }
+.hero { background: var(--bone); padding: 48px 24px 40px; border-top: 5px solid var(--burgundy); }
 .hero-inner {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 32px;
-  align-items: center;
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: center;
 }
+.hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.hero-copy .eyebrow { margin: 0; }
 .eyebrow { margin: 0 0 12px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; color: var(--burgundy); text-transform: uppercase; }
-.hero-title { margin: 0 0 20px; font-size: 4.2rem; line-height: 0.95; color: var(--midnight); }
-.hero-sub { margin: 0 0 26px; font-size: 1.3rem; line-height: 1.5; color: var(--ink); max-width: 400px; }
-.hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-title { margin: 0; font-size: 3.5rem; line-height: 1.02; color: var(--midnight); }
+.hero-sub { margin: 0; font-size: 1.3rem; line-height: 1.5; color: var(--ink); max-width: none; }
+.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.hero-media {
+  background: var(--midnight);
+  border-radius: 18px;
+  aspect-ratio: 4 / 3;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+}
+.hero-media-mark {
+  width: 80%; height: 58%;
+  background-image: var(--logo-wordmark-midnight);
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  display: inline-block;
+}
 
 .btn { border: none; padding: 14px 24px; border-radius: 10px; font-weight: 700; font-size: 1.05rem; min-height: 50px; font-family: inherit; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
 .btn-midnight { background: var(--midnight); color: var(--cream); }
@@ -197,12 +352,6 @@ abbr[title] {
 .btn-outline { background: transparent; color: var(--midnight); border: 2px solid var(--midnight); padding: 12px 22px; }
 .btn-outline:hover { background: var(--midnight); color: var(--bone); }
 
-.hero-decor { position: relative; min-height: 260px; }
-.deco-star { position: absolute; opacity: 0.4; pointer-events: none; }
-.sticker { position: absolute; padding: 8px 14px; border-radius: 50px; font-weight: 800; font-size: 0.78rem; letter-spacing: 0.1em; }
-.sticker-1 { top: -4px; right: 12px; background: var(--clover); color: var(--bone); transform: rotate(8deg); }
-.sticker-2 { bottom: 16px; left: -6px; background: var(--bone); color: var(--burgundy); border: 2px solid var(--burgundy); transform: rotate(-7deg); font-size: 0.72rem; }
-.sticker-3 { top: 110px; left: -10px; background: var(--midnight); color: var(--bone); transform: rotate(-12deg); font-size: 0.72rem; padding: 5px 12px; }
 
 /* ===== TICKER ===== */
 .ticker-wrap { background: var(--midnight); position: relative; }
@@ -216,7 +365,7 @@ abbr[title] {
   color: var(--bone); letter-spacing: -0.01em;
 }
 .ticker-track span { margin: 0 26px; }
-.ticker-track .accent { color: #6FC169; }
+.ticker-track .accent { color: #E58C95; }
 .ticker-wrap.paused .ticker-track { animation-play-state: paused; }
 .ticker-pause-btn {
   position: absolute; top: 50%; right: 1rem; transform: translateY(-50%);
@@ -229,15 +378,50 @@ abbr[title] {
 @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ===== SECTIONS ===== */
-.section { padding: 56px 24px; }
+.section { padding: 44px 24px; }
 .section-bone { background: var(--bone); }
 .section-cream { background: var(--cream); }
 .section-midnight { background: var(--midnight); color: var(--bone); }
 .section-midnight .eyebrow { color: #D8A3AB; }
 .section-midnight h2 { color: var(--bone); }
-.section-inner { max-width: 1440px; margin: 0 auto; }
-.section-title { margin: 0 0 12px; font-size: 2.8rem; line-height: 1.02; color: var(--midnight); }
-.section-sub { margin: 0 0 36px; font-size: 1.2rem; color: var(--mute); max-width: 640px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-title { margin: 0; font-size: 2.8rem; line-height: 1.04; color: var(--midnight); }
+.section-sub { margin: 0 0 24px; font-size: 1.2rem; color: var(--mute); max-width: none; }
+
+/* Section header row: title + its Listen button share one line (the button sits
+   right after the heading and wraps under it only on very narrow screens). */
+.section-head { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; margin: 0 0 16px; }
+.section-head > h1, .section-head > h2 { margin: 0; }
+.section-head .section-speak { flex: none; }
+
+/* ===== TRUST BAND (home §4) ===== */
+.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+.trust-item {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+  background: rgba(243, 235, 224, 0.1);
+  border: 1px solid rgba(243, 235, 224, 0.22);
+  border-radius: 14px;
+  padding: 24px 16px;
+}
+.trust-item .trust-icon { color: #A9D48F; }
+.trust-item p { margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff; }
+
+/* ===== ORG PILLS (home §6) ===== */
+.org-pills { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.org-pills li {
+  background: var(--cream); border: 2px solid var(--border-strong); border-radius: 50px;
+  padding: 10px 18px; font-family: 'Fraunces', Georgia, serif;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  font-weight: 700; font-size: 1rem; color: var(--midnight);
+}
+
+/* ===== REASSURANCE CLOSE (home §7) ===== */
+.section-close { background: var(--burgundy); }
+.close-inner { text-align: center; max-width: 48rem; margin: 0 auto; }
+.section-close .section-title { color: var(--bone); }
+.close-body { margin: 0 auto 1.7rem; font-size: 1.25rem; line-height: 1.55; color: rgba(243, 235, 224, 0.9); max-width: 40rem; }
+.btn-bone { background: var(--bone); color: var(--midnight); }
+.btn-bone:hover { background: #fff; color: var(--midnight); }
 
 /* ===== STEPS ===== */
 .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
@@ -257,13 +441,19 @@ abbr[title] {
 /* ===== TOPIC CARDS ===== */
 .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .topic-card {
-  background: var(--cream); border: 2px solid var(--midnight);
+  background: var(--cream); border: 2px solid var(--border-strong);
   border-radius: 16px; padding: 24px; position: relative;
-  cursor: pointer; transition: transform 0.15s ease;
+  cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease;
   text-align: left; font-family: inherit;
   display: block; text-decoration: none; color: inherit;
 }
-.topic-card:hover { transform: translateY(-3px); color: inherit; }
+.topic-card:hover { transform: translateY(-3px); color: inherit; border-color: var(--midnight); }
+.topic-chip {
+  width: 54px; height: 54px; border-radius: 13px;
+  background: var(--topic-accent, var(--midnight)); color: var(--bone);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
 .topic-card .badge {
   position: absolute; top: -12px; right: 18px;
   padding: 5px 12px; border-radius: 50px;
@@ -289,18 +479,26 @@ abbr[title] {
 /* ===== CHAT ===== */
 .chat-page { background: var(--bone); min-height: 100vh; }
 .chat-header {
-  background: var(--bone); padding: 14px 24px;
+  background: var(--midnight); padding: 14px 24px;
   display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid var(--border); gap: 12px;
+  border-top: 1px solid rgba(243, 235, 224, 0.14); gap: 12px;
 }
 .chat-header-left { display: flex; align-items: center; gap: 14px; }
+.chat-wordmark { width: 9.5rem; height: 2.4rem; }
 .back-btn {
-  background: transparent; color: var(--midnight); border: 2px solid var(--midnight);
+  background: transparent; color: var(--bone); border: 2px solid rgba(243, 235, 224, 0.4);
   padding: 9px 16px; border-radius: 9px;
   font-weight: 700; font-size: 0.95rem;
   display: flex; align-items: center; gap: 6px;
   min-height: 44px; text-decoration: none;
 }
+.back-btn:hover { background: rgba(243, 235, 224, 0.12); color: var(--bone); }
+.chat-header .big-text-btn,
+.chat-header .contrast-btn { color: var(--bone); border-color: rgba(243, 235, 224, 0.4); }
+.chat-header .big-text-btn:hover,
+.chat-header .contrast-btn:hover { background: rgba(243, 235, 224, 0.12); }
+.chat-header .big-text-btn[aria-pressed="true"],
+.chat-header .contrast-btn[aria-pressed="true"] { background: var(--bone); color: var(--midnight); border-color: var(--bone); }
 .chat-header-right { display: flex; gap: 6px; }
 .chat-topic-strip {
   background: var(--cream); padding: 14px 24px;
@@ -339,7 +537,6 @@ abbr[title] {
   background: var(--clover); color: var(--bone);
   padding: 5px 12px; border-radius: 50px;
   font-weight: 800; font-size: 0.72rem; letter-spacing: 0.1em;
-  transform: rotate(-3deg);
 }
 .answer-text { margin: 0 0 16px; font-size: 1.15rem; line-height: 1.55; color: var(--ink); }
 .answer-key { background: var(--bone); border-radius: 10px; padding: 16px 18px; margin: 0 0 16px; }
@@ -352,6 +549,10 @@ abbr[title] {
 }
 .key-text { font-size: 1.05rem; color: var(--ink); }
 .answer-note { margin: 0; font-size: 1rem; color: var(--ink); }
+
+/* Empty-state welcome (shown before the first question) */
+.chat-welcome { display: flex; gap: 12px; align-items: flex-start; padding: 20px 18px; }
+.chat-welcome p { margin: 0; font-size: 1.12rem; line-height: 1.55; color: var(--ink); }
 
 /* Structured answer: Disclaimer / Answer / Next steps / Who to contact */
 .answer-section { margin: 0 0 18px; }
@@ -368,10 +569,10 @@ abbr[title] {
 
 .answer-disclaimer { font-size: 0.9rem; line-height: 1.5; color: var(--mute); }
 .answer-disclaimer-top {
-  display: flex; align-items: flex-start; gap: 10px;
+  display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap;
   background: var(--bone); border-radius: 12px; padding: 12px 14px; margin: 0 0 16px;
 }
-.answer-disclaimer-top p { margin: 0; }
+.answer-disclaimer-top p { margin: 0; flex: 1 1 220px; }
 .answer-disclaimer-top .read-aloud-btn { margin-left: 0; flex-shrink: 0; min-height: 32px; padding: 5px 10px; font-size: 0.74rem; }
 .answer-disclaimer-bottom { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line, #e6dccd); }
 
@@ -379,6 +580,34 @@ abbr[title] {
 .contact-name { margin: 0; font-size: 1.2rem; color: var(--midnight); }
 .contact-sub { margin: 2px 0 8px; font-size: 0.85rem; color: var(--mute); }
 .contact-why, .contact-how { margin: 0 0 8px; font-size: 1rem; line-height: 1.5; color: var(--ink); }
+
+/* Read-aloud voice & speed control (in the top language bar) */
+.speech-settings { position: relative; display: inline-flex; margin-left: 16px; }
+.speech-settings-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: transparent; color: inherit; border: 1.5px solid currentColor;
+  border-radius: 50px; padding: 4px 10px; min-height: 32px;
+  font-size: 0.8rem; font-weight: 700; cursor: pointer; opacity: 0.92;
+}
+.speech-settings-btn:hover { opacity: 1; }
+.speech-pop {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 50;
+  background: var(--bone); color: var(--ink);
+  border: 2px solid var(--midnight); border-radius: 14px;
+  padding: 14px; min-width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+.speech-pop-label { margin: 0 0 7px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--burgundy); }
+.speech-pop-label-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.speech-pop-label-row .speech-pop-label { margin: 0; }
+.speech-rate-val { font-size: 0.95rem; font-weight: 800; color: var(--midnight); }
+.speech-rate { width: 100%; margin: 2px 0; height: 26px; accent-color: var(--burgundy); cursor: pointer; }
+.speech-rate-ends { display: flex; justify-content: space-between; font-size: 0.72rem; opacity: 0.7; margin-bottom: 14px; }
+.speech-voice {
+  width: 100%; min-height: 40px; padding: 8px 10px;
+  border: 1.5px solid var(--midnight); border-radius: 10px;
+  background: #fff; color: var(--ink); font-size: 0.92rem;
+}
+.speech-note { margin: 8px 0 0; font-size: 0.78rem; line-height: 1.4; color: var(--ink); opacity: 0.8; }
 
 /* Guided triage funnel (Phase 2) */
 .triage-panel { padding: 16px 18px 18px; border-top: 1px solid var(--line, #e6dccd); background: var(--cream); }
@@ -412,7 +641,29 @@ abbr[title] {
 .triage-edit:hover { text-decoration: underline; }
 
 /* Read-aloud (text-to-speech) control on each answer */
-.answer-card-top { display: flex; align-items: center; gap: 12px; margin: -2px 0 12px; min-height: 26px; }
+.answer-card-top { display: flex; align-items: center; gap: 12px; margin: -2px 0 12px; min-height: 26px; flex-wrap: wrap; }
+.confidence-badge { display: inline-block; padding: 3px 11px; border-radius: 50px; font-size: 0.78rem; font-weight: 800; border: 1.5px solid; }
+.conf-high { color: #1b5e20; border-color: #2e7d32; background: #e8f5e9; }
+.conf-medium { color: #8a5a00; border-color: #b57600; background: #fff4e0; }
+.conf-low { color: #8a1c1c; border-color: #b32626; background: #fdecec; }
+.source-web-tag { display: inline-block; background: var(--midnight); color: var(--bone); font-size: 0.6rem; font-weight: 800; padding: 1px 6px; border-radius: 50px; margin-right: 6px; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: middle; }
+.feedback-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 14px 0 2px; }
+.feedback-q { font-size: 0.9rem; color: var(--mute); font-weight: 600; }
+.feedback-btn { background: #fff; border: 1.5px solid var(--midnight); border-radius: 50px; padding: 6px 14px; min-height: 40px; font: inherit; font-size: 0.9rem; font-weight: 700; color: var(--midnight); cursor: pointer; }
+.feedback-btn:hover { background: var(--cream); }
+.feedback-thanks { font-size: 0.9rem; color: var(--clover); font-weight: 700; margin: 14px 0 2px; }
+.share-actions { margin-left: auto; display: flex; gap: 6px; }
+.share-btn { background: #fff; border: 1.5px solid var(--border-strong); border-radius: 50px; padding: 5px 12px; min-height: 36px; font: inherit; font-size: 0.82rem; font-weight: 700; color: var(--midnight); cursor: pointer; }
+.share-btn:hover { background: var(--cream); border-color: var(--midnight); }
+
+/* Print / Save-as-PDF: strip the app chrome, show just the answer. */
+@media print {
+  .site-header, .lang-strip, .mt-notice, .moving-nav, .ticker-wrap, .chat-header,
+  .input-bar, .triage-panel, .suggest-block, .feedback-row, .no-print,
+  .read-aloud-btn, .section-speak, .msg-user, .deep-link { display: none !important; }
+  body { padding: 0 !important; background: #fff !important; }
+  .answer-card, .refuse-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
+}
 .read-aloud-btn {
   margin-left: auto; flex-shrink: 0;
   display: inline-flex; align-items: center; gap: 7px;
@@ -430,8 +681,8 @@ abbr[title] {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--midnight); color: var(--bone);
   border: 1.5px solid var(--midnight); border-radius: 50px;
-  padding: 6px 13px; min-height: 34px; margin: 0 0 14px;
-  font-size: 0.8rem; font-weight: 700; cursor: pointer;
+  padding: 9px 16px; min-height: 44px; margin: 0 0 14px;
+  font-size: 0.85rem; font-weight: 700; cursor: pointer;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .section-speak:hover { background: var(--burgundy); border-color: var(--burgundy); }
@@ -473,7 +724,6 @@ abbr[title] {
   background: var(--clover); color: var(--bone);
   padding: 5px 12px; border-radius: 50px;
   font-weight: 800; font-size: 0.72rem; letter-spacing: 0.1em;
-  transform: rotate(-3deg);
 }
 .referral-title { margin: 6px 0 16px; font-size: 1.65rem; line-height: 1.1; color: var(--midnight); }
 .referral-org { background: var(--bone); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
@@ -521,54 +771,70 @@ abbr[title] {
 }
 .send-btn { background: var(--midnight); color: var(--bone); border: none; width: 64px; height: 64px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
 .send-btn svg { width: 28px; height: 28px; }
+.mic-btn { background: #fff; color: var(--midnight); border: 1.5px solid var(--midnight); width: 56px; height: 64px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+.mic-btn:hover { background: var(--cream); }
+.mic-btn:disabled { opacity: 0.5; cursor: default; }
+.mic-btn.listening { background: var(--burgundy); color: var(--bone); border-color: var(--burgundy); animation: mic-pulse 1.2s ease-in-out infinite; }
+@keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(107,31,46,0.45); } 50% { box-shadow: 0 0 0 8px rgba(107,31,46,0); } }
+@media (prefers-reduced-motion: reduce) { .mic-btn.listening { animation: none; } }
 
 /* ===== FOOTER ===== */
 .footer { background: var(--midnight); color: var(--bone); padding: 36px 24px 24px; }
-.footer-inner { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+/* Extend the footer's dark background under the fixed bottom nav so no bg-colored
+   strip shows below it. Pages without the bottom nav (Chat) just get a little more
+   footer padding, which is harmless. */
+.footer { padding-bottom: calc(24px + 5.5rem); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
 .footer-wordmark-img {
   width: 14rem; height: 4rem;
-  background-image: var(--logo-wordmark-bone);
+  background-image: var(--logo-wordmark-midnight);
   background-size: contain; background-repeat: no-repeat;
   background-position: left center;
   display: inline-block; margin-bottom: 12px;
 }
 .footer-col p { margin: 0; font-size: 0.92rem; opacity: 0.78; max-width: 280px; line-height: 1.55; }
-.footer-col h4 { margin: 0 0 12px; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(243,235,224,0.65); }
+.footer-col h3 { margin: 0 0 12px; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(243,235,224,0.65); }
 .footer-col ul { list-style: none; padding: 0; margin: 0; }
-.footer-col li { margin-bottom: 6px; }
-.footer-col a { color: var(--bone); text-decoration: none; font-weight: 500; font-size: 1rem; opacity: 0.85; }
+.footer-col li { margin-bottom: 2px; }
+.footer-col a { color: var(--bone); text-decoration: none; font-weight: 500; font-size: 1rem; opacity: 0.85; display: inline-flex; align-items: center; min-height: 40px; }
 .footer-col a:hover { opacity: 1; color: var(--bone); text-decoration: underline; }
-.footer-disclaim { max-width: 1440px; margin: 1.6rem auto 0; padding-top: 1.4rem; border-top: 1px solid rgba(243,235,224,0.12); font-size: 0.8rem; color: rgba(243,235,224,0.7); text-align: center; line-height: 1.5; }
+.footer-disclaim { max-width: 1200px; margin: 1.6rem auto 0; padding-top: 1.4rem; border-top: 1px solid rgba(243,235,224,0.12); font-size: 0.8rem; color: rgba(243,235,224,0.7); text-align: center; line-height: 1.5; }
 
 /* ===== TOPIC PAGE ===== */
-.topic-page-hero { background: var(--bone); padding: 56px 24px 32px; }
-.topic-page-hero-inner { max-width: 1440px; margin: 0 auto; }
+.topic-page-hero { background: var(--bone); padding: 40px 24px 28px; border-top: 5px solid var(--burgundy); }
+.topic-page-hero-inner { max-width: 1200px; margin: 0 auto; }
 .crumbs { font-size: 0.92rem; color: var(--mute); margin-bottom: 16px; }
 .crumbs a { color: var(--burgundy); }
 .topic-hero-row { display: flex; align-items: center; gap: 20px; margin-bottom: 14px; }
 .topic-hero-icon-wrap { width: 64px; height: 64px; border-radius: 14px; background: var(--midnight); color: var(--bone); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.topic-page-hero-inner > .topic-hero-icon-wrap { margin-bottom: 16px; }
 .topic-hero-icon-wrap svg { width: 36px; height: 36px; }
 .topic-page-title { margin: 0; font-size: 3.2rem; line-height: 1.0; color: var(--midnight); }
-.topic-page-sub { margin: 0; font-size: 1.2rem; color: var(--mute); max-width: 600px; }
+.topic-page-sub { margin: 0; font-size: 1.2rem; color: var(--mute); max-width: none; }
 
 .quick-nav { background: var(--cream); padding: 18px 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 5; }
-.quick-nav-inner { max-width: 1440px; margin: 0 auto; display: flex; gap: 6px; flex-wrap: wrap; overflow-x: auto; }
-.quick-nav a { color: var(--midnight); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 14px; border-radius: 50px; white-space: nowrap; }
-.quick-nav a:hover { background: var(--bone); color: var(--midnight); }
+.quick-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 6px; flex-wrap: wrap; overflow-x: auto; }
+.quick-nav a { color: var(--midnight); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 11px 16px; border-radius: 50px; white-space: nowrap; display: inline-flex; align-items: center; min-height: 44px; }
+.quick-nav a:hover { background: var(--burgundy); color: var(--bone); }
 
-.topic-content { padding: 48px 24px; }
-.topic-content-inner { max-width: 880px; margin: 0 auto; }
-.tc-section { margin-bottom: 48px; }
-.tc-section h2 { margin: 0 0 6px; font-size: 2.2rem; line-height: 1.05; color: var(--midnight); }
+.topic-content { padding: 36px 24px; }
+.topic-content-inner { max-width: 1200px; margin: 0 auto; }
+.tc-section { margin-bottom: 40px; }
+.tc-section h2 { margin: 0; font-size: 2.2rem; line-height: 1.05; color: var(--midnight); }
+/* Prose fills the full section width; cards below fill it too. */
+.tc-section > p { max-width: none; }
+/* FAQ + program cards fill the wide column in two columns on desktop. */
+.faq-grid, .program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
 .tc-section .tc-eyebrow { margin: 0 0 4px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; color: var(--burgundy); }
 .tc-section p { font-size: 1.15rem; line-height: 1.6; }
-.faq-item { background: var(--cream); border-left: 4px solid var(--midnight); border-radius: 0 12px 12px 0; padding: 18px 22px; margin-bottom: 12px; }
+.faq-item { background: var(--cream); border-left: 4px solid var(--burgundy); border-radius: 0 12px 12px 0; padding: 18px 22px; }
 .faq-q { margin: 0 0 8px; font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; font-size: 1.35rem; color: var(--midnight); letter-spacing: -0.015em; }
 .faq-a { margin: 0 0 12px; font-size: 1.1rem; line-height: 1.55; }
 .faq-source { margin: 0; font-size: 0.92rem; color: var(--mute); }
 .faq-source a { color: var(--burgundy); }
 
-.program-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 20px; margin-bottom: 14px; }
+.program-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 20px; min-width: 0; overflow-wrap: break-word; display: flex; flex-direction: column; }
+.program-card .program-foot { margin-top: auto; padding-top: 8px; }
 .program-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
 .program-name { margin: 0; font-size: 1.45rem; line-height: 1.15; color: var(--midnight); font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; letter-spacing: -0.015em; }
 .program-amount { background: var(--burgundy); color: var(--bone); padding: 5px 12px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; flex-shrink: 0; }
@@ -603,10 +869,16 @@ abbr[title] {
 
 /* ===== RESOURCES ===== */
 .res-section { padding: 32px 24px; background: var(--bone); }
-.res-section-inner { max-width: 1440px; margin: 0 auto; }
+.res-section-inner { max-width: 1200px; margin: 0 auto; }
 .res-cat-title { margin: 0 0 16px; font-size: 1.9rem; line-height: 1.1; color: var(--midnight); }
+.res-cat-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.res-cat-headings { min-width: 0; }
+.res-cat-head .eyebrow { margin: 0 0 2px; }
+.res-cat-head .res-cat-title { margin: 0; }
+.res-cat-head .section-speak { margin-left: auto; flex: none; }
+.res-cat-chip { width: 52px; height: 52px; border-radius: 13px; background: var(--midnight); color: var(--bone); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.res-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 18px; display: block; text-decoration: none; color: inherit; }
+.res-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 18px; display: block; text-decoration: none; color: inherit; min-width: 0; overflow-wrap: break-word; }
 .res-card:hover { color: inherit; border-color: var(--midnight); }
 .res-card.featured { border-color: var(--clover); border-width: 2px; }
 .res-card-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
@@ -614,9 +886,92 @@ abbr[title] {
 .res-card-tag { background: var(--midnight); color: var(--bone); padding: 4px 9px; border-radius: 50px; font-weight: 800; font-size: 0.68rem; letter-spacing: 0.08em; height: fit-content; flex-shrink: 0; }
 .res-card-tag.featured-tag { background: var(--clover); }
 .res-card-desc { margin: 0 0 10px; font-size: 1rem; line-height: 1.4; }
-.res-card-meta { display: flex; gap: 14px; font-size: 0.92rem; color: var(--midnight); font-weight: 600; }
+.res-card-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.92rem; color: var(--midnight); font-weight: 600; }
+
+/* ===== FIND HELP NEAR ME ===== */
+.findhelp-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; align-items: start; margin: 18px 0 4px; }
+.findhelp-areas { border: 0; padding: 0; margin: 0; min-width: 0; }
+.findhelp-areas legend { padding: 0; margin: 0 0 8px; font-weight: 700; color: var(--midnight); font-size: 0.95rem; }
+.findhelp-area-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.findhelp-area-btn { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 50px; padding: 8px 15px; font-size: 0.95rem; font-weight: 600; color: var(--midnight); cursor: pointer; }
+.findhelp-area-btn:hover { border-color: var(--midnight); }
+.findhelp-area-btn.selected { background: var(--midnight); color: var(--bone); border-color: var(--midnight); }
+.findhelp-zip { min-width: 0; }
+.findhelp-zip label { display: block; font-weight: 700; color: var(--midnight); font-size: 0.95rem; margin-bottom: 8px; }
+.findhelp-zip input { width: 100%; box-sizing: border-box; padding: 9px 12px; border: 2px solid var(--border-strong); border-radius: 12px; font-size: 1rem; font-family: inherit; background: var(--cream); }
+.findhelp-zip input:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.findhelp-zip-hint { margin: 6px 0 0; font-size: 0.85rem; color: var(--mute); }
+.findhelp-prompt { margin: 14px 0 0; font-size: 1rem; color: var(--mute); font-style: italic; }
+.findhelp-results { margin-top: 18px; }
+.findhelp-results-head { margin: 0 0 12px; font-size: 1rem; color: var(--midnight); font-weight: 600; }
+.findhelp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.findhelp-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 16px; min-width: 0; overflow-wrap: break-word; }
+.findhelp-topic { margin: 0 0 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--burgundy); }
+.findhelp-org { margin: 0; font-size: 1.15rem; line-height: 1.15; color: var(--midnight); font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; letter-spacing: -0.015em; }
+.findhelp-org-sub { margin: 4px 0 12px; font-size: 0.95rem; line-height: 1.35; color: var(--mute); }
+.findhelp-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.findhelp-call { background: var(--clover); color: var(--bone); text-decoration: none; padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; }
+.findhelp-call:hover { background: var(--clover-hover); color: var(--bone); }
+.findhelp-visit { color: var(--midnight); text-decoration: none; padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; border: 2px solid var(--border-strong); }
+.findhelp-visit:hover { border-color: var(--midnight); color: var(--midnight); }
+.findhelp-hours { margin: 10px 0 0; font-size: 0.9rem; color: var(--midnight); font-weight: 600; }
+.findhelp-disclaimer { margin: 16px 0 0; font-size: 0.9rem; color: var(--mute); }
+
+/* Real-help section: left-aligned like every other section, for a cohesive rhythm. */
+
+/* Visually hidden but available to screen readers. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ===== READ-ALOUD: highlight the whole section currently being read ===== */
+.is-reading-section {
+  background-image: linear-gradient(rgba(61, 107, 58, 0.12), rgba(61, 107, 58, 0.12));
+  box-shadow: inset 6px 0 0 var(--clover);
+}
+.section-midnight.is-reading-section,
+.section-close.is-reading-section {
+  background-image: linear-gradient(rgba(169, 212, 143, 0.16), rgba(169, 212, 143, 0.16));
+}
+
+/* Contact card actions (Call now + Visit website) sit in a row. */
+.contact-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.8rem; }
+
+/* ===== POLISH, micro-interactions & gentle depth ===== */
+.btn { transition: background 0.15s ease, color 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease; }
+.btn:hover { box-shadow: 0 4px 14px rgba(21, 35, 62, 0.13); }
+.btn:active { transform: translateY(1px); box-shadow: none; }
+
+.topic-card, .res-card, .source-card, .program-card, .findhelp-card, .fact-card {
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.topic-card:hover { box-shadow: 0 10px 26px rgba(21, 35, 62, 0.12); }
+.res-card:hover, .source-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(21, 35, 62, 0.09); }
+
+/* Playful bounce on the topic-identity chip when its card is hovered */
+.topic-chip { transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.topic-card:hover .topic-chip { transform: scale(1.08) rotate(-4deg); }
+
+.lang-strip button, .nav-links a, .nav-utils a, .quick-nav a, .big-text-btn, .contrast-btn,
+.findhelp-area-btn, .feedback-btn {
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+}
+.findhelp-area-btn:active, .lang-strip button:active { transform: translateY(1px); }
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .topic-card:hover, .res-card:hover, .source-card:hover, .topic-card:hover .topic-chip { transform: none; }
+}
 
 /* ===== RESPONSIVE ===== */
+/* The big wordmark + full nav only fit comfortably on wide screens. Below that,
+   drop the page links (the fixed bottom nav carries them) but keep the Ask CTA
+   until true mobile, where the bottom nav's Ask takes over. */
+@media (max-width: 1080px) {
+  .nav-links .nav-collapse { display: none; }
+}
 @media (max-width: 960px) {
   .steps-grid { grid-template-columns: 1fr 1fr; }
   .topic-grid { grid-template-columns: 1fr 1fr; }
@@ -627,16 +982,30 @@ abbr[title] {
 }
 
 @media (max-width: 720px) {
-  .steps-grid, .topic-grid, .source-grid, .res-grid { grid-template-columns: 1fr; }
+  .steps-grid, .topic-grid, .source-grid, .res-grid, .findhelp-grid,
+  .faq-grid, .program-grid { grid-template-columns: 1fr; }
+  .findhelp-controls { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr 1fr; }
   .hero-title { font-size: 2.6rem; }
   .section-title { font-size: 2rem; }
-  .lang-strip { gap: 12px; font-size: 0.72rem; }
+  .lang-strip { gap: 4px; font-size: 0.85rem; padding: 8px 14px; }
   .footer-inner { grid-template-columns: 1fr; }
   .topic-page-title { font-size: 1.9rem; }
+  /* The fixed bottom nav covers Home/Topics/Resources on small screens, so drop
+     those top-nav text links (which overflow when translated) and keep the A+
+     toggle + Ask CTA. */
+  /* Belt-and-suspenders: never allow a stray-wide element to scroll the page
+     sideways on a phone. `clip` (unlike `hidden`) doesn't break position: sticky. */
+  html, body { overflow-x: clip; }
+  .nav-utils .nav-cta { display: none; }
+  .site-header { padding: 12px 14px; gap: 8px; }
+  .nav-links { gap: 4px; }
+  .nav-links a { font-size: 0.92rem; padding: 0.5rem 0.7rem; }
+  .brand-wordmark-img { width: 8rem; height: 2.4rem; }
 }
 
 /* ========================================================
-   Moving navigation — fixed bottom bar, on every page but Chat
+   Moving navigation, fixed bottom bar, on every page but Chat
    ======================================================== */
 .moving-nav {
   position: fixed;
@@ -677,10 +1046,10 @@ abbr[title] {
 .moving-nav-item.primary { background: var(--clover); color: var(--bone); }
 .moving-nav-item.primary.active { background: var(--clover-hover); color: var(--bone); }
 .moving-nav-icon { display: block; flex: none; }
-.moving-nav-label { white-space: nowrap; }
+.moving-nav-label { white-space: normal; overflow-wrap: anywhere; line-height: 1.02; }
 
 /* Keep page content (incl. the footer) clear of the fixed bar */
-body { padding-bottom: 5rem; }
+body { padding-bottom: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .moving-nav-item { transition: background 0.15s ease, color 0.15s ease; }
 }

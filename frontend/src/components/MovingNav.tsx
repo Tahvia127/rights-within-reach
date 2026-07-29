@@ -19,14 +19,19 @@ const ITEMS: NavItem[] = [
   { to: '/chat',      labelKey: 'bottomnav.ask',      icon: 'chat', primary: true },
 ]
 
-// Fixed bottom nav shown on all pages except Chat (which has its own input bar).
+// Fixed bottom nav shown on every page. On Chat it sits below the message
+// composer (the composer gets extra bottom padding so nothing overlaps).
 export function MovingNav() {
   const { pathname } = useLocation()
   const { t } = useLanguage()
-  if (pathname === '/chat') return null
+  const onChat = pathname === '/chat'
 
   return (
-    <nav className="moving-nav" role="navigation" aria-label={t('bottomnav.aria')}>
+    <nav
+      className={`moving-nav${onChat ? ' moving-nav--chat' : ''}`}
+      role="navigation"
+      aria-label={t('bottomnav.aria')}
+    >
       {ITEMS.map((item) => (
         <NavLink
           key={item.to}

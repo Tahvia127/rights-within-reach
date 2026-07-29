@@ -1,0 +1,64 @@
+name: Daily source re-ingest
+
+# Once a day: re-fetch every tracked source, commit whatever changed, and push.
+# The push is what makes Railway rebuild the Chroma corpus (see nixpacks.toml).
+# If the script finds something a human should look at (page moved, broken, or a
+# real legal change), it exits non-zero and we open an issue.
+# All the actual logic lives in scripts/daily_ingest.py.
+
+on:
+  # 13:00 UTC is 8 AM Central in summer, 7 AM in winter. Cron does not do DST.
+  schedule:
+    - cron: '0 13 * * *'
+  # Lets you run it by hand from the Actions tab.
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # commit and push refreshed sources
+  issues: write     # open the review issue
+
+# Never let two runs overlap.
+concurrency:
+  group: daily-ingest
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests beautifulsoup4
+
+      # continue-on-error means a non-zero exit flags review instead of killing
+      # the job, so the steps below still run.
+      - name: Re-ingest sources
+        id: ingest
+        continue-on-error: true
+        run: python scripts/daily_ingest.py --date "$(TZ=America/Chicago date +%F)"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "rwr-ingest[bot]"
+          git config user.email "ingest@users.noreply.github.com"
+          git add data/raw data/monitor
+          if git diff --cached --quiet; then
+            echo "Nothing changed today, no redeploy needed."
+          else
+            git commit -m "chore(ingest): daily source refresh $(TZ=America/Chicago date +%F)"
+            git push
+          fi
+
+      # Only fires when the ingest step exited non-zero.
+      - name: Open review issue
+        if: steps.ingest.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE="$(TZ=America/Chicago date +%F)"
+          gh issue create \
+            --title "Daily ingest: review needed ($DATE)" \
+            --body-file "data/monitor/ingest-$DATE.md"

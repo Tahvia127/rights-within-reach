@@ -52,7 +52,7 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Get free legal help before things escalate.', body: 'Do not wait until you are in court. Call a legal aid organization as soon as a problem starts so they can help you respond correctly.' },
     ],
     referral: {
-      sticker: '★ Start here', title: 'Illinois Legal Aid Online — Get Legal Help',
+      sticker: 'Start here', title: 'Illinois Legal Aid Online, Get Legal Help',
       orgName: 'Statewide referral platform', orgSub: 'Routes you to the right legal aid lawyer for your case',
       orgDesc: 'Answer a few questions and ILAO will connect you with a free legal aid attorney near you. They handle eviction, repairs, security deposits, and more. Available in English and Spanish.',
       websiteLabel: 'Website', website: 'illinoislegalaid.org', phoneLabel: 'Phone', phone: '311 in Chicago',
@@ -93,7 +93,7 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Busca ayuda legal gratis antes de que empeore.', body: 'No esperes hasta estar en la corte. Llama a una organización de ayuda legal en cuanto empiece un problema para que te ayuden a responder correctamente.' },
     ],
     referral: {
-      sticker: '★ Empieza aquí', title: 'Illinois Legal Aid Online — Get Legal Help',
+      sticker: 'Empieza aquí', title: 'Illinois Legal Aid Online, Get Legal Help',
       orgName: 'Plataforma estatal de referencias', orgSub: 'Te dirige al abogado de ayuda legal correcto para tu caso',
       orgDesc: 'Responde unas preguntas e ILAO te conectará con un abogado de ayuda legal gratis cerca de ti. Manejan desalojos, reparaciones, depósitos de seguridad y más. Disponible en inglés y español.',
       websiteLabel: 'Sitio web', website: 'illinoislegalaid.org', phoneLabel: 'Teléfono', phone: '311 en Chicago',
@@ -134,7 +134,7 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: '在事态升级前获取免费法律帮助。', body: '不要等到上法庭才行动。一旦出现问题，尽快致电法律援助机构，让他们帮助您正确应对。' },
     ],
     referral: {
-      sticker: '★ 从这里开始', title: 'Illinois Legal Aid Online — Get Legal Help',
+      sticker: '从这里开始', title: 'Illinois Legal Aid Online, Get Legal Help',
       orgName: '全州转介平台', orgSub: '为您的案件转介到合适的法律援助律师',
       orgDesc: '回答几个问题，ILAO 就会为您联系附近的免费法律援助律师。他们处理驱逐、维修、押金等问题。提供英语和西班牙语服务。',
       websiteLabel: '网站', website: 'illinoislegalaid.org', phoneLabel: '电话', phone: '芝加哥拨打 311',
@@ -175,7 +175,7 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Humingi ng libreng tulong legal bago lumala.', body: 'Huwag maghintay hanggang nasa korte ka na. Tumawag sa organisasyon ng tulong legal sa sandaling magsimula ang problema para matulungan ka nilang tumugon nang tama.' },
     ],
     referral: {
-      sticker: '★ Magsimula dito', title: 'Illinois Legal Aid Online — Get Legal Help',
+      sticker: 'Magsimula dito', title: 'Illinois Legal Aid Online, Get Legal Help',
       orgName: 'Plataporma ng referral sa buong estado', orgSub: 'Itinuturo ka sa tamang abogado ng tulong legal para sa iyong kaso',
       orgDesc: 'Sumagot ng ilang tanong at ikokonekta ka ng ILAO sa libreng abogado ng tulong legal malapit sa iyo. Hinahawakan nila ang pagpapaalis, pag-aayos, deposito, at iba pa. Available sa Ingles at Espanyol.',
       websiteLabel: 'Website', website: 'illinoislegalaid.org', phoneLabel: 'Telepono', phone: '311 sa Chicago',
@@ -216,7 +216,7 @@ const CONTENT: Record<Language, TopicContent> = {
       { title: 'Nhận trợ giúp pháp lý miễn phí trước khi mọi việc leo thang.', body: 'Đừng chờ đến khi ra tòa. Gọi cho một tổ chức trợ giúp pháp lý ngay khi vấn đề bắt đầu để họ giúp bạn phản hồi đúng cách.' },
     ],
     referral: {
-      sticker: '★ Bắt đầu ở đây', title: 'Illinois Legal Aid Online — Get Legal Help',
+      sticker: 'Bắt đầu ở đây', title: 'Illinois Legal Aid Online, Get Legal Help',
       orgName: 'Nền tảng giới thiệu toàn bang', orgSub: 'Hướng bạn đến đúng luật sư trợ giúp pháp lý cho trường hợp của bạn',
       orgDesc: 'Trả lời vài câu hỏi và ILAO sẽ kết nối bạn với một luật sư trợ giúp pháp lý miễn phí gần bạn. Họ xử lý trục xuất, sửa chữa, tiền đặt cọc, và hơn thế nữa. Có sẵn bằng tiếng Anh và tiếng Tây Ban Nha.',
       websiteLabel: 'Trang web', website: 'illinoislegalaid.org', phoneLabel: 'Điện thoại', phone: '311 ở Chicago',
@@ -237,6 +237,7 @@ export default function Housing() {
       title={c.title}
       sub={c.sub}
       iconName="home"
+      accent="var(--burgundy)"
       quickNav={c.quickNav}
       summary={<>{c.summary}</>}
       faqs={c.faqs}

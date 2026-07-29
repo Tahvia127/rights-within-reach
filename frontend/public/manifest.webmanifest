@@ -1,0 +1,22 @@
+{
+  "name": "Rights Within Reach",
+  "short_name": "Rights",
+  "description": "Free, plain-language legal information for Illinois residents — housing, money, home repairs, and public benefits, in your language.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "background_color": "#F3EBE0",
+  "theme_color": "#6B1F2E",
+  "categories": ["education", "government", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -48,17 +48,17 @@ const CONTENT: Record<Language, TopicContent> = {
       { name: 'Chicago HomeMod Program', amount: 'Up to $10,000', meta: 'Chicago · Disability', body: 'Accessibility modifications for Chicago residents with disabilities. Covers ramps, lifts, grab bars, accessible bathrooms, and door widening.', cta: 'Apply via MOPD', meta2: 'Chicago residents only' },
     ],
     steps: [
-      { title: 'Start with HAFHR or HRAP.', body: 'These cover the most repair types and the most money. If you qualify, they should be your first applications.' },
+      { title: 'Start with HAFHR or HRAP.', body: 'They cover the most repair types and the largest amounts, so many homeowners apply to these programs first.' },
       { title: 'Apply for multiple programs at once.', body: 'Programs can be combined in many cases. The earlier you apply, the better your odds before funds run out for the year.' },
       { title: 'Get a written estimate.', body: 'Most programs require at least one contractor estimate. Pick licensed contractors and keep all paperwork.' },
       { title: 'Document the need.', body: 'Take photos of the problem before any work starts. Save any inspector reports or letters from your utility company.' },
       { title: 'If you are 60 or older, ask about senior programs first.', body: 'Programs like SARFS and Section 504 grants are easier to qualify for if you are an elderly homeowner.' },
     ],
     referral: {
-      sticker: '★ Start here', title: 'Chicagoland Habitat for Humanity',
+      sticker: 'Start here', title: 'Chicagoland Habitat for Humanity',
       orgName: 'HAFHR program administrator', orgSub: 'Helps with the IHDA Homeowner Assistance Fund application',
       orgDesc: 'Habitat for Humanity is the official administrator for HAFHR in the Chicago region. They help you complete the application, work with contractors, and make sure your repairs meet the program standards.',
-      websiteLabel: 'Website', website: 'chicagolandhabitat.org', hoursLabel: 'Hours', hours: 'Mon–Fri, 9–5',
+      websiteLabel: 'Website', website: 'chicagolandhabitat.org', hoursLabel: 'Hours', hours: 'Mon to Fri, 9 to 5',
       bringLabel: 'Bring these with you', bring: ['Deed to your home', 'Property tax bill', 'Photo ID', 'Proof of income', 'Photos of repairs needed'],
       startBtn: 'Start your application →', otherBtn: 'Find another program',
     },
@@ -92,17 +92,17 @@ const CONTENT: Record<Language, TopicContent> = {
       { name: 'Chicago HomeMod Program', amount: 'Hasta $10,000', meta: 'Chicago · Discapacidad', body: 'Modificaciones de accesibilidad para residentes de Chicago con discapacidades. Cubre rampas, elevadores, barras de apoyo, baños accesibles y ensanchamiento de puertas.', cta: 'Solicitar vía MOPD', meta2: 'Solo residentes de Chicago' },
     ],
     steps: [
-      { title: 'Empieza con HAFHR o HRAP.', body: 'Estos cubren la mayoría de los tipos de reparación y el mayor monto. Si calificas, deben ser tus primeras solicitudes.' },
+      { title: 'Empieza con HAFHR o HRAP.', body: 'Cubren la mayoría de los tipos de reparación y los montos más altos, por lo que muchos propietarios solicitan estos programas primero.' },
       { title: 'Solicita varios programas a la vez.', body: 'En muchos casos los programas se pueden combinar. Cuanto antes solicites, mejores tus probabilidades antes de que se acaben los fondos del año.' },
       { title: 'Consigue un presupuesto por escrito.', body: 'La mayoría de los programas requieren al menos un presupuesto de un contratista. Elige contratistas con licencia y guarda todos los documentos.' },
       { title: 'Documenta la necesidad.', body: 'Toma fotos del problema antes de que empiece cualquier trabajo. Guarda los informes de inspectores o cartas de tu compañía de servicios.' },
       { title: 'Si tienes 60 años o más, pregunta primero por programas para mayores.', body: 'Programas como SARFS y las ayudas de la Sección 504 son más fáciles de calificar si eres un propietario mayor.' },
     ],
     referral: {
-      sticker: '★ Empieza aquí', title: 'Chicagoland Habitat for Humanity',
+      sticker: 'Empieza aquí', title: 'Chicagoland Habitat for Humanity',
       orgName: 'Administrador del programa HAFHR', orgSub: 'Ayuda con la solicitud del Fondo de Asistencia para Propietarios de IHDA',
       orgDesc: 'Habitat for Humanity es el administrador oficial de HAFHR en la región de Chicago. Te ayudan a completar la solicitud, trabajar con contratistas y asegurar que tus reparaciones cumplan los estándares del programa.',
-      websiteLabel: 'Sitio web', website: 'chicagolandhabitat.org', hoursLabel: 'Horario', hours: 'Lun–Vie, 9–5',
+      websiteLabel: 'Sitio web', website: 'chicagolandhabitat.org', hoursLabel: 'Horario', hours: 'Lun to Vie, 9 to 5',
       bringLabel: 'Lleva esto contigo', bring: ['Escritura de tu casa', 'Factura del impuesto predial', 'Identificación con foto', 'Comprobante de ingresos', 'Fotos de las reparaciones necesarias'],
       startBtn: 'Empieza tu solicitud →', otherBtn: 'Buscar otro programa',
     },
@@ -136,17 +136,17 @@ const CONTENT: Record<Language, TopicContent> = {
       { name: 'Chicago HomeMod Program', amount: '最高 $10,000', meta: '芝加哥 · 残障', body: '为芝加哥残障居民提供无障碍改造。涵盖坡道、升降机、扶手、无障碍浴室和加宽门。', cta: '通过 MOPD 申请', meta2: '仅限芝加哥居民' },
     ],
     steps: [
-      { title: '从 HAFHR 或 HRAP 开始。', body: '它们涵盖最多的维修类型和最多的资金。如果您符合资格，应优先申请这些。' },
+      { title: '从 HAFHR 或 HRAP 开始。', body: '它们涵盖最多的维修类型和最高的金额，因此许多房主会先申请这些项目。' },
       { title: '同时申请多个项目。', body: '许多情况下项目可以合并。申请越早，在当年资金用完之前成功的机会越大。' },
       { title: '获取书面估价。', body: '大多数项目要求至少一份承包商估价。选择有执照的承包商并保留所有文件。' },
       { title: '记录需求。', body: '在任何工作开始前给问题拍照。保存任何检查员报告或公用事业公司的信件。' },
       { title: '如果您60岁或以上，先询问老年项目。', body: '如果您是老年房主，像 SARFS 和 504 条款补助这样的项目更容易符合资格。' },
     ],
     referral: {
-      sticker: '★ 从这里开始', title: 'Chicagoland Habitat for Humanity',
+      sticker: '从这里开始', title: 'Chicagoland Habitat for Humanity',
       orgName: 'HAFHR 项目管理方', orgSub: '协助办理 IHDA 房主援助基金申请',
       orgDesc: 'Habitat for Humanity 是芝加哥地区 HAFHR 的官方管理方。他们帮助您完成申请、与承包商合作，并确保您的维修符合项目标准。',
-      websiteLabel: '网站', website: 'chicagolandhabitat.org', hoursLabel: '时间', hours: '周一至周五, 9–5',
+      websiteLabel: '网站', website: 'chicagolandhabitat.org', hoursLabel: '时间', hours: '周一至周五, 9 to 5',
       bringLabel: '请带上这些', bring: ['您房屋的房契', '房产税单', '带照片的身份证件', '收入证明', '所需维修的照片'],
       startBtn: '开始申请 →', otherBtn: '查找其他项目',
     },
@@ -180,17 +180,17 @@ const CONTENT: Record<Language, TopicContent> = {
       { name: 'Chicago HomeMod Program', amount: 'Hanggang $10,000', meta: 'Chicago · Kapansanan', body: 'Mga pagbabago para sa accessibility para sa mga residente ng Chicago na may kapansanan. Saklaw ang ramp, lift, grab bar, accessible na banyo, at pagpapalapad ng pinto.', cta: 'Mag-apply sa MOPD', meta2: 'Mga residente ng Chicago lang' },
     ],
     steps: [
-      { title: 'Magsimula sa HAFHR o HRAP.', body: 'Sinasaklaw ng mga ito ang pinakamaraming uri ng pag-aayos at pinakamalaking halaga. Kung kwalipikado ka, dapat ito ang una mong aplikasyon.' },
+      { title: 'Magsimula sa HAFHR o HRAP.', body: 'Sinasaklaw ng mga ito ang pinakamaraming uri ng pag-aayos at pinakamalaking halaga, kaya marami ang nag-a-apply muna sa mga programang ito.' },
       { title: 'Mag-apply sa maraming programa nang sabay.', body: 'Sa maraming kaso, maaaring pagsamahin ang mga programa. Kung mas maaga kang mag-apply, mas malaki ang tsansa mo bago maubos ang pondo para sa taon.' },
       { title: 'Kumuha ng nakasulat na estimate.', body: 'Karamihan ng programa ay nangangailangan ng kahit isang estimate ng kontratista. Pumili ng lisensyadong kontratista at itago ang lahat ng papeles.' },
       { title: 'Idokumento ang pangangailangan.', body: 'Kumuha ng litrato ng problema bago magsimula ang anumang trabaho. I-save ang anumang ulat ng inspektor o liham mula sa iyong kompanya ng utility.' },
       { title: 'Kung 60 pataas ka, magtanong muna tungkol sa mga programa para sa matatanda.', body: 'Mas madaling maging kwalipikado sa mga programa tulad ng SARFS at mga gawad ng Section 504 kung ikaw ay matandang may-ari ng bahay.' },
     ],
     referral: {
-      sticker: '★ Magsimula dito', title: 'Chicagoland Habitat for Humanity',
+      sticker: 'Magsimula dito', title: 'Chicagoland Habitat for Humanity',
       orgName: 'Tagapamahala ng programang HAFHR', orgSub: 'Tumutulong sa aplikasyon ng IHDA Homeowner Assistance Fund',
       orgDesc: 'Ang Habitat for Humanity ang opisyal na tagapamahala ng HAFHR sa rehiyon ng Chicago. Tinutulungan ka nilang kumpletuhin ang aplikasyon, makipagtulungan sa mga kontratista, at tiyaking naaabot ng iyong pag-aayos ang mga pamantayan ng programa.',
-      websiteLabel: 'Website', website: 'chicagolandhabitat.org', hoursLabel: 'Oras', hours: 'Lun–Biy, 9–5',
+      websiteLabel: 'Website', website: 'chicagolandhabitat.org', hoursLabel: 'Oras', hours: 'Lun to Biy, 9 to 5',
       bringLabel: 'Dalhin ang mga ito', bring: ['Titulo ng iyong bahay', 'Bill ng property tax', 'ID na may litrato', 'Patunay ng kita', 'Mga litrato ng pag-aayos na kailangan'],
       startBtn: 'Simulan ang iyong aplikasyon →', otherBtn: 'Maghanap ng ibang programa',
     },
@@ -224,17 +224,17 @@ const CONTENT: Record<Language, TopicContent> = {
       { name: 'Chicago HomeMod Program', amount: 'Lên đến $10,000', meta: 'Chicago · Khuyết tật', body: 'Sửa đổi tiếp cận cho cư dân Chicago khuyết tật. Bao gồm đường dốc, thang nâng, thanh vịn, phòng tắm tiếp cận, và mở rộng cửa.', cta: 'Đăng ký qua MOPD', meta2: 'Chỉ cư dân Chicago' },
     ],
     steps: [
-      { title: 'Bắt đầu với HAFHR hoặc HRAP.', body: 'Chúng bao gồm nhiều loại sửa chữa nhất và số tiền nhiều nhất. Nếu bạn đủ điều kiện, đây nên là các đơn đầu tiên của bạn.' },
+      { title: 'Bắt đầu với HAFHR hoặc HRAP.', body: 'Chúng bao gồm nhiều loại sửa chữa nhất và số tiền lớn nhất, nên nhiều chủ nhà nộp đơn cho các chương trình này trước.' },
       { title: 'Đăng ký nhiều chương trình cùng lúc.', body: 'Trong nhiều trường hợp các chương trình có thể kết hợp. Đăng ký càng sớm, cơ hội càng cao trước khi hết quỹ trong năm.' },
       { title: 'Lấy báo giá bằng văn bản.', body: 'Hầu hết các chương trình yêu cầu ít nhất một báo giá của nhà thầu. Chọn nhà thầu có giấy phép và giữ tất cả giấy tờ.' },
       { title: 'Ghi lại nhu cầu.', body: 'Chụp ảnh vấn đề trước khi bất kỳ công việc nào bắt đầu. Lưu mọi báo cáo thanh tra hoặc thư từ công ty tiện ích của bạn.' },
       { title: 'Nếu bạn từ 60 tuổi trở lên, hãy hỏi về các chương trình cho người cao tuổi trước.', body: 'Các chương trình như SARFS và trợ cấp Section 504 dễ đủ điều kiện hơn nếu bạn là chủ nhà cao tuổi.' },
     ],
     referral: {
-      sticker: '★ Bắt đầu ở đây', title: 'Chicagoland Habitat for Humanity',
+      sticker: 'Bắt đầu ở đây', title: 'Chicagoland Habitat for Humanity',
       orgName: 'Đơn vị quản lý chương trình HAFHR', orgSub: 'Hỗ trợ đơn đăng ký Quỹ Hỗ trợ Chủ nhà IHDA',
       orgDesc: 'Habitat for Humanity là đơn vị quản lý chính thức của HAFHR ở khu vực Chicago. Họ giúp bạn hoàn thành đơn, làm việc với nhà thầu, và đảm bảo việc sửa chữa của bạn đạt tiêu chuẩn chương trình.',
-      websiteLabel: 'Trang web', website: 'chicagolandhabitat.org', hoursLabel: 'Giờ', hours: 'Thứ 2–Thứ 6, 9–5',
+      websiteLabel: 'Trang web', website: 'chicagolandhabitat.org', hoursLabel: 'Giờ', hours: 'Thứ 2 to Thứ 6, 9 to 5',
       bringLabel: 'Mang theo những thứ này', bring: ['Giấy chủ quyền nhà', 'Hóa đơn thuế tài sản', 'Giấy tờ tùy thân có ảnh', 'Bằng chứng thu nhập', 'Ảnh các chỗ cần sửa'],
       startBtn: 'Bắt đầu đơn đăng ký →', otherBtn: 'Tìm chương trình khác',
     },
@@ -252,6 +252,7 @@ export default function Repairs() {
       title={c.title}
       sub={c.sub}
       iconName="wrench"
+      accent="var(--repairs)"
       quickNav={c.quickNav}
       summary={<>{c.summary}</>}
       faqs={c.faqs}

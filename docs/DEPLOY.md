@@ -23,8 +23,11 @@ URL into the frontend, then point the backend's CORS back at the frontend.
 
    | Variable | Required | Value |
    |---|---|---|
-   | `ANTHROPIC_API_KEY` | your real key (`sk-ant-…`) |
-   | `ALLOWED_ORIGINS` | your Vercel URL, e.g. `https://rights-within-reach.vercel.app` (comma-separated for several) |
+   | `ANTHROPIC_API_KEY` | **yes** | your real key (`sk-ant-…`) |
+   | `ALLOWED_ORIGINS` | **yes** | your Vercel URL, e.g. `https://rights-within-reach.vercel.app` (comma-separated for several) |
+   | `WEB_SEARCH_ENABLED` | optional | `1` (default). Live web-grounding — **billed by Anthropic per search**. Set `0` to answer from corpus only |
+   | `WEB_STRONG_SCORE` | optional | `0.60` (default). Lower = web-check more often; `0` = check the web on every answer |
+   | `WEB_SEARCH_MAX_USES` | optional | `2` (default) max searches per answer |
    | `ANALYTICS_HASH_IP` | optional | `1` to count unique visitors |
    | `ANALYTICS_SALT` | if hashing | long random string, kept private |
    | `ANALYTICS_LOG_QUESTIONS` | optional | leave `0` (default) — keeps raw questions out of logs |
@@ -42,6 +45,22 @@ URL into the frontend, then point the backend's CORS back at the frontend.
 > filesystem and is wiped on redeploy. For durable analytics, mount a volume at
 > `/app/data/analytics` (set `ANALYTICS_LOG_PATH=/app/data/analytics/requests.jsonl`)
 > or ship logs to an external sink later.
+
+### Recommended analytics setup (decision)
+
+1. **Unique visitors, privacy-first:** set `ANALYTICS_HASH_IP=1` and a long, secret,
+   **stable** `ANALYTICS_SALT` (rotating it resets the count). This counts uniques
+   without ever storing a raw IP.
+2. **Retention — do this:** the daily re-ingest redeploys the backend whenever a
+   source changes, so without a volume your logs reset almost daily. Mount a Railway
+   **Volume** at `/app/data/analytics` and set
+   `ANALYTICS_LOG_PATH=/app/data/analytics/requests.jsonl`.
+3. Leave `ANALYTICS_LOG_QUESTIONS=0` (default) so raw questions are never logged.
+
+Then review anytime with `make usage` (points it at the volume path locally, or copy
+the JSONL down first). For a shareable visual, `make dashboard` writes a self-contained,
+brand-styled HTML report to `data/analytics/dashboard.html` — no server, no external
+requests, still aggregate-only (open it in any browser or hand it to a stakeholder).
 
 ---
 
@@ -77,6 +96,21 @@ blocks the API calls with a CORS error.
 - **Backend:** add `api.rightswithinreach.org` as a Railway custom domain; then update
   `VITE_API_URL` (Vercel) and `ALLOWED_ORIGINS` (Railway) to the final hostnames and
   redeploy both.
+
+---
+
+## 5. Daily re-ingest (GitHub Actions)
+
+`.github/workflows/daily-ingest.yml` re-fetches sources every morning at 8 AM Central,
+commits any changed `data/raw/**`, and pushes. **For that to reach production, Railway
+must auto-deploy on push to the default branch** (Railway → service → Settings → check
+the GitHub trigger). If you'd rather not auto-deploy on every push, add a
+`RAILWAY_DEPLOY_HOOK` repository secret and uncomment the deploy step in the workflow.
+The workflow opens a GitHub issue when a source changed materially or looks broken.
+
+> Note: the **root `requirements.txt` is for Railway only** (it's how Nixpacks detects
+> Python). Vercel must use **Root Directory = `frontend`** so it builds the Vite app and
+> ignores that file — otherwise Vercel misdetects the project as Python.
 
 ---
 

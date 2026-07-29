@@ -1,0 +1,10 @@
+{
+  "source_name": "Paying Public Utilities Through My Landlord (ILAO)",
+  "url": "https://www.illinoislegalaid.org/legal-information/paying-public-utilities-through-my-landlord",
+  "topic": "housing",
+  "jurisdiction": "illinois",
+  "priority": "Medium",
+  "downloaded_at": "2026-06-28",
+  "file_type": "html",
+  "notes": "replaced login-gated ILAO page with fetchable equivalent"
+}

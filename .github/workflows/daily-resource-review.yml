@@ -1,0 +1,70 @@
+name: Daily resource review
+
+# Once a day: re-check every organization we publish and write a report.
+# This never touches the live site. If something needs a human (dead link, or a
+# candidate new org), the script exits non-zero and we open an issue for it.
+# A person then fixes links or adds approved orgs to Resources.tsx by hand.
+# All the actual logic lives in scripts/daily_resource_review.py.
+#
+# Link checking is free and always runs. The web-search discovery pass costs
+# money, so it only runs when both the secret and the variable below are set.
+
+on:
+  # 13:30 UTC is 8:30 AM Central in summer, 7:30 in winter. Cron does not do DST.
+  schedule:
+    - cron: '30 13 * * *'
+  # Lets you run it by hand from the Actions tab.
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # commit the daily report
+  issues: write     # open the review issue
+
+# Never let two runs overlap.
+concurrency:
+  group: daily-resource-review
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install requests beautifulsoup4 anthropic
+
+      # continue-on-error means a non-zero exit flags review instead of killing
+      # the job, so the steps below still run.
+      - name: Run resource review
+        id: review
+        continue-on-error: true
+        env:
+          # Both must be set for the paid discovery pass. Otherwise it stays free.
+          RESOURCE_DISCOVERY_ENABLED: ${{ vars.RESOURCE_DISCOVERY_ENABLED }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/daily_resource_review.py --date "$(TZ=America/Chicago date +%F)"
+
+      - name: Commit the report
+        run: |
+          git config user.name "rwr-review[bot]"
+          git config user.email "review@users.noreply.github.com"
+          git add data/monitor/resource-review-*.md
+          if git diff --cached --quiet; then
+            echo "No new report to commit."
+          else
+            git commit -m "chore(review): daily resource review $(TZ=America/Chicago date +%F)"
+            git push
+          fi
+
+      # Only fires when the review step exited non-zero.
+      - name: Open review issue
+        if: steps.review.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE="$(TZ=America/Chicago date +%F)"
+          gh issue create \
+            --title "Resource review needed ($DATE)" \

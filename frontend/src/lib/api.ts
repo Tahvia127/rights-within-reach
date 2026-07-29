@@ -11,6 +11,7 @@ export interface Source {
   url?: string
   topic: string
   score?: number
+  web?: boolean // pulled from a live web check rather than our corpus
 }
 
 export interface Contact {
@@ -33,7 +34,10 @@ export interface AskResponse {
   note?: string
   sources: Source[]
   topic: string
+  confidence?: 'high' | 'medium' | 'low' | string
   refused?: boolean
+  /** Backend sets reason:"error" (in a 200 response) when the answer engine failed. */
+  reason?: string
   refusal_org?: {
     name: string
     sub: string
@@ -71,6 +75,17 @@ export async function ask({ question, language = 'en', area, zip, subject }: Ask
     throw new ApiError(errorText || `Request failed: ${res.status}`, res.status)
   }
   return res.json() as Promise<AskResponse>
+}
+
+export async function sendFeedback(helpful: boolean, language = 'en', topic = ''): Promise<void> {
+  // Fire-and-forget; a failed vote should never disrupt the user.
+  try {
+    await fetch(`${API_URL}/api/feedback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ helpful, language, topic }),
+    })
+  } catch { /* ignore */ }
 }
 
 export async function search(query: string, topic?: string, k = 5): Promise<{ results: Source[] }> {

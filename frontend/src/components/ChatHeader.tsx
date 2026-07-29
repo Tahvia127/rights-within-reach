@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useBigText } from './BigTextProvider'
+import { DarkModeToggle } from './DarkModeToggle'
 import { Icon } from '../lib/icons'
 import { useLanguage } from '../lib/translations'
 
@@ -15,9 +16,10 @@ interface Props {
 export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props) {
   const navigate = useNavigate()
   const { toggleBigText, bigText } = useBigText()
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
 
   return (
+    <>
     <header className="chat-header" role="banner">
       <div className="chat-header-left">
         <a
@@ -34,7 +36,7 @@ export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props
           href="/"
           aria-label={t('brand.homeAria')}
         >
-          <span className="brand-compact-img" role="img" aria-label="Rights Within Reach" />
+          <span className="brand-wordmark-img chat-wordmark" role="img" aria-label="Rights Within Reach" />
         </a>
       </div>
       <div className="chat-header-right">
@@ -46,6 +48,7 @@ export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props
         >
           A+
         </button>
+        <DarkModeToggle />
         {onReadAloud && (
           <button
             className="big-text-btn"
@@ -58,5 +61,9 @@ export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props
         )}
       </div>
     </header>
+    {language !== 'en' && (
+      <p className="mt-notice" role="note">{t('mt.notice')}</p>
+    )}
+    </>
   )
 }
