@@ -430,6 +430,10 @@ const META_I18N: Record<Language, Record<string, string>> = {
   },
 }
 
+function slugify(s: string): string {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 44)
+}
+
 function ResCard({ card }: { card: ResourceCard }) {
   const { language } = useLanguage()
   const className = card.featured ? 'res-card featured' : 'res-card'
@@ -437,23 +441,25 @@ function ResCard({ card }: { card: ResourceCard }) {
   const desc = language === 'en' ? card.desc : (DESC_I18N[language]?.[card.desc] ?? card.desc)
   const tag = language === 'en' ? card.tag : (TAG_I18N[language]?.[card.tag] ?? card.tag)
   const meta = (m?: string) => !m || language === 'en' ? m : (META_I18N[language]?.[m] ?? m)
-  const content = (
-    <>
+  return (
+    <div className={className} data-readable>
       <div className="res-card-head">
-        <h3 className="res-card-name">{card.name}</h3>
+        <h3 className="res-card-name">
+          {card.href
+            ? <a href={card.href} target="_blank" rel="noopener">{card.name}</a>
+            : card.name}
+        </h3>
         <span className={tagClass}>{tag}</span>
       </div>
       <p className="res-card-desc">{desc}</p>
-      <div className="res-card-meta">
-        <span>{meta(card.meta[0])}</span>
-        <span>{meta(card.meta[1])}</span>
+      <div className="res-card-foot">
+        <div className="res-card-meta">
+          <span>{meta(card.meta[0])}</span>
+          <span>{meta(card.meta[1])}</span>
+        </div>
+        <ReadAloud id={`res-card-${slugify(card.name)}`} />
       </div>
-    </>
-  )
-  return card.href ? (
-    <a href={card.href} className={className} target="_blank" rel="noopener">{content}</a>
-  ) : (
-    <div className={className}>{content}</div>
+    </div>
   )
 }
 
@@ -618,7 +624,7 @@ function BringCard({ title, meta, items }: { title: string; meta: string; items:
     <article className="program-card">
       <h3 className="program-name">{title}</h3>
       <p className="program-meta">{meta}</p>
-      <ul style={{ paddingLeft: '1.3rem', fontSize: '1rem', lineHeight: 1.7 }}>
+      <ul className="bring-doc-list">
         {items.map((item, i) => <li key={i}>{item}</li>)}
       </ul>
     </article>

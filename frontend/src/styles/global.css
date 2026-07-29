@@ -34,7 +34,7 @@ body {
   padding: 0;
   background: var(--bone);
   color: var(--ink);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -395,7 +395,7 @@ abbr[title] {
 .section-head .section-speak { flex: none; }
 
 /* ===== TRUST BAND (home §4) ===== */
-.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; grid-auto-rows: 1fr; }
 .trust-item {
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
   background: rgba(243, 235, 224, 0.1);
@@ -424,8 +424,8 @@ abbr[title] {
 .btn-bone:hover { background: #fff; color: var(--midnight); }
 
 /* ===== STEPS ===== */
-.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
-.step-card { background: var(--cream); border: 2px solid var(--midnight); border-radius: 16px; padding: 22px; position: relative; }
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; grid-auto-rows: 1fr; }
+.step-card { background: var(--cream); border: 2px solid var(--midnight); border-radius: 22px; padding: 22px; position: relative; height: 100%; }
 .step-number {
   position: absolute; top: -16px; left: 18px;
   width: 38px; height: 38px; border-radius: 50%;
@@ -439,7 +439,7 @@ abbr[title] {
 .step-desc { margin: 0; font-size: 1rem; line-height: 1.5; color: var(--ink); }
 
 /* ===== TOPIC CARDS ===== */
-.topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; grid-auto-rows: 1fr; }
 .topic-card {
   background: var(--cream); border: 2px solid var(--border-strong);
   border-radius: 16px; padding: 24px; position: relative;
@@ -824,16 +824,18 @@ abbr[title] {
 /* Prose fills the full section width; cards below fill it too. */
 .tc-section > p { max-width: none; }
 /* FAQ + program cards fill the wide column in two columns on desktop. */
-.faq-grid, .program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+.faq-grid, .program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; grid-auto-rows: 1fr; }
 .tc-section .tc-eyebrow { margin: 0 0 4px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; color: var(--burgundy); }
 .tc-section p { font-size: 1.15rem; line-height: 1.6; }
-.faq-item { background: var(--cream); border-left: 4px solid var(--burgundy); border-radius: 0 12px 12px 0; padding: 18px 22px; }
+.faq-item { background: var(--cream); border-left: 5px solid var(--burgundy); border-radius: 0 20px 20px 0; padding: 20px 24px; display: flex; flex-direction: column; height: 100%; }
 .faq-q { margin: 0 0 8px; font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; font-size: 1.35rem; color: var(--midnight); letter-spacing: -0.015em; }
-.faq-a { margin: 0 0 12px; font-size: 1.1rem; line-height: 1.55; }
+.faq-a { margin: 0 0 12px; font-size: 1.1rem; line-height: 1.55; flex: 1; }
+.faq-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; flex-wrap: wrap; }
 .faq-source { margin: 0; font-size: 0.92rem; color: var(--mute); }
 .faq-source a { color: var(--burgundy); }
+.faq-item .section-speak, .program-card .section-speak { min-height: 34px; padding: 6px 12px; font-size: 0.74rem; margin: 0; flex: none; }
 
-.program-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 20px; min-width: 0; overflow-wrap: break-word; display: flex; flex-direction: column; }
+.program-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 22px; padding: 22px; min-width: 0; overflow-wrap: break-word; display: flex; flex-direction: column; height: 100%; }
 .program-card .program-foot { margin-top: auto; padding-top: 8px; }
 .program-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
 .program-name { margin: 0; font-size: 1.45rem; line-height: 1.15; color: var(--midnight); font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; letter-spacing: -0.015em; }
@@ -877,16 +879,20 @@ abbr[title] {
 .res-cat-head .res-cat-title { margin: 0; }
 .res-cat-head .section-speak { margin-left: auto; flex: none; }
 .res-cat-chip { width: 52px; height: 52px; border-radius: 13px; background: var(--midnight); color: var(--bone); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.res-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 14px; padding: 18px; display: block; text-decoration: none; color: inherit; min-width: 0; overflow-wrap: break-word; }
+.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; grid-auto-rows: 1fr; }
+.res-card { background: var(--cream); border: 2px solid var(--border-strong); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit; min-width: 0; overflow-wrap: break-word; }
 .res-card:hover { color: inherit; border-color: var(--midnight); }
 .res-card.featured { border-color: var(--clover); border-width: 2px; }
 .res-card-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
 .res-card-name { margin: 0; font-size: 1.2rem; line-height: 1.15; color: var(--midnight); font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; font-weight: 700; letter-spacing: -0.015em; }
+.res-card-name a { color: inherit; text-decoration: none; }
+.res-card-name a:hover { text-decoration: underline; }
 .res-card-tag { background: var(--midnight); color: var(--bone); padding: 4px 9px; border-radius: 50px; font-weight: 800; font-size: 0.68rem; letter-spacing: 0.08em; height: fit-content; flex-shrink: 0; }
 .res-card-tag.featured-tag { background: var(--clover); }
-.res-card-desc { margin: 0 0 10px; font-size: 1rem; line-height: 1.4; }
-.res-card-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.92rem; color: var(--midnight); font-weight: 600; }
+.res-card-desc { margin: 0 0 12px; font-size: 1rem; line-height: 1.4; flex: 1; }
+.res-card-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; flex-wrap: wrap; }
+.res-card-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.92rem; color: var(--midnight); font-weight: 600; min-width: 0; }
+.res-card .section-speak { min-height: 34px; padding: 6px 12px; font-size: 0.74rem; margin: 0; flex: none; }
 
 /* ===== FIND HELP NEAR ME ===== */
 .findhelp-controls { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; align-items: start; margin: 18px 0 4px; }
@@ -1053,3 +1059,126 @@ body { padding-bottom: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .moving-nav-item { transition: background 0.15s ease, color 0.15s ease; }
 }
+
+/* ============================================================
+   CENTERED LAYOUT — the whole site reads down the middle instead
+   of left-aligned. Section headers, eyebrows, intros, hero, and
+   card grids center; card *body* text stays left for readability.
+   ============================================================ */
+.hero-inner { grid-template-columns: 1fr; max-width: 900px; }
+.hero-copy { align-items: center; text-align: center; }
+.hero-sub { margin-left: auto; margin-right: auto; max-width: 46rem; }
+.hero-buttons { justify-content: center; }
+
+.section-inner { text-align: center; }
+.section-head { justify-content: center; }
+.section-sub { margin-left: auto; margin-right: auto; max-width: 60rem; }
+
+.topic-page-hero-inner { text-align: center; }
+.topic-page-hero-inner > .topic-hero-icon-wrap { margin-left: auto; margin-right: auto; }
+.crumbs { text-align: center; }
+.topic-page-sub { margin-left: auto; margin-right: auto; max-width: 60rem; }
+
+.quick-nav-inner { justify-content: center; }
+
+.topic-content-inner { text-align: center; }
+.tc-section > p { margin-left: auto; margin-right: auto; max-width: 62rem; }
+.res-section-inner { text-align: center; }
+.res-cat-head { justify-content: center; flex-wrap: wrap; }
+.res-cat-head .section-speak { margin-left: 0; }
+
+/* Card / list / answer internals stay left-aligned so longer copy is readable. */
+.res-card, .faq-item, .program-card, .findhelp-card, .callout, .contact-card,
+.answer-card, .refuse-card, .deep-link, .triage-panel, .referral, .fact-card,
+.step-list, .step-list li, .bring-card, .msg-user-bubble, .chat-welcome {
+  text-align: left;
+}
+
+/* ============================================================
+   ORGANIC DECOR — softer, less boxy. Rounded tops on the colored
+   bands so sections nest like cards, plus soft brand-tinted blobs.
+   The blobs are FILLER placeholders (see the graphics list); swap
+   them for real illustrations when ready. All decorative, aria-
+   hidden by nature (pseudo-elements), and pointer-events:none.
+   ============================================================ */
+.hero, .section-midnight, .section-close, .topic-page-hero { position: relative; overflow: hidden; }
+
+/* Rounded tops on the colored bands -> soft nested-card look. */
+.section-midnight, .section-close { border-top-left-radius: 44px; border-top-right-radius: 44px; }
+
+/* Soft round brand blobs. */
+.hero::before, .hero::after,
+.section-midnight::before, .section-close::before {
+  content: ""; position: absolute; pointer-events: none; z-index: 0; border-radius: 50%;
+}
+.hero::before  { width: 300px; height: 300px; top: -90px; right: -70px;
+  background: radial-gradient(circle at 35% 35%, rgba(107, 31, 46, 0.13), transparent 68%); }
+.hero::after   { width: 230px; height: 230px; bottom: -80px; left: -60px;
+  background: radial-gradient(circle at 40% 40%, rgba(61, 107, 58, 0.13), transparent 68%); }
+.section-midnight::before { width: 360px; height: 360px; bottom: -130px; right: -100px;
+  background: radial-gradient(circle at 40% 40%, rgba(169, 212, 143, 0.14), transparent 68%); }
+.section-close::before { width: 300px; height: 300px; top: -110px; left: -80px;
+  background: radial-gradient(circle at 40% 40%, rgba(243, 235, 224, 0.12), transparent 68%); }
+
+/* Keep real content above the decorative blobs. */
+.hero-inner, .section-inner, .topic-page-hero-inner { position: relative; z-index: 1; }
+
+/* Hand-drawn squiggle accent (filler — swap for your own). */
+.squiggle {
+  display: block; width: 200px; height: 14px; margin: 8px auto 0;
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14'%3E%3Cpath d='M3 7 Q16 1 29 7 T55 7 T81 7 T107 7 T133 7 T159 7 T185 7 T197 7' fill='none' stroke='%236B1F2E' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.dark .squiggle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14'%3E%3Cpath d='M3 7 Q16 1 29 7 T55 7 T81 7 T107 7 T133 7 T159 7 T185 7 T197 7' fill='none' stroke='%23EC9AA4' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* First content band gets a rounded entry over the ticker, too. */
+#topics.section-cream { border-top-left-radius: 44px; border-top-right-radius: 44px; position: relative; margin-top: -4px; }
+
+/* ============================================================
+   FULL CENTERING — center card content and icons too. Chat and
+   numbered step lists stay left-aligned (centering a conversation
+   or a numbered list hurts readability).
+   ============================================================ */
+.topic-card { text-align: center; border-radius: 22px; }
+.res-card, .faq-item, .program-card, .findhelp-card, .callout, .fact-card, .bring-card { text-align: center; }
+
+/* head/foot rows: stack + center instead of space-between */
+.res-card-head { flex-direction: column; align-items: center; gap: 6px; }
+.res-card-foot, .res-card-meta { justify-content: center; }
+.faq-foot { justify-content: center; }
+.program-head { flex-direction: column; align-items: center; gap: 6px; }
+.program-foot { justify-content: center; }
+.findhelp-actions { justify-content: center; }
+.findhelp-area-btns { justify-content: center; }
+
+/* icons / chips centered */
+.step-icon { margin-left: auto; margin-right: auto; }
+
+/* keep the conversation UI and numbered steps left-aligned */
+.answer-card, .refuse-card, .deep-link, .triage-panel, .referral, .contact-card,
+.msg-user-bubble, .chat-welcome, .suggest-block, .step-list, .step-list li,
+.findhelp-results-head { text-align: left; }
+
+/* "Why trust this" — each claim card gets its own brand color. */
+.trust-item { border: none; }
+.trust-item:nth-child(1) { background: var(--burgundy); }
+.trust-item:nth-child(2) { background: var(--clover); }
+.trust-item:nth-child(3) { background: #2E5A88; }
+.trust-item:nth-child(4) { background: #B8451F; }
+.trust-item .trust-icon { color: #fff; }
+.trust-item p { color: #fff; }
+
+/* Rotating hero stamp/badge (corner seal). */
+.hero-badge { position: absolute; top: 20px; left: 20px; width: 106px; height: 106px; z-index: 3; pointer-events: none; }
+.hero-badge-svg { width: 100%; height: 100%; display: block; }
+.hero-badge-ring { transform-box: fill-box; transform-origin: center; animation: badge-spin 22s linear infinite; }
+@keyframes badge-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .hero-badge-ring { animation: none; } }
+@media (max-width: 680px) { .hero-badge { width: 84px; height: 84px; top: 12px; left: 12px; } }
+@media (max-width: 460px) { .hero-badge { display: none; } }
+
+/* "What to bring" checklists: keep the list left-aligned but centered as a block
+   (bullets read normally instead of floating away from centered text). */
+.bring-doc-list { width: max-content; max-width: 100%; text-align: left; margin: 0 auto; padding-left: 1.4rem; font-size: 1rem; line-height: 1.7; list-style: disc; }
+.bring-doc-list li { margin-bottom: 2px; }
