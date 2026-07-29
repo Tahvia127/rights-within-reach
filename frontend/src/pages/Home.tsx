@@ -6,6 +6,7 @@ import { SiteFooter } from '../components/SiteFooter'
 import { Ticker } from '../components/Ticker'
 import { FindHelpNearMe } from '../components/FindHelpNearMe'
 import { Icon } from '../lib/icons'
+import { TopicArt } from '../components/TopicArt'
 import { useLanguage } from '../lib/translations'
 import { ReadAloud } from '../components/ReadAloud'
 
@@ -38,9 +39,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="hero-media" aria-hidden="true">
-              <span className="hero-media-mark" role="img" aria-label="Rights Within Reach" />
-            </div>
           </div>
         </section>
 
@@ -58,26 +56,26 @@ export default function Home() {
             <div className="topic-grid">
               <Link to="/housing" className="topic-card" style={{ ['--topic-accent' as string]: 'var(--burgundy)' }} aria-label={t('home.topic.housing.aria')}>
                 <span className="badge most-asked">{t('home.topics.mostAsked')}</span>
-                <span className="topic-chip"><Icon name="home" size={26} /></span>
+                <span className="topic-chip"><TopicArt topic="housing" /></span>
                 <h3 className="serif topic-title">{t('home.topic.housing.title')}</h3>
                 <p className="topic-desc">{t('home.topic.housing.desc')}</p>
                 <p className="topic-cta">{t('home.topics.readMore')}</p>
               </Link>
               <Link to="/money" className="topic-card" style={{ ['--topic-accent' as string]: 'var(--clover)' }}>
-                <span className="topic-chip"><Icon name="money" size={26} /></span>
+                <span className="topic-chip"><TopicArt topic="money" /></span>
                 <h3 className="serif topic-title">{t('home.topic.money.title')}</h3>
                 <p className="topic-desc">{t('home.topic.money.desc')}</p>
                 <p className="topic-cta">{t('home.topics.readMore')}</p>
               </Link>
               <Link to="/repairs" className="topic-card" style={{ ['--topic-accent' as string]: 'var(--repairs)' }}>
-                <span className="topic-chip"><Icon name="wrench" size={26} /></span>
+                <span className="topic-chip"><TopicArt topic="repairs" /></span>
                 <h3 className="serif topic-title">{t('home.topic.repairs.title')}</h3>
                 <p className="topic-desc">{t('home.topic.repairs.desc')}</p>
                 <p className="topic-cta">{t('home.topics.readMore')}</p>
               </Link>
               <Link to="/benefits" className="topic-card" style={{ ['--topic-accent' as string]: '#B8451F' }} aria-label={t('home.topic.benefits.aria')}>
                 <span className="badge new">{t('home.topics.new')}</span>
-                <span className="topic-chip"><Icon name="benefits" size={26} /></span>
+                <span className="topic-chip"><TopicArt topic="benefits" /></span>
                 <h3 className="serif topic-title">{t('home.topic.benefits.title')}</h3>
                 <p className="topic-desc">{t('home.topic.benefits.desc')}</p>
                 <p className="topic-cta">{t('home.topics.readMore')}</p>

@@ -112,15 +112,18 @@ export function TopicPage(props: TopicPageProps) {
             </div>
             <div className="faq-grid">
               {faqs.map((faq, i) => (
-                <article key={i} className="faq-item">
+                <article key={i} className="faq-item" data-readable>
                   <h3 className="faq-q">{faq.q}</h3>
                   <p className="faq-a">{faq.a}</p>
-                  <p className="faq-source">
-                    <strong>{t('topic.source')}</strong>{' '}
-                    <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
-                      {faq.source}
-                    </a>
-                  </p>
+                  <div className="faq-foot">
+                    <p className="faq-source">
+                      <strong>{t('topic.source')}</strong>{' '}
+                      <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
+                        {faq.source}
+                      </a>
+                    </p>
+                    <ReadAloud id={`faq-${i}`} />
+                  </div>
                 </article>
               ))}
             </div>
@@ -134,7 +137,7 @@ export function TopicPage(props: TopicPageProps) {
             </div>
             <div className="program-grid">
               {programs.map((p, i) => (
-                <article key={i} className="program-card">
+                <article key={i} className="program-card" data-readable>
                   <div className="program-head">
                     <h3 className="program-name">{p.name}</h3>
                     {p.amount && <span className="program-amount">{p.amount}</span>}
@@ -152,6 +155,7 @@ export function TopicPage(props: TopicPageProps) {
                       {p.cta}
                     </a>
                     {p.meta2 && <span style={{ fontSize: '0.92rem', color: 'var(--mute)' }}>{p.meta2}</span>}
+                    <ReadAloud id={`program-${i}`} />
                   </div>
                 </article>
               ))}
