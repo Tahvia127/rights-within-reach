@@ -14,14 +14,33 @@ import pdfplumber
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
 
+from backend.services.taxonomy import list_code_for, normalize_jurisdiction
+
 # --- config ---
 
 CHROMA_PATH = "data/chroma"
 COLLECTION = "rwr_docs"
 EMBED_MODEL = "all-MiniLM-L6-v2"  # 384-dim, fast, good for short legal text
 
-CHUNK_WORDS = 220         # target chunk size in words
+CHUNK_WORDS = 220         # default target chunk size in words
 CHUNK_OVERLAP_WORDS = 40  # words carried over between chunks for context
+
+# Chunk size by document type. Statutory text has long enumerated provisions that
+# lose meaning when split mid-section, so it wants larger chunks; plain-language
+# guides answer best in smaller focused chunks. Keyed by the source's `kind`
+# (statute, ordinance, agency_guide, court_guide, kyr_guide, org, directory,
+# portal). A source with no `kind` — every legacy Illinois sidecar — uses the
+# default, so the existing corpus chunks exactly as before.
+CHUNK_PROFILES = {
+    "statute": (340, 60),
+    "ordinance": (340, 60),
+}
+
+
+def chunk_params_for(meta: dict) -> tuple[int, int]:
+    """(target_words, overlap) for a source, by its document kind."""
+    return CHUNK_PROFILES.get((meta.get("kind") or "").strip().lower(),
+                              (CHUNK_WORDS, CHUNK_OVERLAP_WORDS))
 
 # Missing folders are skipped silently.
 RAW_DIRS = [
@@ -33,6 +52,12 @@ RAW_DIRS = [
     Path("data/raw/money_debt"),
     Path("data/raw/housing_repair"),
     Path("data/raw/resources"),
+    Path("data/raw/ca"),  # California + San Francisco sources (jurisdiction layer)
+    Path("data/raw/mo"),  # Missouri + St. Louis sources (jurisdiction layer)
+    Path("data/raw/tx"),  # Texas + Houston sources (jurisdiction layer)
+    Path("data/raw/ny"),  # New York + NYC sources (jurisdiction layer)
+    Path("data/raw/ve"),  # Veterans & Military (federal category)
+    Path("data/raw/wo"),  # Work & Employment (federal + state labor)
 ]
 
 # Tags stripped before extracting text from HTML.
@@ -68,17 +93,18 @@ def pdf_to_text(path: Path) -> str:
     return "\n".join(ln for ln in lines if ln)
 
 
-def chunk_text(text: str) -> list[str]:
+def chunk_text(text: str, chunk_words: int = CHUNK_WORDS,
+               overlap_words: int = CHUNK_OVERLAP_WORDS) -> list[str]:
     words = text.split()
     if not words:
         return []
-    step = max(1, CHUNK_WORDS - CHUNK_OVERLAP_WORDS)
+    step = max(1, chunk_words - overlap_words)
     chunks = []
     for start in range(0, len(words), step):
-        chunk = " ".join(words[start:start + CHUNK_WORDS])
+        chunk = " ".join(words[start:start + chunk_words])
         if chunk.strip():
             chunks.append(chunk)
-        if start + CHUNK_WORDS >= len(words):
+        if start + chunk_words >= len(words):
             break
     return chunks
 
@@ -117,8 +143,14 @@ def build() -> int:
         slug = src_path.stem
         text = pdf_to_text(src_path) if src_path.suffix == ".pdf" \
                else html_to_text(src_path.read_text(encoding="utf-8", errors="replace"))
-        chunks = chunk_text(text)
-        print(f"  {meta.get('topic', '?')}/{slug}: {len(chunks)} chunks ({len(text):,} chars)")
+        cw, ov = chunk_params_for(meta)
+        chunks = chunk_text(text, cw, ov)
+        print(f"  {meta.get('topic', '?')}/{slug}: {len(chunks)} chunks "
+              f"({len(text):,} chars, {cw}w)")
+        # Jurisdiction layer: a clean (state, locality) pair and a LIST code,
+        # derived from the sidecar so legacy Illinois files need no re-editing.
+        state, locality = normalize_jurisdiction(meta)
+        list_code = list_code_for(meta)
         for i, chunk in enumerate(chunks):
             ids.append(f"{slug}::{i}")
             documents.append(chunk)
@@ -127,6 +159,9 @@ def build() -> int:
                 "url": meta.get("url", ""),
                 "topic": meta.get("topic", ""),
                 "jurisdiction": meta.get("jurisdiction", ""),
+                "state": state,
+                "locality": locality or "",
+                "list_code": list_code,
                 "priority": meta.get("priority", ""),
                 "access_date": meta.get("access_date", ""),
                 "chunk_index": i,

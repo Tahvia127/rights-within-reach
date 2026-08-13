@@ -23,6 +23,12 @@ class AskRequest(BaseModel):
     area: str | None = None
     zip: str | None = Field(None, max_length=10)
     subject: str | None = None
+    # Jurisdiction the user is asking about. `state` keeps retrieval to
+    # `federal` + this state so a California user never gets Illinois law;
+    # `locality` (e.g. "chicago", "san_francisco") boosts local ordinances.
+    # Plain strings so an unknown value degrades gracefully in the handler.
+    state: str | None = Field(None, max_length=16)
+    locality: str | None = Field(None, max_length=40)
 
 
 class FeedbackRequest(BaseModel):
@@ -64,6 +70,29 @@ class Source(BaseModel):
     web: bool = False   # True if from a live web search rather than our corpus
 
 
+class Handoff(BaseModel):
+    """Warm-handoff intake: a guided legal-aid front door for the user's state.
+    Present on refusals and low-confidence answers so we never dead-end."""
+    name: str
+    url: str = ""
+    description: str = ""
+
+
+class OrgCard(BaseModel):
+    """A verified referral org from the resource finder (data/orgs.csv). Shared by
+    the /orgs endpoint and the `local_orgs` list on an /ask answer."""
+    name: str
+    city: str = ""
+    state: str = ""
+    zip: str = ""
+    address: str = ""
+    phone: str = ""
+    url: str = ""
+    list_codes: list[str] = []
+    languages: list[str] = []
+    source: str = ""
+
+
 class AskResponse(BaseModel):
     refused: bool
     reason: str | None = None
@@ -75,6 +104,12 @@ class AskResponse(BaseModel):
     sources: list[Source] = []
     topic: str = ""
     refusal_org: RefusalOrg | None = None
+    # Verified local orgs that serve this state + topic, ranked toward the user's
+    # language. Empty on refusals and when the finder has no match.
+    local_orgs: list[OrgCard] = []
+    # Warm handoff to a guided legal-aid intake — set on refusals and
+    # low-confidence answers so the user always has a real next step.
+    handoff: Handoff | None = None
     # How well the sources support the answer. None on refusals and errors,
     # where we never computed one.
     confidence: Literal["high", "medium", "low"] | None = None
@@ -87,6 +122,9 @@ class SearchResult(BaseModel):
     url: str = ""
     topic: str = ""
     jurisdiction: str = ""
+    state: str = ""
+    locality: str = ""
+    list_code: str = ""
     text: str
     score: float
 
@@ -95,3 +133,10 @@ class SearchResponse(BaseModel):
     query: str
     count: int
     results: list[SearchResult]
+
+
+#  /orgs only — the resource finder (OrgCard is defined above, shared with /ask)
+
+class OrgsResponse(BaseModel):
+    count: int
+    results: list[OrgCard]

@@ -19,7 +19,7 @@ interface TopicContent {
   summary: string; faqs: FAQ[]; programs: Program[]; steps: Step[]; referral: Referral
 }
 
-const CONTENT: Record<Language, TopicContent> = {
+const CONTENT: Record<'en', TopicContent> & Partial<Record<Language, TopicContent>> = {
   en: {
     parentLabel: 'Money & Debt',
     eyebrow: 'Money & debt',

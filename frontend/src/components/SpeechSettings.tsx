@@ -5,7 +5,7 @@ import { Icon } from '../lib/icons'
 
 // Maps UI language to voice-language prefix for ranking the voice list.
 const VOICE_PREFIX: Record<Language, string> = {
-  en: 'en', es: 'es', zh: 'zh', tl: 'fil', vi: 'vi',
+  en: 'en', es: 'es', zh: 'zh', tl: 'fil', vi: 'vi', pl: 'pl',
 }
 
 // Global read-aloud preferences: playback speed and voice.

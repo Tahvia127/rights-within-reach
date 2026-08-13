@@ -12,20 +12,22 @@ import { matchDemoAnswer } from '../lib/demoAnswers'
 import { useLanguage, Language, orgText } from '../lib/translations'
 import { useSpeech, useSpeechContext } from '../lib/speech'
 
-const VALID = ['en', 'es', 'zh', 'tl', 'vi']
+const VALID = ['en', 'es', 'zh', 'tl', 'vi', 'pl']
 
 interface DemoMessage {
   user: string
   bot: AskResponse
   topicLink?: { slug: string; label: string; sub: string }
   /** Snapshot of what was asked, so the answer can be shared as a deep link. */
-  ask?: { lang: Language; area?: string; zip?: string; subject?: string }
+  ask?: { lang: Language; state?: string; locality?: string; area?: string; zip?: string; subject?: string }
 }
 
 // Build a shareable /chat URL that reproduces a question (+ its language/triage).
 function buildShareUrl(m: DemoMessage): string {
   const p = new URLSearchParams({ q: m.user })
   if (m.ask?.lang) p.set('lang', m.ask.lang)
+  if (m.ask?.state) p.set('state', m.ask.state)
+  if (m.ask?.locality) p.set('locality', m.ask.locality)
   if (m.ask?.area) p.set('area', m.ask.area)
   if (m.ask?.zip) p.set('zip', m.ask.zip)
   if (m.ask?.subject) p.set('subject', m.ask.subject)
@@ -43,6 +45,7 @@ function spokenText(bot: AskResponse): string {
     return [
       bot.answer,
       org && `${org.name}. ${org.description} Phone: ${org.phone}. Hours: ${org.hours}.`,
+      bot.handoff && bot.handoff.name,
       bot.disclaimer,
     ]
       .filter(Boolean)
@@ -51,14 +54,25 @@ function spokenText(bot: AskResponse): string {
   const parts: string[] = [bot.answer]
   if (bot.next_steps?.length) parts.push(...bot.next_steps)
   if (bot.contact) parts.push(`${bot.contact.name}. ${bot.contact.why ?? ''} ${bot.contact.how ?? ''}`)
+  if (bot.local_orgs?.length) parts.push(localOrgsSpeech(bot.local_orgs))
   if (bot.key_points) parts.push(...bot.key_points.map((k) => `${k.label}: ${k.text}`))
   if (bot.note) parts.push(bot.note)
   if (bot.disclaimer) parts.push(bot.disclaimer)
+  if (bot.handoff) parts.push(bot.handoff.name)
   return parts.filter(Boolean).join('. ')
 }
 
 function contactSpeech(c: NonNullable<AskResponse['contact']>): string {
   return [c.name, c.why, c.how, c.phone && `Phone ${c.phone}`, c.url && `Website ${c.url}`, c.hours && `Hours ${c.hours}`].filter(Boolean).join('. ')
+}
+
+function localOrgsSpeech(orgs: NonNullable<AskResponse['local_orgs']>): string {
+  return orgs.map((o) => [o.name, o.phone && `Phone ${o.phone}`].filter(Boolean).join('. ')).join('. ')
+}
+
+function orgHref(url?: string): string | undefined {
+  if (!url) return undefined
+  return url.startsWith('http') ? url : `https://${url}`
 }
 
 // Readable multi-line text for copy/share (not the run-on read-aloud string).
@@ -74,12 +88,17 @@ function shareText(bot: AskResponse, t: (k: string) => string): string {
     const wh = [bot.contact.why, bot.contact.how].filter(Boolean).join(' ')
     if (wh) lines.push(wh)
   }
+  if (bot.local_orgs?.length) {
+    lines.push('', `${t('chat.localOrgs')}:`)
+    bot.local_orgs.forEach((o) => lines.push([o.name, o.phone].filter(Boolean).join(', ')))
+  }
   if (bot.refusal_org) {
     const o = bot.refusal_org
     lines.push('', [o.name, o.phone].filter(Boolean).join(', '))
     if (o.description) lines.push(o.description)
   }
   if (bot.disclaimer) lines.push('', bot.disclaimer)
+  if (bot.handoff) lines.push('', `${t('chat.getLegalHelp')}: ${bot.handoff.name}${bot.handoff.url ? ` — ${bot.handoff.url}` : ''}`)
   lines.push('', ', Rights Within Reach · rightswithinreach.org')
   return lines.filter((l) => l !== undefined).join('\n')
 }
@@ -132,8 +151,8 @@ export default function Chat() {
   const voiceBaseRef = useRef('') // input text when voice dictation started
 
   // Guided triage (Phase 2). 'ready' = collected or skipped → show the input.
-  const [triage, setTriage] = useState<{ area: string | null; zip: string; subject: string | null }>({ area: null, zip: '', subject: null })
-  const [triageStep, setTriageStep] = useState<'area' | 'zip' | 'subject' | 'ready'>('area')
+  const [triage, setTriage] = useState<TriageState>({ state: initialState(), area: null, zip: '', subject: null })
+  const [triageStep, setTriageStep] = useState<'state' | 'area' | 'zip' | 'subject' | 'ready'>('state')
 
   const lastMessage = messages[messages.length - 1]
   const readPage = () =>
@@ -151,7 +170,7 @@ export default function Chat() {
     setLoading(true)
     setError(null)
     try {
-      const response = await ask({ question, language: ctx.lang, area: ctx.area, zip: ctx.zip, subject: ctx.subject })
+      const response = await ask({ question, language: ctx.lang, state: ctx.state, locality: ctx.locality, area: ctx.area, zip: ctx.zip, subject: ctx.subject })
       // If the answer engine soft-failed (e.g. out of API credits), fall back to a
       // curated demo answer so a live demo still shows a real, structured card.
       const bot = response.reason === 'error' ? matchDemoAnswer(question, ctx.subject, ctx.lang) : response
@@ -170,7 +189,9 @@ export default function Chat() {
     const question = input
     setInput('')
     submitQuestion(question, {
-      lang: language, area: triage.area ?? undefined,
+      lang: language, state: triage.state,
+      locality: deriveLocality(triage.state, triage.area),
+      area: triage.area ?? undefined,
       zip: triage.zip || undefined, subject: triage.subject ?? undefined,
     })
   }
@@ -188,10 +209,13 @@ export default function Chat() {
     const area = searchParams.get('area') || undefined
     const zip = searchParams.get('zip') || undefined
     const subject = searchParams.get('subject') || undefined
-    setTriage({ area: area ?? null, zip: zip ?? '', subject: subject ?? null })
+    const stateParam = searchParams.get('state') || undefined
+    const stateVal = stateParam && SUPPORTED_STATES.includes(stateParam) ? stateParam : triage.state
+    const locality = searchParams.get('locality') || deriveLocality(stateVal, area ?? null)
+    setTriage({ state: stateVal, area: area ?? null, zip: zip ?? '', subject: subject ?? null })
     setTriageStep('ready')
     setSearchParams({}, { replace: true }) // clean URL so refresh doesn't re-ask
-    submitQuestion(q, { lang, area, zip, subject })
+    submitQuestion(q, { lang, state: stateVal, locality, area, zip, subject })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -231,16 +255,17 @@ export default function Chat() {
         <TriagePanel triage={triage} step={triageStep} setTriage={setTriage} setStep={setTriageStep} speech={speech} language={language} />
       ) : (
         <>
-          {(triage.area || triage.subject) && (
+          {(triage.state || triage.area || triage.subject) && (
             <div className="triage-summary">
               <span>
                 {t('triage.summary')}: {[
+                  triage.state && t(STATE_LABEL[triage.state]),
                   triage.area && t(AREA_LABEL[triage.area]),
                   triage.subject && t(SUBJECT_LABEL[triage.subject]),
                   triage.zip,
                 ].filter(Boolean).join(' · ')}
               </span>
-              <button className="triage-edit" onClick={() => setTriageStep('area')}>{t('triage.edit')}</button>
+              <button className="triage-edit" onClick={() => setTriageStep('state')}>{t('triage.edit')}</button>
             </div>
           )}
 
@@ -288,26 +313,79 @@ export default function Chat() {
   )
 }
 
-type TriageState = { area: string | null; zip: string; subject: string | null }
+type TriageState = { state: string; area: string | null; zip: string; subject: string | null }
+
+// Which state the user is in decides which "area" options to show and whether
+// the ZIP step applies (ZIP→region is an Illinois-only table today).
+const SUPPORTED_STATES = ['IL', 'CA', 'MO', 'TX', 'NY']
+const STATE_LABEL: Record<string, string> = {
+  IL: 'triage.state.il', CA: 'triage.state.ca', MO: 'triage.state.mo',
+  TX: 'triage.state.tx', NY: 'triage.state.ny',
+}
+const STATE_AREAS: Record<string, string[]> = {
+  IL: ['chicago', 'suburban_cook', 'collar', 'elsewhere'],
+  CA: ['san_francisco', 'elsewhere_ca'],
+  MO: ['st_louis', 'kansas_city', 'elsewhere_mo'],
+  TX: ['houston', 'dallas', 'elsewhere_tx'],
+  NY: ['nyc', 'elsewhere_ny'],
+}
 
 const AREA_LABEL: Record<string, string> = {
   chicago: 'triage.area.chicago',
   suburban_cook: 'triage.area.suburbanCook',
   collar: 'triage.area.collar',
   elsewhere: 'triage.area.elsewhere',
+  san_francisco: 'triage.area.sf',
+  elsewhere_ca: 'triage.area.elsewhereCa',
+  st_louis: 'triage.area.stLouis',
+  kansas_city: 'triage.area.kansasCity',
+  elsewhere_mo: 'triage.area.elsewhereMo',
+  houston: 'triage.area.houston',
+  dallas: 'triage.area.dallas',
+  elsewhere_tx: 'triage.area.elsewhereTx',
+  nyc: 'triage.area.nyc',
+  elsewhere_ny: 'triage.area.elsewhereNy',
+}
+
+// Map an (state, area) choice to a locality code the backend can boost on. Only
+// localities with distinct local law return a value; everything else is
+// statewide (undefined).
+function deriveLocality(state: string, area: string | null): string | undefined {
+  if (state === 'IL') {
+    if (area === 'chicago') return 'chicago'
+    if (area === 'suburban_cook') return 'cook_county'
+  }
+  if (state === 'CA' && area === 'san_francisco') return 'san_francisco'
+  if (state === 'MO') {
+    if (area === 'st_louis') return 'st_louis_city'
+    if (area === 'kansas_city') return 'kansas_city'
+  }
+  if (state === 'TX' && area === 'houston') return 'houston'
+  if (state === 'NY' && area === 'nyc') return 'new_york_city'
+  return undefined
+}
+
+function initialState(): string {
+  try {
+    const saved = localStorage.getItem('rwr.state')
+    if (saved && SUPPORTED_STATES.includes(saved)) return saved
+  } catch { /* localStorage unavailable */ }
+  return 'IL' // incumbent jurisdiction; an explicit pick overrides + persists
 }
 const SUBJECT_LABEL: Record<string, string> = {
   housing: 'bottomnav.housing',
   money: 'bottomnav.money',
   repairs: 'bottomnav.repairs',
   benefits: 'bottomnav.benefits',
+  veterans: 'subject.veterans',
+  work: 'subject.work',
 }
 
 function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
   triage: TriageState
-  step: 'area' | 'zip' | 'subject' | 'ready'
+  step: 'state' | 'area' | 'zip' | 'subject' | 'ready'
   setTriage: Dispatch<SetStateAction<TriageState>>
-  setStep: Dispatch<SetStateAction<'area' | 'zip' | 'subject' | 'ready'>>
+  setStep: Dispatch<SetStateAction<'state' | 'area' | 'zip' | 'subject' | 'ready'>>
   speech: Speech
   language: Language
 }) {
@@ -323,13 +401,35 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
 
   return (
     <section className="triage-panel" aria-label={t('triage.aria')}>
+      {step === 'state' && (
+        <div className="triage-step">
+          <Prompt promptKey="triage.state.prompt" />
+          <div className="triage-options">
+            {SUPPORTED_STATES.map((val) => (
+              <button key={val} className="triage-option" aria-pressed={triage.state === val} onClick={() => {
+                // Changing state invalidates the old area, so clear it.
+                setTriage((p) => ({ ...p, state: val, area: null }))
+                try { localStorage.setItem('rwr.state', val) } catch { /* ignore */ }
+                setStep('area')
+              }}>
+                {t(STATE_LABEL[val])}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {step === 'area' && (
         <div className="triage-step">
           <Prompt promptKey="triage.area.prompt" />
           <div className="triage-options">
-            {Object.entries(AREA_LABEL).map(([val, key]) => (
-              <button key={val} className="triage-option" onClick={() => { setTriage((p) => ({ ...p, area: val })); setStep('zip') }}>
-                {t(key)}
+            {(STATE_AREAS[triage.state] ?? STATE_AREAS.IL).map((val) => (
+              <button key={val} className="triage-option" onClick={() => {
+                setTriage((p) => ({ ...p, area: val }))
+                // ZIP→region is an Illinois-only table, so only IL uses the ZIP step.
+                setStep(triage.state === 'IL' ? 'zip' : 'subject')
+              }}>
+                {t(AREA_LABEL[val])}
               </button>
             ))}
           </div>
@@ -446,6 +546,26 @@ function SectionHead({ title, id, text, speech, language }: { title: string; id:
   )
 }
 
+function HandoffCTA({ handoff }: { handoff: NonNullable<AskResponse['handoff']> }) {
+  const { t } = useLanguage()
+  const url = handoff.url ? (handoff.url.startsWith('http') ? handoff.url : `https://${handoff.url}`) : undefined
+  return (
+    <div className="handoff-cta" style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--line, #e4ded3)' }}>
+      <p className="handoff-prompt" style={{ margin: '0 0 0.5rem', fontSize: '0.92rem', color: 'var(--mute)' }}>
+        {t('chat.handoffPrompt')}
+      </p>
+      {url ? (
+        <a href={url} target="_blank" rel="noopener" className="btn btn-burgundy"
+           style={{ minHeight: '3rem', justifyContent: 'center', width: '100%' }}>
+          {t('chat.getLegalHelp')}: {handoff.name} ↗
+        </a>
+      ) : (
+        <p style={{ margin: 0 }}>{handoff.name}</p>
+      )}
+    </div>
+  )
+}
+
 function ConfidenceBadge({ level }: { level?: string }) {
   const { t } = useLanguage()
   if (!level || !['high', 'medium', 'low'].includes(level)) return null
@@ -494,7 +614,43 @@ function AnswerCard({ bot, id, speech, language, shareUrl }: { bot: AskResponse;
         </section>
       )}
 
+      {bot.local_orgs && bot.local_orgs.length > 0 && (
+        <section className="answer-section">
+          <SectionHead title={t('chat.localOrgs')} id={`${id}:orgs`} text={localOrgsSpeech(bot.local_orgs)} speech={speech} language={language} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {bot.local_orgs.map((o, i) => {
+              const tel = o.phone ? o.phone.replace(/[^0-9]/g, '') : ''
+              const web = orgHref(o.url)
+              const place = [o.city, o.state].filter(Boolean).join(', ')
+              return (
+                <div className="contact-card" key={`${o.name}-${i}`}>
+                  <p className="serif contact-name">{o.name}</p>
+                  {place && <p className="contact-sub">{place}</p>}
+                  {o.languages && o.languages.length > 0 && (
+                    <p className="contact-sub">{t('findhelp.langs')}: {o.languages.join(', ')}</p>
+                  )}
+                  <div className="contact-actions">
+                    {tel && (
+                      <a href={`tel:${tel}`} className="btn btn-burgundy" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+                        {t('chat.callNow')} {o.phone}
+                      </a>
+                    )}
+                    {web && (
+                      <a href={web} target="_blank" rel="noopener" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+                        {t('chat.visitSite')}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
       {bot.disclaimer && <p className="answer-disclaimer answer-disclaimer-bottom">{bot.disclaimer}</p>}
+
+      {bot.handoff && <HandoffCTA handoff={bot.handoff} />}
     </article>
   )
 }
@@ -608,6 +764,8 @@ function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: stri
         </a>
         <button className="btn btn-outline">{t('chat.moreOptions')}</button>
       </div>
+
+      {bot.handoff && <HandoffCTA handoff={bot.handoff} />}
     </article>
   )
 }

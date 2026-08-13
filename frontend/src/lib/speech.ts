@@ -18,6 +18,7 @@ const VOICE_LOCALE: Record<Language, string> = {
   zh: 'zh-CN',
   tl: 'fil-PH',
   vi: 'vi-VN',
+  pl: 'pl-PL',
 }
 
 export function speechSupported(): boolean {

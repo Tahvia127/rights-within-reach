@@ -1,0 +1,26 @@
+source_name,url,jurisdiction,locality,list_code,kind,http_status,text_chars
+"CA Civil Code 1946.2 (just cause for termination, AB 1482)",https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1946.2,CA,,HO-02,statute,200,24866
+"CA Civil Code 1947.12 (rent cap, AB 1482)",https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12,CA,,HO-06,statute,200,15746
+CA Civil Code 1950.5 (security deposits),https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5,CA,,HO-06,statute,200,27313
+CA Civil Code 1942 (repair and deduct),https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942,CA,,HO-05,statute,200,2647
+CA Civil Code 1941.1 (untenantable dwellings),https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1941.1,CA,,HO-05,statute,200,6581
+CA Civil Code 1940.2 (landlord harassment),https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1940.2,CA,,HO-06,statute,200,3192
+"CA Civil Code 789.3 (utility shutoff, lockout)",https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=789.3,CA,,HO-07,statute,200,3719
+CA Code of Civil Procedure 1161 (unlawful detainer),https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1161,CA,,HO-02,statute,200,8196
+"CA Code of Civil Procedure 1174 (judgment, eviction)",https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1174,CA,,HO-02,statute,200,8046
+AB 1482 bill text as enacted,https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB1482,CA,,HO-06,statute,200,34373
+California Courts self-help: eviction,https://selfhelp.courts.ca.gov/eviction,CA,,HO-02,court_guide,200,3976
+California Courts self-help: small claims,https://selfhelp.courts.ca.gov/small-claims,CA,,CO-03,court_guide,200,1855
+California Courts self-help: debt collection lawsuits,https://selfhelp.courts.ca.gov/debt-lawsuits,CA,,MO-00,court_guide,200,3459
+CA DFEH / CRD housing discrimination,https://calcivilrights.ca.gov/housing/,CA,,HO-01,agency_guide,200,27435
+CalWORKs (CDSS),https://www.cdss.ca.gov/calworks,CA,,BE-00,agency_guide,200,3682
+SF immigration legal help directory,https://immigrants.sf.gov/help/legal-resources,CA,san_francisco,IM-00,directory,200,17798
+SF citizenship help directory,https://immigrants.sf.gov/help/citizenship,CA,san_francisco,IM-00,directory,200,11781
+SFHSA immigrant services organizations,https://www.sfhsa.org/services/immigrants/immigrant-services-organizations,CA,san_francisco,BE-00,directory,200,4119
+SFHSA naturalization services,https://www.sfhsa.org/services/disability-aging/legal-assistance/naturalization-services,CA,san_francisco,IM-00,agency_guide,200,3732
+SF Anti-Displacement Coalition know your rights,https://sfadc.org/rights,CA,san_francisco,HO-06,kyr_guide,200,43289
+Housing Rights Committee of SF,https://hrcsf.org/,CA,san_francisco,HO-06,org,200,2695
+USCIS Form N-648 (medical disability exception),https://www.uscis.gov/n-648,federal,,IM-00,agency_guide,200,7873
+USCIS Policy Manual Vol 12 Part E Ch 3 (N-648),https://www.uscis.gov/policy-manual/volume-12-part-e-chapter-3,federal,,IM-00,agency_guide,200,57467
+"California Courts self-help: eviction, tenant side",https://selfhelp.courts.ca.gov/eviction-tenant,CA,,HO-02,court_guide,200,2823
+CA Attorney General: housing,https://oag.ca.gov/housing,CA,,HO-01,agency_guide,200,27589

@@ -17,6 +17,7 @@ LANGUAGES = {
     "zh": "Simplified Chinese",
     "tl": "Tagalog",
     "vi": "Vietnamese",
+    "pl": "Polish",
 }
 
 # One block per language: the disclaimer, the refusal headlines, and the
@@ -159,7 +160,8 @@ REFERRAL_ORGS = {
 # Pass 1: research. Claude reads our corpus, may check the allow-listed web, and
 # writes a plain brief. Pass 2 turns that brief into the structured answer.
 RESEARCH_PROMPT = """You are a careful legal-information researcher for Rights \
-Within Reach (Illinois housing, public benefits, home-repair programs, consumer debt).
+Within Reach ({jurisdiction} housing, public benefits, home-repair programs, consumer debt, \
+veterans' benefits, and workers' rights including unpaid wages).
 
 You are given excerpts from our own library. First rely on those. You MAY use the \
 web_search tool to CHECK whether our library is current and to fill small gaps — but only \
@@ -179,8 +181,9 @@ This brief is internal notes, not the final user-facing answer."""
 
 # Pass 2: write the user-facing answer. Rule 7 gets appended for non-English.
 ANSWER_PROMPT = """You are the assistant for Rights Within Reach, a free tool that gives \
-plain-language LEGAL INFORMATION (never legal advice) about Illinois housing, public \
-benefits, home repair programs, and consumer debt. Your users are working-class families, \
+plain-language LEGAL INFORMATION (never legal advice) about {jurisdiction} housing, public \
+benefits, home repair programs, consumer debt, veterans' benefits, and workers' rights \
+(including unpaid wages). Your users are working-class families, \
 older immigrants, and longtime homeowners, often in a stressful situation and reading on a \
 phone. Write at a 6th-grade reading level, in short sentences.
 
@@ -206,10 +209,13 @@ headings (no "#" or "##"). Do not write a title. You may use a simple bullet lis
 for steps or a few options, and bold ("**word**") only for a key number or deadline. Lead \
 with the direct answer in the first sentence.
 
-5. STAY IN SCOPE. You only cover Illinois housing, benefits, home repair, and consumer \
-debt. If the question is about immigration, criminal law, or family law (divorce, custody, \
-child support), do not answer it — briefly say it's out of scope and that a referral \
-follows.
+5. STAY IN SCOPE. You only cover {jurisdiction} housing, benefits, home repair, consumer \
+debt, veterans' benefits, and workers' rights (including unpaid wages). Answer only about \
+{jurisdiction} or federal law — if the sources you were \
+given are for a different state, say you don't have {jurisdiction} information and that a \
+referral follows; never adapt another state's law. If the question is about immigration, \
+criminal law, or family law (divorce, custody, child support), do not answer it — briefly \
+say it's out of scope and that a referral follows.
 
 6. RETURN STRUCTURED OUTPUT via the `answer` tool. Put the plain-language answer in \
 `answer` (no disclaimer — the app adds it separately), 2-5 concrete actions in \
@@ -301,4 +307,69 @@ ALLOWED_DOMAINS = [
     "irs.gov",                  # tax debt
     "usda.gov",                 # rural home-repair (Section 504)
     "hhs.gov",
+    # --- California (jurisdiction expansion) ---
+    "leginfo.legislature.ca.gov",  # California statutes (Civ. Code, CCP)
+    "courts.ca.gov",               # California Courts
+    "selfhelp.courts.ca.gov",      # California Courts self-help
+    "calcivilrights.ca.gov",       # CA Civil Rights Dept (housing discrimination)
+    "hcd.ca.gov",                  # CA Housing & Community Development
+    "oag.ca.gov",                  # CA Attorney General
+    "cdss.ca.gov",                 # CA Dept of Social Services (CalFresh/CalWORKs)
+    "dhcs.ca.gov",                 # Medi-Cal
+    "benefitscal.com",             # CA benefits application portal
+    "edd.ca.gov",                  # CA unemployment
+    "lawhelpca.org",               # CA legal-aid directory
+    # San Francisco local
+    "sf.gov",
+    "sfhsa.org",
+    "immigrants.sf.gov",
+    "sfadc.org",                   # SF Anti-Displacement Coalition
+    "hrcsf.org",                   # Housing Rights Committee of SF
+    # --- Missouri (jurisdiction expansion) ---
+    "revisor.mo.gov",              # Missouri Revised Statutes
+    "ago.mo.gov",                  # Missouri Attorney General
+    "courts.mo.gov",               # Missouri Courts / self-help
+    "dss.mo.gov",                  # MO Dept of Social Services
+    "mydss.mo.gov",                # MO benefits portal (SNAP/TANF/MO HealthNet)
+    "dhss.mo.gov",                 # MO Health & Senior Services
+    "molawhelp.org",               # MO legal-aid directory
+    "lsmo.org",                    # Missouri Legal Services (self-help content)
+    "lsem.org",                    # Legal Services of Eastern Missouri
+    "lawmo.org",                   # Legal Aid of Western Missouri
+    "stlouis-mo.gov",              # City of St. Louis
+    # --- Texas (jurisdiction expansion) ---
+    "statutes.capitol.texas.gov",  # Texas statutes (Property Code)
+    "texasattorneygeneral.gov",    # Texas Attorney General
+    "texaslawhelp.org",            # Texas legal-aid self-help & directory
+    "sll.texas.gov",               # Texas State Law Library guides
+    "txcourts.gov",                # Texas Courts
+    "hhs.texas.gov",               # Texas Health & Human Services (SNAP/Medicaid)
+    "yourtexasbenefits.com",       # Texas benefits portal
+    "lonestarlegal.org",           # Lone Star Legal Aid (Houston/East TX)
+    "trla.org",                    # Texas RioGrande Legal Aid
+    # --- New York (jurisdiction expansion) ---
+    "nysenate.gov",                # New York statutes (RPL, GOB, RPAPL)
+    "nycourts.gov",                # New York Courts
+    "otda.ny.gov",                 # NY Office of Temporary & Disability Assistance (SNAP/TA)
+    "health.ny.gov",               # NY Medicaid / State of Health
+    "hcr.ny.gov",                  # NY Homes & Community Renewal (rent regulation / DHCR)
+    "nyc.gov",                     # NYC HPD, ACCESS HRA
+    "access.nyc.gov",              # NYC benefits screening
+    "lawhelpny.org",               # NY legal-aid directory
+    "legalaidnyc.org",             # The Legal Aid Society (NYC)
+    "metcouncilonhousing.org",     # Met Council on Housing (NYC tenants)
+    "nylag.org",                   # New York Legal Assistance Group
+    # --- Veterans & Military (federal category) ---
+    "va.gov",                      # US Dept of Veterans Affairs (benefits, claims)
+    "benefits.va.gov",
+    "ecfr.gov",                    # federal regulations (38 CFR — VA)
+    "vets.gov",
+    # --- Work & Employment (federal + state labor) ---
+    "dol.gov",                     # US Dept of Labor (FLSA wage & hour)
+    "eeoc.gov",                    # Equal Employment Opportunity Commission
+    "nlrb.gov",                    # National Labor Relations Board
+    "twc.texas.gov",               # Texas Workforce Commission (wage claims)
+    "dir.ca.gov",                  # CA Dept of Industrial Relations (DLSE wage claims)
+    "labor.mo.gov",                # Missouri Dept of Labor
+    "dol.ny.gov",                  # NY Dept of Labor
 ]
