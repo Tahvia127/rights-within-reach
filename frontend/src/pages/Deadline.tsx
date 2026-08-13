@@ -9,7 +9,7 @@ import { ReadAloud } from '../components/ReadAloud'
 import { useLanguage, Language } from '../lib/translations'
 
 const DATE_LOCALE: Record<Language, string> = {
-  en: 'en-US', es: 'es', zh: 'zh-CN', tl: 'fil-PH', vi: 'vi',
+  en: 'en-US', es: 'es', zh: 'zh-CN', tl: 'fil-PH', vi: 'vi', pl: 'pl',
 }
 
 export default function Deadline() {

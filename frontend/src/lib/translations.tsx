@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
-export type Language = 'en' | 'es' | 'zh' | 'tl' | 'vi'
+export type Language = 'en' | 'es' | 'zh' | 'tl' | 'vi' | 'pl'
 
 export const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -8,6 +8,7 @@ export const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'zh', label: '中文' },
   { code: 'tl', label: 'Tagalog' },
   { code: 'vi', label: 'Tiếng Việt' },
+  { code: 'pl', label: 'Polski' },
 ]
 
 interface LanguageContextValue {
@@ -63,6 +64,9 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.answerLabel': 'Answer',
     'chat.nextSteps': 'Next steps',
     'chat.whoToContact': 'Who to contact & how',
+    'chat.localOrgs': 'Organizations near you',
+    'chat.handoffPrompt': 'Still need help? Get matched with free legal aid:',
+    'chat.getLegalHelp': 'Get legal help',
     'chat.welcome': 'Ask about housing, money, home repairs, or public benefits. Every answer cites the law and points you to real help, in your language.',
     'chat.suggestAria': 'Suggested follow-up questions',
     'chat.refuseAria': 'Out of scope, who to call instead',
@@ -75,11 +79,27 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.webSource': 'Web',
     'chat.webChecked': 'Checked on the web',
     'speak.noVoice': 'No voice for this language is installed on your device, so it will be read in a default voice.',
+    'triage.state.prompt': 'Which state are you in? We answer with the law for your state.',
+    'triage.state.il': 'Illinois',
+    'triage.state.ca': 'California',
+    'triage.state.mo': 'Missouri',
+    'triage.state.tx': 'Texas',
+    'triage.state.ny': 'New York',
     'triage.area.prompt': 'Where do you live? This helps us point you to the right local help.',
     'triage.area.chicago': 'Chicago',
     'triage.area.suburbanCook': 'Suburban Cook County',
     'triage.area.collar': 'Collar county (DuPage, Lake, Will…)',
     'triage.area.elsewhere': 'Elsewhere in Illinois',
+    'triage.area.sf': 'San Francisco',
+    'triage.area.elsewhereCa': 'Elsewhere in California',
+    'triage.area.stLouis': 'St. Louis',
+    'triage.area.kansasCity': 'Kansas City',
+    'triage.area.elsewhereMo': 'Elsewhere in Missouri',
+    'triage.area.houston': 'Houston',
+    'triage.area.dallas': 'Dallas–Fort Worth',
+    'triage.area.elsewhereTx': 'Elsewhere in Texas',
+    'triage.area.nyc': 'New York City',
+    'triage.area.elsewhereNy': 'Elsewhere in New York',
     'triage.zip.prompt': 'What is your ZIP code? (optional)',
     'triage.zip.placeholder': 'e.g. 60601',
     'triage.zip.next': 'Next',
@@ -279,14 +299,25 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'findhelp.area.collar': 'Collar county',
     'findhelp.area.illinois': 'Elsewhere in Illinois',
     'findhelp.zip': 'ZIP code (optional)',
-    'findhelp.zipHint': 'A Chicago ZIP will pick “Chicago” for you.',
+    'findhelp.zipHint': 'We’ll rank organizations closest to your ZIP first.',
+    'findhelp.state': 'Which state are you in?',
+    'findhelp.topicLabel': 'What do you need help with?',
+    'findhelp.topic.all': 'All topics',
+    'findhelp.loading': 'Finding organizations…',
+    'findhelp.error': 'Could not load organizations right now. Please try again.',
+    'findhelp.none': 'No listed organizations for that filter yet. Try the statewide directory:',
+    'findhelp.langs': 'Speaks',
     'findhelp.prompt': 'Pick your area to see the free organizations that serve it.',
     'findhelp.results': 'Organizations that serve your area',
     'findhelp.topic.housing': 'Housing & eviction',
     'findhelp.topic.money': 'Money & debt',
     'findhelp.topic.repairs': 'Home repairs',
     'findhelp.topic.benefits': 'Public benefits',
+    'findhelp.topic.veterans': 'Veterans & military',
+    'findhelp.topic.work': 'Work & wages',
     'findhelp.topic.general': 'Not sure / anything else',
+    'subject.veterans': 'Veterans & military',
+    'subject.work': 'Work & wages',
     'findhelp.call': 'Call',
     'findhelp.visit': 'Visit site',
     'findhelp.disclaimer': 'These are verified, free organizations. General information, not legal advice.',
@@ -370,6 +401,9 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.answerLabel': 'Respuesta',
     'chat.nextSteps': 'Próximos pasos',
     'chat.whoToContact': 'A quién contactar y cómo',
+    'chat.localOrgs': 'Organizaciones cerca de ti',
+    'chat.handoffPrompt': '¿Aún necesitas ayuda? Conéctate con ayuda legal gratuita:',
+    'chat.getLegalHelp': 'Obtén ayuda legal',
     'chat.welcome': 'Pregunta sobre vivienda, dinero, reparaciones del hogar o beneficios públicos. Cada respuesta cita la ley y te dirige a ayuda real, en tu idioma.',
     'chat.suggestAria': 'Preguntas de seguimiento sugeridas',
     'chat.refuseAria': 'Fuera de alcance: a quién llamar',
@@ -382,11 +416,27 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.webSource': 'Web',
     'chat.webChecked': 'Verificado en la web',
     'speak.noVoice': 'No hay una voz para este idioma instalada en tu dispositivo, así que se leerá con una voz predeterminada.',
+    'triage.state.prompt': '¿En qué estado vives? Respondemos con la ley de tu estado.',
+    'triage.state.il': 'Illinois',
+    'triage.state.ca': 'California',
+    'triage.state.mo': 'Missouri',
+    'triage.state.tx': 'Texas',
+    'triage.state.ny': 'Nueva York',
     'triage.area.prompt': '¿Dónde vives? Esto nos ayuda a dirigirte a la ayuda local correcta.',
     'triage.area.chicago': 'Chicago',
     'triage.area.suburbanCook': 'Suburbios del Condado de Cook',
     'triage.area.collar': 'Condado vecino (DuPage, Lake, Will…)',
     'triage.area.elsewhere': 'Otro lugar en Illinois',
+    'triage.area.sf': 'San Francisco',
+    'triage.area.elsewhereCa': 'Otro lugar en California',
+    'triage.area.stLouis': 'St. Louis',
+    'triage.area.kansasCity': 'Kansas City',
+    'triage.area.elsewhereMo': 'Otro lugar en Missouri',
+    'triage.area.houston': 'Houston',
+    'triage.area.dallas': 'Dallas–Fort Worth',
+    'triage.area.elsewhereTx': 'Otro lugar en Texas',
+    'triage.area.nyc': 'Ciudad de Nueva York',
+    'triage.area.elsewhereNy': 'Otro lugar en Nueva York',
     'triage.zip.prompt': '¿Cuál es tu código postal? (opcional)',
     'triage.zip.placeholder': 'ej. 60601',
     'triage.zip.next': 'Siguiente',
@@ -586,14 +636,25 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'findhelp.area.collar': 'Condado vecino',
     'findhelp.area.illinois': 'Otro lugar de Illinois',
     'findhelp.zip': 'Código postal (opcional)',
-    'findhelp.zipHint': 'Un código postal de Chicago elegirá “Chicago” por ti.',
+    'findhelp.zipHint': 'Mostraremos primero las organizaciones más cercanas a tu código postal.',
+    'findhelp.state': '¿En qué estado vives?',
+    'findhelp.topicLabel': '¿Con qué necesitas ayuda?',
+    'findhelp.topic.all': 'Todos los temas',
+    'findhelp.loading': 'Buscando organizaciones…',
+    'findhelp.error': 'No se pudieron cargar las organizaciones ahora. Inténtalo de nuevo.',
+    'findhelp.none': 'Aún no hay organizaciones para ese filtro. Prueba el directorio estatal:',
+    'findhelp.langs': 'Habla',
     'findhelp.prompt': 'Elige tu zona para ver las organizaciones gratuitas que la atienden.',
     'findhelp.results': 'Organizaciones que atienden tu zona',
     'findhelp.topic.housing': 'Vivienda y desalojo',
     'findhelp.topic.money': 'Dinero y deudas',
     'findhelp.topic.repairs': 'Reparaciones del hogar',
     'findhelp.topic.benefits': 'Beneficios públicos',
+    'findhelp.topic.veterans': 'Veteranos y militares',
+    'findhelp.topic.work': 'Trabajo y salarios',
     'findhelp.topic.general': 'No estoy seguro / otra cosa',
+    'subject.veterans': 'Veteranos y militares',
+    'subject.work': 'Trabajo y salarios',
     'findhelp.call': 'Llamar',
     'findhelp.visit': 'Visitar sitio',
     'findhelp.disclaimer': 'Son organizaciones gratuitas y verificadas. Información general, no asesoría legal.',
@@ -1544,6 +1605,69 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'res.bring.title': 'Chuẩn bị cho buổi gặp trợ giúp pháp lý đầu tiên của bạn.',
     'res.bring.sub': 'Hầu hết các buổi tư vấn chỉ kéo dài 30 phút. Mang đúng giấy tờ và bạn sẽ nhận được nhiều hơn từ buổi gặp.',
   },
+  // Polish — curated subset of the highest-traffic strings. Anything not listed
+  // falls back to English via t(); the "machine-assisted, under review" banner
+  // (mt.notice) tells users so. Machine-drafted, pending native review.
+  pl: {
+    'mt.notice': 'Te tłumaczenia są wspomagane maszynowo i są weryfikowane przez rodzimych użytkowników języka.',
+    'chat.welcome': 'Zadaj pytanie o mieszkanie, świadczenia, długi, sprawy weteranów lub pracę. Każda odpowiedź podaje źródła.',
+    'chat.placeholder': 'Wpisz swoje pytanie…',
+    'chat.typeQuestion': 'Wpisz swoje pytanie',
+    'chat.send': 'Wyślij',
+    'chat.searching': 'Szukam w źródłach…',
+    'chat.answerLabel': 'Odpowiedź',
+    'chat.nextSteps': 'Następne kroki',
+    'chat.whoToContact': 'Do kogo się zwrócić i jak',
+    'chat.localOrgs': 'Organizacje w Twojej okolicy',
+    'chat.handoffPrompt': 'Nadal potrzebujesz pomocy? Znajdź bezpłatną pomoc prawną:',
+    'chat.getLegalHelp': 'Uzyskaj pomoc prawną',
+    'chat.sources': 'Źródła',
+    'chat.helpful': 'Czy to było pomocne?',
+    'chat.yes': 'Tak',
+    'chat.no': 'Nie',
+    'chat.callNow': 'Zadzwoń teraz',
+    'chat.visitSite': 'Odwiedź stronę',
+    'chat.readAnswer': 'Przeczytaj na głos',
+    'chat.stopReading': 'Zatrzymaj czytanie',
+    'chat.phone': 'Telefon',
+    'chat.hours': 'Godziny',
+    'chat.website': 'Strona internetowa',
+    'chat.confidence': 'Pewność',
+    'chat.conf.high': 'wysoka',
+    'chat.conf.medium': 'średnia',
+    'chat.conf.low': 'niska',
+    'triage.state.prompt': 'W którym stanie mieszkasz? Odpowiadamy zgodnie z prawem Twojego stanu.',
+    'triage.area.prompt': 'Gdzie mieszkasz? To pomaga wskazać właściwą lokalną pomoc.',
+    'triage.subject.prompt': 'Czego dotyczy sprawa?',
+    'triage.skip': 'Pomiń i po prostu zapytaj →',
+    'triage.edit': 'Zmień',
+    'triage.summary': 'Pomagamy Ci w',
+    'triage.zip.prompt': 'Jaki jest Twój kod pocztowy? (opcjonalnie)',
+    'triage.zip.next': 'Dalej',
+    'triage.state.il': 'Illinois',
+    'triage.state.ca': 'Kalifornia',
+    'triage.state.mo': 'Missouri',
+    'triage.state.tx': 'Teksas',
+    'triage.state.ny': 'Nowy Jork',
+    'bottomnav.housing': 'Mieszkanie',
+    'bottomnav.money': 'Pieniądze i długi',
+    'bottomnav.repairs': 'Naprawy domu',
+    'bottomnav.benefits': 'Świadczenia',
+    'subject.veterans': 'Weterani i wojsko',
+    'subject.work': 'Praca i wynagrodzenie',
+    'findhelp.eyebrow': 'Znajdź pomoc w pobliżu',
+    'findhelp.title': 'Znajdź bezpłatną organizację',
+    'findhelp.state': 'W którym stanie mieszkasz?',
+    'findhelp.topicLabel': 'W czym potrzebujesz pomocy?',
+    'findhelp.topic.all': 'Wszystkie tematy',
+    'findhelp.loading': 'Szukam organizacji…',
+    'findhelp.none': 'Na razie brak organizacji dla tego filtra. Wypróbuj katalog stanowy:',
+    'findhelp.langs': 'Języki',
+    'findhelp.call': 'Zadzwoń',
+    'findhelp.visit': 'Odwiedź stronę',
+    'findhelp.zip': 'Kod pocztowy (opcjonalnie)',
+    'findhelp.disclaimer': 'To są zweryfikowane, bezpłatne organizacje. Informacje ogólne, nie porada prawna.',
+  },
 }
 
 // Referral-org card data (name/sub/hours/description) comes from the backend in
@@ -1636,6 +1760,9 @@ const ORG_I18N: Record<OrgLang, Record<string, string>> = {
     "Rights Within Reach doesn't cover divorce, custody, or child support. CARPLS can connect you with a lawyer who does.": 'Rights Within Reach không bao gồm ly hôn, quyền nuôi con hoặc cấp dưỡng con. CARPLS có thể kết nối bạn với luật sư phù hợp.',
     "I don't have information about that in my sources, but CARPLS can point you in the right direction.": 'Tôi không có thông tin về điều đó trong nguồn của mình, nhưng CARPLS có thể chỉ cho bạn hướng đi đúng.',
   },
+  // Org descriptors stay in English for Polish for now (names/phones are English
+  // across all languages anyway); orgText falls back to the English value.
+  pl: {},
 }
 
 /** Translate a backend-provided org descriptor / hours / blurb, keyed by its exact
@@ -1645,7 +1772,7 @@ export function orgText(value: string, language: Language): string {
   return ORG_I18N[language]?.[value.trim()] ?? value
 }
 
-const VALID_LANGS: Language[] = ['en', 'es', 'zh', 'tl', 'vi']
+const VALID_LANGS: Language[] = ['en', 'es', 'zh', 'tl', 'vi', 'pl']
 
 // Remember the chosen language across reloads and deep-links so the whole site
 // stays in the user's language, not just during one client-side session.
@@ -1658,6 +1785,7 @@ function detectBrowserLanguage(): Language | null {
       if (c.startsWith('zh')) return 'zh'
       if (c.startsWith('vi')) return 'vi'
       if (c.startsWith('tl') || c.startsWith('fil')) return 'tl'
+      if (c.startsWith('pl')) return 'pl'
       if (c.startsWith('en')) return 'en'
     }
   } catch { /* navigator unavailable */ }

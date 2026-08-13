@@ -9,7 +9,8 @@ python-dotenv
 
 # retrieval / RAG
 chromadb         # vector store (data/chroma, collection "rwr_docs")
-sentence-transformers  # local embeddings (all-MiniLM-L6-v2)
+sentence-transformers  # local embeddings (all-MiniLM-L6-v2) + optional CrossEncoder rerank
+rank-bm25        # optional hybrid dense+BM25 retrieval (only used when HYBRID_SEARCH=1)
 
 # LLM
 anthropic        # /ask answering + question translation

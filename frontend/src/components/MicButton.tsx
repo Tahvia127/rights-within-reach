@@ -3,7 +3,7 @@ import { useLanguage, Language } from '../lib/translations'
 
 // Map the UI language to a BCP-47 locale for the speech recognizer.
 const RECOG_LOCALE: Record<Language, string> = {
-  en: 'en-US', es: 'es-US', zh: 'zh-CN', tl: 'fil-PH', vi: 'vi-VN',
+  en: 'en-US', es: 'es-US', zh: 'zh-CN', tl: 'fil-PH', vi: 'vi-VN', pl: 'pl-PL',
 }
 
 // SpeechRecognition is unprefixed in some browsers, webkit-prefixed in others,

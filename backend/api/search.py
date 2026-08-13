@@ -21,8 +21,10 @@ def search(
     q: str = Query(..., max_length=2000, description="natural-language query"),
     k: int = Query(5, ge=1, le=20, description="number of results"),
     topic: str | None = Query(None, description="optional topic filter, e.g. money_debt"),
+    state: str | None = Query(None, description="optional jurisdiction filter, e.g. IL, CA, federal"),
+    locality: str | None = Query(None, description="optional locality boost, e.g. chicago, san_francisco"),
 ):
-    results = retrieve(q, k=k, topic=topic)
+    results = retrieve(q, k=k, topic=topic, state=state, locality=locality)
     record(request, kind="search", topic=topic, query_chars=len(q),
            count=len(results), question=q)
     return {"query": q, "count": len(results), "results": results}

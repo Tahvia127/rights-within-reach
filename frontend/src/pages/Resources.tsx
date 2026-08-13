@@ -119,7 +119,7 @@ const LGBTQ: ResourceCard[] = [
 // Card tag + description translations, keyed by the English text. Machine-drafted,
 // PENDING NATIVE-SPEAKER REVIEW. A missing key falls back to English. Org names,
 // phone numbers, and the meta line are left as-is across languages.
-const TAG_I18N: Record<Language, Record<string, string>> = {
+const TAG_I18N: Partial<Record<Language, Record<string, string>>> = {
   en: {},
   es: { 'Start here': 'Empieza aquí', 'Featured': 'Destacado', 'Chicago': 'Chicago', 'City': 'Ciudad', 'Court': 'Corte', 'Prevention': 'Prevención', 'Statewide': 'Estatal', 'Federal': 'Federal', 'Program': 'Programa', 'Nonprofit': 'Sin fines de lucro', 'Utility': 'Servicios', 'Emergency': 'Emergencia', 'State': 'Estado', 'Seniors': 'Mayores', 'Disability': 'Discapacidad', 'Self-help': 'Autoayuda', 'Pro bono': 'Pro bono', 'Forms': 'Formularios', '24/7': '24/7', 'Bilingual': 'Bilingüe', 'Multilingual': 'Multilingüe', 'Cook County': 'Condado de Cook', 'Legal': 'Legal', 'Mutual aid': 'Ayuda mutua' },
   zh: { 'Start here': '从这里开始', 'Featured': '推荐', 'Chicago': '芝加哥', 'City': '市政', 'Court': '法庭', 'Prevention': '预防', 'Statewide': '全州', 'Federal': '联邦', 'Program': '项目', 'Nonprofit': '非营利', 'Utility': '公用事业', 'Emergency': '紧急', 'State': '州', 'Seniors': '老年人', 'Disability': '残障', 'Self-help': '自助', 'Pro bono': '公益', 'Forms': '表格', '24/7': '24/7', 'Bilingual': '双语', 'Multilingual': '多语言', 'Cook County': '库克县', 'Legal': '法律', 'Mutual aid': '互助' },
@@ -127,7 +127,7 @@ const TAG_I18N: Record<Language, Record<string, string>> = {
   vi: { 'Start here': 'Bắt đầu ở đây', 'Featured': 'Nổi bật', 'Chicago': 'Chicago', 'City': 'Thành phố', 'Court': 'Tòa án', 'Prevention': 'Phòng ngừa', 'Statewide': 'Toàn bang', 'Federal': 'Liên bang', 'Program': 'Chương trình', 'Nonprofit': 'Phi lợi nhuận', 'Utility': 'Tiện ích', 'Emergency': 'Khẩn cấp', 'State': 'Bang', 'Seniors': 'Người cao tuổi', 'Disability': 'Khuyết tật', 'Self-help': 'Tự trợ giúp', 'Pro bono': 'Miễn phí', 'Forms': 'Biểu mẫu', '24/7': '24/7', 'Bilingual': 'Song ngữ', 'Multilingual': 'Đa ngôn ngữ', 'Cook County': 'Quận Cook', 'Legal': 'Pháp lý', 'Mutual aid': 'Tương trợ' },
 }
 
-const DESC_I18N: Record<Language, Record<string, string>> = {
+const DESC_I18N: Partial<Record<Language, Record<string, string>>> = {
   en: {},
   es: {
     'Free 24/7 helpline that connects you to a real person. Tell them your ZIP code and they route you to local help for rent, utilities, eviction prevention, food, and shelter.': 'Línea gratuita 24/7 que te conecta con una persona real. Da tu código postal y te dirigen a ayuda local para renta, servicios, prevención de desalojo, comida y refugio.',
@@ -318,7 +318,7 @@ const DESC_I18N: Record<Language, Record<string, string>> = {
 // Card meta chips (the /badges). Keyed by the exact English string; phone
 // numbers, URLs, addresses, and universal tokens (24/7, Chicago) fall back to
 // English. Machine-drafted, pending native review.
-const META_I18N: Record<Language, Record<string, string>> = {
+const META_I18N: Partial<Record<Language, Record<string, string>>> = {
   en: {},
   es: {
     'Call 311': 'Llame al 311',
@@ -586,7 +586,7 @@ export default function Resources() {
 }
 
 // "What to bring" checklists, per language. Machine-drafted, pending native review.
-const BRING_CARDS: Record<Language, { title: string; meta: string; items: string[] }[]> = {
+const BRING_CARDS: Record<'en', { title: string; meta: string; items: string[] }[]> & Partial<Record<Language, { title: string; meta: string; items: string[] }[]>> = {
   en: [
     { title: 'For housing issues', meta: 'Eviction, deposits, repairs', items: ['Your lease (every page)', 'Any notices from your landlord', 'Photos of any conditions or damage', 'Rent receipts or proof of payment', 'Photo ID'] },
     { title: 'For debt or consumer issues', meta: 'Garnishment, collection, utilities', items: ['Account statements', 'Collection letters or notices', 'A log of calls (date, time, what said)', 'Pay stubs and proof of income', 'Photo ID'] },

@@ -1,10 +1,12 @@
 """
 ask.py
-POST /ask — answers Illinois legal questions from our own sources, with guardrails.
+POST /ask — answers state legal questions (Illinois, California) from our own
+sources, with guardrails.
 
 Pipeline: translate to English -> block out-of-scope and dangerous questions ->
-retrieve chunks from Chroma -> refuse politely if nothing relevant -> ask Claude
-for a structured answer grounded only in what we retrieved.
+retrieve chunks from Chroma, filtered to federal + the user's state -> refuse
+politely if nothing relevant -> ask Claude for a structured answer grounded only
+in what we retrieved, framed to the user's jurisdiction.
 
 Every answer is source-grounded, avoids individualized advice, and ships with the
 disclaimer. All fixed text (prompts, translations, org cards) lives in content.py.
@@ -19,15 +21,18 @@ import anthropic
 from dotenv import load_dotenv
 from fastapi import APIRouter, Request
 
-from backend.analytics import record
+from backend.analytics import log_question_gap, record
 from backend.api.content import (
     ALLOWED_DOMAINS, ANSWER_PROMPT, ANSWER_TOOL, LANGUAGE_RULE, LANGUAGES,
     REFERRAL_ORGS, RESEARCH_PROMPT, text, title,
 )
+from backend.api.glossary import glossary_block
 from backend.api.schemas import AskRequest, AskResponse, FeedbackRequest
 from backend.limiter import limiter
+from backend.services.orgs import find_orgs
 from backend.services.retriever import search as retrieve
-from backend.services.routing import SUBJECT_TO_TOPIC, contact_for, resolve_region
+from backend.services.routing import SUBJECT_TO_TOPIC, contact_for, handoff_for, resolve_region
+from backend.services.taxonomy import KNOWN_STATES
 
 # Load backend/.env so ANTHROPIC_API_KEY is available when run via uvicorn.
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
@@ -70,7 +75,47 @@ _CACHE: dict[tuple, tuple[float, dict]] = {}
 _CACHE_TTL = 3600   # seconds
 _CACHE_MAX = 500    # entries
 
+# State code -> display name for source cards. Anything unrecognized shows as-is.
+_STATE_LABEL = {"IL": "Illinois", "CA": "California", "MO": "Missouri",
+                "TX": "Texas", "NY": "New York", "federal": "Federal"}
+
 _client = None
+
+
+def _norm_state(state: str | None) -> str | None:
+    """Normalize an incoming state to a known code, or None (= no filter).
+
+    Unknown values return None rather than an unusable filter, so a stray value
+    degrades to today's unfiltered behavior instead of refusing every answer."""
+    s = (state or "").strip()
+    if not s:
+        return None
+    s = "federal" if s.lower() == "federal" else s.upper()
+    return s if s in KNOWN_STATES else None
+
+
+def _norm_locality(locality: str | None) -> str | None:
+    loc = (locality or "").strip().lower().replace(" ", "_")
+    return loc or None
+
+
+def _jurisdiction_name(state: str | None) -> str:
+    """Display jurisdiction for the model prompts. Defaults to Illinois so an
+    unset state renders the prompt exactly as it did before the state layer."""
+    if not state or state == "IL":
+        return "Illinois"
+    return _STATE_LABEL.get(state, "Illinois")
+
+
+def _section_label(chunk: dict) -> str:
+    """Human label for a source card: 'California · San Francisco', 'Illinois',
+    'Federal'. Falls back to the legacy jurisdiction string when state is unset."""
+    state = chunk.get("state") or ""
+    name = _STATE_LABEL.get(state, state.title() if state else "")
+    if not name:
+        return (chunk.get("jurisdiction") or "").title()
+    loc = (chunk.get("locality") or "").replace("_", " ").title()
+    return f"{name} · {loc}" if loc else name
 
 
 def _claude() -> anthropic.Anthropic:
@@ -104,15 +149,25 @@ def ask(request: Request, req: AskRequest):
         return {"refused": False, "reason": "empty",
                 "answer": "Please type a question.", "sources": [], "topic": ""}
 
+    # Jurisdiction changes the correct answer, so it is part of the cache key.
+    state = _norm_state(req.state)
+    locality = _norm_locality(req.locality)
+
     # Triage inputs change the answer, so they belong in the cache key.
-    key = (question.lower(), language, req.area or "", (req.zip or "")[:5], req.subject or "")
+    key = (question.lower(), language, req.area or "", (req.zip or "")[:5],
+           req.subject or "", state or "", locality or "")
     result = _cache_get(key)
     cached = result is not None
     if not cached:
-        result = _handle(question, language, req.area, req.zip, req.subject)
+        result = _handle(question, language, req.area, req.zip, req.subject, state, locality)
         if result.get("reason") != "error":  # never cache a transient failure
             _cache_put(key, result)
     _record_ask(request, req, language, result, cached)
+    # Opt-in gap log: capture questions the corpus couldn't answer well, so we can
+    # see what to add next. No-ops unless QUESTION_GAP_LOG is set; PII-scrubbed and
+    # DV/immigration-excluded inside the logger.
+    log_question_gap(question, reason=result.get("reason"), confidence=result.get("confidence"),
+                     topic=result.get("topic"), state=state, language=language)
     return result
 
 
@@ -153,6 +208,8 @@ def _record_ask(request, req, language: str, result: dict, cached: bool) -> None
         area=req.area or None,
         subject=req.subject or None,
         zip_given=bool(req.zip),
+        state=_norm_state(req.state),
+        locality=_norm_locality(req.locality),
         question=req.question,
     )
 
@@ -166,9 +223,10 @@ def _category(question: str) -> str | None:
     return None
 
 
-def _refuse(category: str, language: str) -> dict:
+def _refuse(category: str, language: str, state: str | None = None) -> dict:
     """Refusal payload: translated headline plus the org card the frontend shows.
-    Org contact details are language-neutral and stay as-is."""
+    Org contact details are language-neutral and stay as-is. A warm handoff to the
+    state's legal-aid intake is always included so a refusal never dead-ends."""
     return {
         "refused": True,
         "reason": category,
@@ -177,6 +235,7 @@ def _refuse(category: str, language: str) -> dict:
         "sources": [],
         "topic": category,
         "refusal_org": REFERRAL_ORGS[category],
+        "handoff": handoff_for(state),
     }
 
 
@@ -198,13 +257,13 @@ def _to_english(question: str, language: str) -> str:
         return question
 
 
-def _research_with_web(q_en: str, context: str) -> tuple[str, list[dict]]:
+def _research_with_web(q_en: str, context: str, jurisdiction: str) -> tuple[str, list[dict]]:
     """Pass 1: research the question against our corpus plus the allow-listed web.
     Returns (brief, web_sources). Raises anthropic.APIError if the call fails."""
     resp = _claude().messages.create(
         model=MODEL,
         max_tokens=1500,
-        system=RESEARCH_PROMPT,
+        system=RESEARCH_PROMPT.format(jurisdiction=jurisdiction),
         messages=[{"role": "user", "content":
                    f"Our library excerpts:\n\n{context}\n\nQuestion: {q_en}\n\n"
                    "Research and write the brief."}],
@@ -269,7 +328,7 @@ def _source_cards(chunks: list[dict], web_sources: list[dict]) -> list[dict]:
         seen.add(c["source_name"])
         cards.append({
             "title": c["source_name"],
-            "section": (c.get("jurisdiction") or "").title(),
+            "section": _section_label(c),
             "url": c["url"],
             "topic": c["topic"],
             "score": c["score"],
@@ -283,30 +342,42 @@ def _source_cards(chunks: list[dict], web_sources: list[dict]) -> list[dict]:
 # ------------------------------------------------------------------- pipeline
 
 def _handle(question: str, language: str, area: str | None,
-            zip_code: str | None, subject: str | None) -> dict:
+            zip_code: str | None, subject: str | None,
+            state: str | None = None, locality: str | None = None) -> dict:
     """Translate -> filter -> retrieve -> answer. The optional triage inputs
-    (area/zip/subject) narrow retrieval and pick the referral org."""
+    (area/zip/subject) narrow retrieval and pick the referral org; state/locality
+    keep retrieval inside the user's jurisdiction."""
     q_en = _to_english(question, language)
 
     # 1. Out-of-scope and danger pre-filter.
     cat = _category(q_en)
     if cat:
-        return _refuse(cat, language)
+        return _refuse(cat, language, state)
 
-    # 2. Retrieve. A triage subject narrows the search; if that finds nothing,
-    # retry across all topics before giving up.
+    # 2. Retrieve, filtered to federal + the user's state. A triage subject
+    # narrows the topic; if that finds nothing, retry across all topics (still
+    # within the jurisdiction) before giving up.
     subject_topic = SUBJECT_TO_TOPIC.get((subject or "").strip())
-    chunks = [c for c in retrieve(q_en, k=TOP_K, topic=subject_topic) if c["score"] >= MIN_SCORE]
+    chunks = [c for c in retrieve(q_en, k=TOP_K, topic=subject_topic, state=state,
+                                  locality=locality) if c["score"] >= MIN_SCORE]
     if not chunks and subject_topic:
-        chunks = [c for c in retrieve(q_en, k=TOP_K) if c["score"] >= MIN_SCORE]
+        chunks = [c for c in retrieve(q_en, k=TOP_K, state=state, locality=locality)
+                  if c["score"] >= MIN_SCORE]
     if not chunks:
-        return _refuse("no_results", language)
+        return _refuse("no_results", language, state)
 
-    # 3. Pick the "who to contact" org by topic and region.
+    # 3. Pick the "who to contact" org by topic, region, and state.
     top_topic = subject_topic or Counter(c["topic"] for c in chunks).most_common(1)[0][0]
-    org = contact_for(top_topic, resolve_region(area, zip_code))
+    region = locality if state == "CA" else resolve_region(area, zip_code)
+    org = contact_for(top_topic, region, state)
     contact_line = (f"Referral organization (for contact_why / contact_how): "
                     f"{org['name']} — {org['sub']}, phone {org['phone']}.")
+
+    # Verified local orgs for this state + topic, ranked toward the user's
+    # language. Complements the single model-written referral. Only when we know
+    # the state, so we never mix jurisdictions; empty when the finder has none.
+    local_orgs = find_orgs(state=state, topic=top_topic, language=language,
+                           zip_code=zip_code, limit=3) if state else []
 
     # 4. Build the context blocks the model reads.
     context = "\n\n".join(
@@ -316,19 +387,21 @@ def _handle(question: str, language: str, area: str | None,
 
     # 5. Web check only when our corpus looks thin or uncertain. If it fails or
     # is turned off, we fall back to corpus-only.
+    jurisdiction = _jurisdiction_name(state)
     top_score = max((c["score"] for c in chunks), default=0.0)
     corpus_strong = top_score >= WEB_STRONG_SCORE and len(chunks) >= WEB_STRONG_MIN_CHUNKS
     brief, web_sources = "", []
     if WEB_SEARCH_ENABLED and not corpus_strong:
         try:
-            brief, web_sources = _research_with_web(q_en, context)
+            brief, web_sources = _research_with_web(q_en, context, jurisdiction)
         except anthropic.APIError as e:
             print(f"[ask] web research failed, falling back to corpus-only: {e}")
 
     # 6. Write the answer, from the brief if we have one, otherwise the corpus.
-    system = ANSWER_PROMPT
+    system = ANSWER_PROMPT.format(jurisdiction=jurisdiction)
     if language != "en":
         system += LANGUAGE_RULE.format(language=LANGUAGES[language])
+        system += glossary_block(language)  # pin legal terms of art for this language
 
     if brief:
         user_content = (
@@ -364,4 +437,8 @@ def _handle(question: str, language: str, area: str | None,
         "sources": _source_cards(chunks, web_sources),
         "topic": top_topic,
         "confidence": fields["confidence"],
+        "local_orgs": local_orgs,
+        # Low-confidence answers get the warm handoff too — the sources were thin
+        # or conflicting, so point the user at a real intake rather than stopping.
+        "handoff": handoff_for(state) if fields["confidence"] == "low" else None,
     }

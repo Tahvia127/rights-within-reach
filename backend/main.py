@@ -14,6 +14,7 @@ from backend.limiter import limiter
 from backend.analytics import RequestLoggingMiddleware
 from backend.api.search import router as search_router
 from backend.api.ask import router as ask_router
+from backend.api.orgs import router as orgs_router
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
@@ -59,3 +60,4 @@ def health():
 
 app.include_router(search_router, prefix="/api")
 app.include_router(ask_router, prefix="/api")
+app.include_router(orgs_router, prefix="/api")
