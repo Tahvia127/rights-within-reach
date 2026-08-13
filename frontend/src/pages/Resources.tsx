@@ -6,6 +6,7 @@ import { SiteFooter } from '../components/SiteFooter'
 import { Icon, IconName } from '../lib/icons'
 import { ReadAloud } from '../components/ReadAloud'
 import { FindHelpNearMe } from '../components/FindHelpNearMe'
+import { JurisdictionNotice } from '../components/JurisdictionNotice'
 import { useLanguage, Language } from '../lib/translations'
 
 interface ResourceCard {
@@ -484,8 +485,9 @@ export default function Resources() {
       <SkipLink />
       <LanguageStrip />
       <SiteHeader />
+      <JurisdictionNotice />
 
-      <header className="topic-page-hero" role="banner" data-readable>
+      <header className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {t('nav.resources')}

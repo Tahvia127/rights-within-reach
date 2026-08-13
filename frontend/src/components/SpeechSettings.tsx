@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useLanguage, Language } from '../lib/translations'
 import { useSpeechContext } from '../lib/speech'
 import { Icon } from '../lib/icons'
@@ -15,6 +15,26 @@ export function SpeechSettings() {
   const { supported, rate, setRate, voiceForLang, setVoiceForLang, voices } = useSpeechContext()
   const { t, language } = useLanguage()
   const [open, setOpen] = useState(false)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
+
+  // Disclosure behavior: Escape closes and returns focus; outside-click closes.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus() }
+    }
+    const onDown = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onDown)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onDown)
+    }
+  }, [open])
+
   if (!supported) return null
 
   const voiceURI = voiceForLang(language)
@@ -23,12 +43,14 @@ export function SpeechSettings() {
   const others  = voices.filter((v) => !v.lang.toLowerCase().startsWith(prefix))
 
   return (
-    <div className="speech-settings">
+    <div className="speech-settings" ref={wrapRef}>
       <button
+        ref={btnRef}
         type="button"
         className="speech-settings-btn"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
+        aria-controls="speech-pop"
         aria-label={t('speak.settings')}
       >
         <Icon name="volume" size={18} aria-hidden="true" />
@@ -38,7 +60,7 @@ export function SpeechSettings() {
       </button>
 
       {open && (
-        <div className="speech-pop" role="dialog" aria-label={t('speak.settings')}>
+        <div className="speech-pop" id="speech-pop" role="group" aria-label={t('speak.settings')}>
           <div className="speech-pop-label-row">
             <span className="speech-pop-label">{t('speak.speed')}</span>
             <span className="speech-rate-val">{rate}×</span>

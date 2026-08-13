@@ -71,6 +71,18 @@ a:hover { color: var(--burgundy-hover); }
   outline-color: var(--bone) !important;
 }
 
+/* Jurisdiction heads-up banner (shown to non-Illinois users on IL-only pages) */
+.jurisdiction-notice {
+  background: var(--cream, #f6efe1);
+  border-bottom: 2px solid var(--burgundy, #6B1F2E);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+.jurisdiction-notice p { margin: 0 auto; max-width: 60rem; }
+.jurisdiction-notice a { font-weight: 700; }
+
 /* W3C 2.4.1 skip-to-content link */
 .skip-link {
   position: absolute;
@@ -1034,7 +1046,6 @@ abbr[title] {
   border-top: 2px solid var(--border-strong);
   box-shadow: 0 -4px 16px rgba(21, 35, 62, 0.12);
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
-  overflow-x: auto;
 }
 .moving-nav-item {
   flex: 1 1 0;
@@ -1050,7 +1061,7 @@ abbr[title] {
   text-decoration: none;
   color: var(--midnight);
   font-weight: 700;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   line-height: 1.05;
   text-align: center;
 }

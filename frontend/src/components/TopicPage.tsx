@@ -4,6 +4,7 @@ import { SkipLink } from './SkipLink'
 import { LanguageStrip } from './LanguageStrip'
 import { SiteHeader } from './SiteHeader'
 import { SiteFooter } from './SiteFooter'
+import { JurisdictionNotice } from './JurisdictionNotice'
 import { Icon, IconName } from '../lib/icons'
 import { useLanguage } from '../lib/translations'
 import { ReadAloud } from './ReadAloud'
@@ -62,6 +63,7 @@ export function TopicPage(props: TopicPageProps) {
       <SkipLink />
       <LanguageStrip />
       <SiteHeader />
+      <JurisdictionNotice />
 
       <header className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">

@@ -20,6 +20,8 @@ interface DemoMessage {
   topicLink?: { slug: string; label: string; sub: string }
   /** Snapshot of what was asked, so the answer can be shared as a deep link. */
   ask?: { lang: Language; state?: string; locality?: string; area?: string; zip?: string; subject?: string }
+  /** True when served from the offline demo fallback (live service unreachable). */
+  demo?: boolean
 }
 
 // Build a shareable /chat URL that reproduces a question (+ its language/triage).
@@ -174,12 +176,14 @@ export default function Chat() {
     try {
       const response = await ask({ question, language: ctx.lang, state: ctx.state, locality: ctx.locality, area: ctx.area, zip: ctx.zip, subject: ctx.subject })
       // If the answer engine soft-failed (e.g. out of API credits), fall back to a
-      // curated demo answer so a live demo still shows a real, structured card.
-      const bot = response.reason === 'error' ? matchDemoAnswer(question, ctx.subject, ctx.lang) : response
-      setMessages((prev) => [...prev, { user: question, bot, ask: ctx }])
+      // curated demo answer so a live demo still shows a real, structured card —
+      // but flag it so the UI can tell the user it's offline example info.
+      const isDemo = response.reason === 'error'
+      const bot = isDemo ? matchDemoAnswer(question, ctx.subject, ctx.lang) : response
+      setMessages((prev) => [...prev, { user: question, bot, ask: ctx, demo: isDemo }])
     } catch {
       // Hard failure (network/server unreachable): use the demo fallback too.
-      setMessages((prev) => [...prev, { user: question, bot: matchDemoAnswer(question, ctx.subject, ctx.lang), ask: ctx }])
+      setMessages((prev) => [...prev, { user: question, bot: matchDemoAnswer(question, ctx.subject, ctx.lang), ask: ctx, demo: true }])
     } finally {
       setLoading(false)
     }
@@ -423,8 +427,25 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
     </div>
   )
 
+  // Step flow depends on state (only Illinois uses the ZIP step).
+  const flow: ('state' | 'area' | 'zip' | 'subject')[] =
+    triage.state === 'IL' ? ['state', 'area', 'zip', 'subject'] : ['state', 'area', 'subject']
+  const idx = flow.indexOf(step as 'state' | 'area' | 'zip' | 'subject')
+  const goBack = () => { const prev = flow[idx - 1]; if (prev) setStep(prev) }
+
   return (
     <section className="triage-panel" aria-label={t('triage.aria')}>
+      {idx >= 0 && (
+        <div className="triage-nav" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+          {idx > 0
+            ? <button type="button" className="triage-skip" onClick={goBack}>← {t('triage.back')}</button>
+            : <span />}
+          <span style={{ fontSize: '0.82rem', color: 'var(--mute)' }}
+                aria-label={`${t('triage.step')} ${idx + 1} / ${flow.length}`}>
+            {idx + 1} / {flow.length}
+          </span>
+        </div>
+      )}
       {step === 'state' && (
         <div className="triage-step">
           <Prompt promptKey="triage.state.prompt" />
@@ -493,13 +514,17 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
         </div>
       )}
 
-      <button className="triage-skip" onClick={() => setStep('ready')}>{t('triage.skip')}</button>
+      {/* State is the highest-value question, so it can't be skipped — but the
+          rest of the funnel can. */}
+      {step !== 'state' && (
+        <button className="triage-skip" onClick={() => setStep('ready')}>{t('triage.skip')}</button>
+      )}
     </section>
   )
 }
 
 function Exchange({ message, id, speech, language }: { message: DemoMessage; id: string; speech: Speech; language: Language }) {
-  const { user, bot, topicLink } = message
+  const { user, bot, topicLink, demo } = message
   const { t } = useLanguage()
   return (
     <>
@@ -512,6 +537,12 @@ function Exchange({ message, id, speech, language }: { message: DemoMessage; id:
           <span className="msg-bot-icon-img" aria-hidden="true" />
           <span>Rights Within Reach</span>
         </div>
+
+        {demo && (
+          <p className="demo-notice" role="note" style={{ background: '#FFF4E5', border: '1px solid #E8A33D', borderRadius: '6px', padding: '0.5rem 0.75rem', margin: '0 0 0.6rem', fontSize: '0.88rem', color: 'var(--ink)' }}>
+            {t('chat.demoNotice')}
+          </p>
+        )}
 
         {bot.refused ? (
           <RefusalCard bot={bot} id={id} speech={speech} language={language} />

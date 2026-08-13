@@ -106,6 +106,8 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'triage.subject.prompt': 'What is this about?',
     'triage.skip': 'Skip these and just ask →',
     'triage.edit': 'Change',
+    'triage.back': 'Back',
+    'triage.step': 'Step',
     'triage.summary': 'Helping you in',
     'chat.live': 'Live conversation',
     'chat.question': 'question so far',
@@ -124,6 +126,7 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.answered': 'Answered',
     'chat.searching': 'Searching the law for you…',
     'chat.answerReady': 'Answer ready.',
+    'chat.demoNotice': 'Our live service is temporarily unavailable, so this is a general example — please confirm details with the organization listed below.',
     'chat.error': 'Something went wrong. Please try again.',
     'chat.errorTitle': 'Something went wrong.',
     'chat.sources': 'Sources',
@@ -291,6 +294,8 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'res.hero.eyebrow': 'Find help',
     'res.hero.title': 'Real people who can help.',
     'res.hero.sub': 'Every organization on this page provides free or sliding-scale legal help to Illinois residents. Most have multilingual staff. None will charge you for a consultation.',
+    'jurisdiction.notice': 'the detailed guides on this page are still Illinois-focused. For answers specific to your state,',
+    'jurisdiction.cta': 'ask a question',
     'findhelp.eyebrow': 'Find help near me',
     'findhelp.title': 'Get matched to a free office',
     'findhelp.sub': 'Tell us where you live and we’ll show the free organizations that serve your area, with the right number to call first.',
@@ -444,6 +449,8 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'triage.subject.prompt': '¿De qué se trata?',
     'triage.skip': 'Omitir y solo preguntar →',
     'triage.edit': 'Cambiar',
+    'triage.back': 'Atrás',
+    'triage.step': 'Paso',
     'triage.summary': 'Ayudándote en',
     'chat.live': 'Conversación en vivo',
     'chat.question': 'pregunta hasta ahora',
@@ -462,6 +469,7 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'chat.answered': 'Respondido',
     'chat.searching': 'Buscando en la ley para ti…',
     'chat.answerReady': 'Respuesta lista.',
+    'chat.demoNotice': 'Nuestro servicio en vivo no está disponible por el momento, así que este es un ejemplo general; confirma los detalles con la organización que aparece abajo.',
     'chat.error': 'Algo salió mal. Por favor, inténtalo de nuevo.',
     'chat.errorTitle': 'Algo salió mal.',
     'chat.sources': 'Fuentes',
@@ -629,6 +637,8 @@ const STRINGS: Record<Language, Record<string, string>> = {
     'res.hero.eyebrow': 'Busca ayuda',
     'res.hero.title': 'Personas reales que pueden ayudar.',
     'res.hero.sub': 'Cada organización en esta página ofrece ayuda legal gratuita o de tarifa ajustable a los residentes de Illinois. La mayoría tiene personal multilingüe. Ninguna te cobrará por una consulta.',
+    'jurisdiction.notice': 'las guías detalladas de esta página aún se centran en Illinois. Para respuestas sobre tu estado,',
+    'jurisdiction.cta': 'haz una pregunta',
     'findhelp.eyebrow': 'Busca ayuda cerca de ti',
     'findhelp.title': 'Conéctate con una oficina gratuita',
     'findhelp.sub': 'Dinos dónde vives y te mostramos las organizaciones gratuitas que atienden tu zona, con el número correcto para llamar primero.',
@@ -1810,6 +1820,10 @@ function initialLanguage(): Language {
   return detectBrowserLanguage() ?? 'en'
 }
 
+// Right-to-left languages. Empty until the RTL CSS pass ships; wiring `dir` now
+// is the groundwork so adding 'ar'/'ur'/'fa' later is a one-line change here.
+const RTL_LANGS = new Set<string>([])
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(initialLanguage)
 
@@ -1821,10 +1835,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       /* ignore persistence failures */
     }
     document.documentElement.lang = code
+    document.documentElement.dir = RTL_LANGS.has(code) ? 'rtl' : 'ltr'
   }
 
   useEffect(() => {
     document.documentElement.lang = language
+    document.documentElement.dir = RTL_LANGS.has(language) ? 'rtl' : 'ltr'
   }, [language])
 
   const t = (key: string): string => STRINGS[language]?.[key] ?? STRINGS.en[key] ?? key
