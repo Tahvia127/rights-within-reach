@@ -14,6 +14,7 @@ export function LanguageStrip() {
           onClick={() => setLanguage(code as Language)}
           aria-pressed={language === code}
           aria-label={label}
+          lang={code}
         >
           {label}
         </button>

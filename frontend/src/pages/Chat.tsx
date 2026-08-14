@@ -149,6 +149,8 @@ export default function Chat() {
   const speech = useSpeechContext()
   const formRef = useRef<HTMLFormElement>(null)
   const voiceBaseRef = useRef('') // input text when voice dictation started
+  const lastMsgRef = useRef<HTMLDivElement>(null) // newest exchange, for scroll + focus
+  const [announce, setAnnounce] = useState('')    // polite screen-reader announcement
 
   // Guided triage (Phase 2). 'ready' = collected or skipped → show the input.
   const [triage, setTriage] = useState<TriageState>({ state: initialState(), area: null, zip: '', subject: null })
@@ -219,6 +221,17 @@ export default function Chat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // When a new answer renders, move focus to it and scroll it into view (so it
+  // isn't below the fold on a phone), and announce it to screen readers.
+  useEffect(() => {
+    if (loading) { setAnnounce(''); return }
+    if (!messages.length) return
+    setAnnounce(t('chat.answerReady'))
+    const el = lastMsgRef.current
+    if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, messages.length])
+
   return (
     <div className="chat-page">
       <SkipLink />
@@ -244,12 +257,19 @@ export default function Chat() {
             <p>{t('chat.welcome')}</p>
           </div>
         )}
-        {messages.map((m, i) => (
-          <Exchange key={i} message={m} id={String(i)} speech={speech} language={language} />
-        ))}
+        {messages.map((m, i) => {
+          const isLast = i === messages.length - 1
+          return (
+            <div key={i} ref={isLast ? lastMsgRef : undefined} tabIndex={isLast ? -1 : undefined} style={{ outline: 'none' }}>
+              <Exchange message={m} id={String(i)} speech={speech} language={language} />
+            </div>
+          )
+        })}
         {loading && <LoadingMessage />}
         {error && <ErrorMessage message={error} />}
       </main>
+
+      <div className="sr-only" aria-live="polite" role="status">{announce}</div>
 
       {triageStep !== 'ready' ? (
         <TriagePanel triage={triage} step={triageStep} setTriage={setTriage} setStep={setTriageStep} speech={speech} language={language} />
@@ -289,6 +309,10 @@ export default function Chat() {
               placeholder={t('chat.placeholder')}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                // Enter sends; Shift+Enter inserts a newline.
+                if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); formRef.current?.requestSubmit() }
+              }}
               aria-label={t('chat.typeQuestion')}
               disabled={loading}
             />
@@ -540,7 +564,7 @@ function Exchange({ message, id, speech, language }: { message: DemoMessage; id:
 function SectionHead({ title, id, text, speech, language }: { title: string; id: string; text: string; speech: Speech; language: Language }) {
   return (
     <div className="answer-section-head">
-      <h4 className="answer-section-title">{title}</h4>
+      <h2 className="answer-section-title">{title}</h2>
       <ReadAloudButton id={id} text={text} speech={speech} language={language} />
     </div>
   )
@@ -581,17 +605,12 @@ function AnswerCard({ bot, id, speech, language, shareUrl }: { bot: AskResponse;
   return (
     <article className="answer-card" aria-label={t('chat.answerLabel')}>
       <div className="answer-card-top">
-        <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
+        {bot.confidence !== 'low' && (
+          <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
+        )}
         <ConfidenceBadge level={bot.confidence} />
         <ShareActions bot={bot} shareUrl={shareUrl} />
       </div>
-
-      {bot.disclaimer && (
-        <div className="answer-disclaimer answer-disclaimer-top">
-          <ReadAloudButton id={`${id}:d0`} text={bot.disclaimer} speech={speech} language={language} />
-          <p>{bot.disclaimer}</p>
-        </div>
-      )}
 
       <section className="answer-section">
         <SectionHead title={t('chat.answerLabel')} id={`${id}:ans`} text={bot.answer} speech={speech} language={language} />
@@ -762,7 +781,7 @@ function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: stri
         <a href={`tel:${org.phone.replace(/[^0-9]/g, '')}`} className="btn btn-burgundy" style={{ flex: 1, minHeight: '3.2rem', justifyContent: 'center' }}>
           {t('chat.callNow')}
         </a>
-        <button className="btn btn-outline">{t('chat.moreOptions')}</button>
+        <a href="/resources" className="btn btn-outline" style={{ justifyContent: 'center' }}>{t('chat.moreOptions')}</a>
       </div>
 
       {bot.handoff && <HandoffCTA handoff={bot.handoff} />}

@@ -63,7 +63,7 @@ export function TopicPage(props: TopicPageProps) {
       <LanguageStrip />
       <SiteHeader />
 
-      <header className="topic-page-hero" role="banner" data-readable>
+      <header className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {parentLabel}

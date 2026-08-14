@@ -25,14 +25,11 @@ export function SiteFooter() {
             <li><Link to="/chat">{t('footer.askQuestion')}</Link></li>
             <li><Link to="/resources">{t('footer.findHelp')}</Link></li>
             <li><Link to="/deadline">{t('footer.deadline')}</Link></li>
-            <li><Link to="/">{t('footer.howToUse')}</Link></li>
           </ul>
         </div>
         <div className="footer-col">
           <h3>{t('footer.about')}</h3>
           <ul>
-            <li><Link to="/">{t('footer.whoWeAre')}</Link></li>
-            <li><Link to="/">{t('footer.ourPartners')}</Link></li>
             <li><a href="mailto:hello@rightswithinreach.org">{t('footer.contact')}</a></li>
           </ul>
         </div>

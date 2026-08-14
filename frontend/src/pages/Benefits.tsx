@@ -286,7 +286,7 @@ function ReferralCard({ r }: { r: Referral }) {
         <a href={tel} className="btn btn-clover" style={{ flex: 1, justifyContent: 'center' }}>
           {r.callBtn}
         </a>
-        <button className="btn btn-outline">{r.otherBtn}</button>
+        <a href="/resources" className="btn btn-outline" style={{ justifyContent: 'center' }}>{r.otherBtn}</a>
       </div>
     </aside>
   )

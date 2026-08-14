@@ -63,6 +63,13 @@ a:hover { color: var(--burgundy-hover); }
   outline-offset: 3px !important;
   border-radius: 4px;
 }
+/* WCAG 1.4.11: the orange ring is too low-contrast on the dark navy bars,
+   so use a light ring on those surfaces (language strip, headers). */
+.lang-strip *:focus-visible,
+.site-header *:focus-visible,
+.chat-header *:focus-visible {
+  outline-color: var(--bone) !important;
+}
 
 /* W3C 2.4.1 skip-to-content link */
 .skip-link {
