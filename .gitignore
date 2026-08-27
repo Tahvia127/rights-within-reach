@@ -43,3 +43,6 @@ data/analytics/
 .idea/
 .vscode/
 *.swp
+
+# Editor / tooling
+.claude/
