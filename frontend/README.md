@@ -85,7 +85,7 @@ All in `src/styles/global.css` as CSS variables under `:root`:
 | `--focus` | `#B8451F` | Focus rings (high-contrast over bone) |
 
 Typography:
-- **Recoleta-style display:** Fraunces (Google Fonts) with `font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1`
+- **Recoleta-style display:** Fraunces (self-hosted via @fontsource, no Google Fonts request) with `font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1`
 - **Body:** Inter
 
 ## Accessibility

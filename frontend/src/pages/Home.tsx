@@ -54,7 +54,7 @@ export default function Home() {
             </div>
 
             <div className="topic-grid">
-              <Link to="/housing" className="topic-card" style={{ ['--topic-accent' as string]: 'var(--burgundy)' }} aria-label={t('home.topic.housing.aria')}>
+              <Link to="/housing" className="topic-card" style={{ ['--topic-accent' as string]: 'var(--burgundy)' }}>
                 <span className="badge most-asked">{t('home.topics.mostAsked')}</span>
                 <span className="topic-chip"><TopicArt topic="housing" /></span>
                 <h3 className="serif topic-title">{t('home.topic.housing.title')}</h3>
@@ -73,7 +73,7 @@ export default function Home() {
                 <p className="topic-desc">{t('home.topic.repairs.desc')}</p>
                 <p className="topic-cta">{t('home.topics.readMore')}</p>
               </Link>
-              <Link to="/benefits" className="topic-card" style={{ ['--topic-accent' as string]: '#B8451F' }} aria-label={t('home.topic.benefits.aria')}>
+              <Link to="/benefits" className="topic-card" style={{ ['--topic-accent' as string]: '#B8451F' }}>
                 <span className="badge new">{t('home.topics.new')}</span>
                 <span className="topic-chip"><TopicArt topic="benefits" /></span>
                 <h3 className="serif topic-title">{t('home.topic.benefits.title')}</h3>
