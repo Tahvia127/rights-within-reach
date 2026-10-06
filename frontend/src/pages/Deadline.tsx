@@ -43,7 +43,8 @@ export default function Deadline() {
       <LanguageStrip />
       <SiteHeader />
 
-      <header className="topic-page-hero" data-readable>
+      <main id="main">
+      <div className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {t('deadline.crumb')}
@@ -57,9 +58,9 @@ export default function Deadline() {
           </div>
           <p className="topic-page-sub">{t('deadline.sub')}</p>
         </div>
-      </header>
+      </div>
 
-      <main id="main" className="section section-cream">
+      <div className="section section-cream">
         <div className="section-inner" style={{ maxWidth: 620 }}>
           <div className="program-card">
             <div className="deadline-field">
@@ -90,6 +91,7 @@ export default function Deadline() {
 
           <p className="deadline-disclaimer">{t('deadline.disclaimer')}</p>
         </div>
+      </div>
       </main>
 
       <SiteFooter />

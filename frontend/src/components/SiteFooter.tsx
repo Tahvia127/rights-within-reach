@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../lib/translations'
+import { SITE } from '../lib/siteInfo'
 
 export function SiteFooter() {
   const { t } = useLanguage()
@@ -11,7 +12,7 @@ export function SiteFooter() {
           <p>{t('footer.tagline')}</p>
         </div>
         <div className="footer-col">
-          <h3>{t('footer.topics')}</h3>
+          <h2>{t('footer.topics')}</h2>
           <ul>
             <li><Link to="/housing">{t('footer.housingRent')}</Link></li>
             <li><Link to="/money">{t('footer.moneyDebt')}</Link></li>
@@ -20,7 +21,7 @@ export function SiteFooter() {
           </ul>
         </div>
         <div className="footer-col">
-          <h3>{t('footer.help')}</h3>
+          <h2>{t('footer.help')}</h2>
           <ul>
             <li><Link to="/chat">{t('footer.askQuestion')}</Link></li>
             <li><Link to="/resources">{t('footer.findHelp')}</Link></li>
@@ -28,13 +29,24 @@ export function SiteFooter() {
           </ul>
         </div>
         <div className="footer-col">
-          <h3>{t('footer.about')}</h3>
+          <h2>{t('footer.legal')}</h2>
           <ul>
-            <li><a href="mailto:hello@rightswithinreach.org">{t('footer.contact')}</a></li>
+            <li><Link to="/about">{t('footer.aboutLink')}</Link></li>
+            <li><Link to="/privacy">{t('footer.privacy')}</Link></li>
+            <li><Link to="/terms">{t('footer.terms')}</Link></li>
+            <li><Link to="/cookies">{t('footer.cookies')}</Link></li>
+            <li><Link to="/refunds">{t('footer.refunds')}</Link></li>
+            <li><Link to="/accessibility">{t('footer.accessibility')}</Link></li>
           </ul>
         </div>
       </div>
       <p className="footer-disclaim">{t('footer.disclaimer')}</p>
+      <p className="footer-operator">
+        {t('footer.operatedBy')} {SITE.operator}, Chicago, Illinois.{' '}
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <br />
+        © {SITE.copyrightYear} {SITE.operator}
+      </p>
     </footer>
   )
 }

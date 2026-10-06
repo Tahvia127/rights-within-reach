@@ -1113,20 +1113,18 @@ function buildResponse(meta: DemoMeta, c: Content, lang: string): AskResponse {
 }
 
 /**
- * Returns a curated, real-looking answer for the question in the given language,
- * or the generic safe fallback. Used only when the live answer engine is
- * unavailable, so a demo never shows an error card.
+ * Returns a pre-written answer when the question clearly matches one by keyword,
+ * or null. Used only when the live answer engine is unavailable. It never
+ * guesses from the topic alone: showing an answer to a different question as if
+ * it were the answer would mislead the user, so the caller shows an "unavailable"
+ * message instead. The result is flagged `prewritten` so the UI can say so.
  */
-export function matchDemoAnswer(question: string, subject?: string, language: Language = 'en'): AskResponse {
+export function matchDemoAnswer(question: string, subject?: string, language: Language = 'en'): AskResponse | null {
   const q = question.toLowerCase()
   const byKeyword = DEMO_META.filter((d) => d.keywords.some((k) => q.includes(k)))
-  let meta: DemoMeta | undefined
-  if (byKeyword.length) {
-    meta = (subject ? byKeyword.find((d) => d.subjects?.includes(subject)) : undefined) ?? byKeyword[0]
-  } else if (subject) {
-    meta = DEMO_META.find((d) => d.subjects?.includes(subject))
-  }
-  const chosen = meta ?? GENERIC_META
+  if (!byKeyword.length) return null
+  const chosen = (subject ? byKeyword.find((d) => d.subjects?.includes(subject)) : undefined) ?? byKeyword[0]
   const content = CONTENT[language]?.[chosen.id] ?? EN[chosen.id]
-  return buildResponse(chosen, content, language)
+  // Not written for this exact question, so never claim high confidence.
+  return { ...buildResponse(chosen, content, language), confidence: undefined, prewritten: true }
 }

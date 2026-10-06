@@ -287,7 +287,7 @@ function ReferralCard({ r }: { r: Referral }) {
         {r.bring.map((item, i) => <li key={i} className="bring-chip">{item}</li>)}
       </ul>
       <div className="referral-buttons">
-        <a href="#" className="btn btn-clover external" target="_blank" rel="noopener" style={{ flex: 1, justifyContent: 'center' }}>
+        <a href="#" className="btn btn-clover external" target="_blank" rel="noopener noreferrer" style={{ flex: 1, justifyContent: 'center' }}>
           {r.startBtn}
         </a>
         <a href="/resources" className="btn btn-outline" style={{ justifyContent: 'center' }}>{r.otherBtn}</a>

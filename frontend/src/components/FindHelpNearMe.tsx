@@ -162,7 +162,7 @@ export function FindHelpNearMe() {
             <p className="findhelp-prompt">
               {t('findhelp.none')}{' '}
               {directory && (
-                <a href={href(directory.url)} target="_blank" rel="noopener">
+                <a href={href(directory.url)} target="_blank" rel="noopener noreferrer">
                   {directory.name} ↗
                 </a>
               )}
@@ -191,7 +191,7 @@ export function FindHelpNearMe() {
                         </a>
                       )}
                       {web && (
-                        <a className="findhelp-visit" href={web} target="_blank" rel="noopener">
+                        <a className="findhelp-visit" href={web} target="_blank" rel="noopener noreferrer">
                           {t('findhelp.visit')} ↗
                         </a>
                       )}

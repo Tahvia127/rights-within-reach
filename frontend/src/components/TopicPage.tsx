@@ -63,7 +63,8 @@ export function TopicPage(props: TopicPageProps) {
       <LanguageStrip />
       <SiteHeader />
 
-      <header className="topic-page-hero" data-readable>
+      <main id="main">
+      <div className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {parentLabel}
@@ -78,7 +79,7 @@ export function TopicPage(props: TopicPageProps) {
           </div>
           <p className="topic-page-sub">{sub}</p>
         </div>
-      </header>
+      </div>
 
       <nav className="quick-nav" aria-label="Sections on this page">
         <div className="quick-nav-inner">
@@ -88,7 +89,7 @@ export function TopicPage(props: TopicPageProps) {
         </div>
       </nav>
 
-      <main id="main" className="topic-content" role="main">
+      <div className="topic-content">
         <div className="topic-content-inner">
 
           <section className="tc-section" id="summary" aria-labelledby="summary-h" data-readable>
@@ -118,9 +119,11 @@ export function TopicPage(props: TopicPageProps) {
                   <div className="faq-foot">
                     <p className="faq-source">
                       <strong>{t('topic.source')}</strong>{' '}
-                      <a href={faq.sourceUrl ?? '#'} className="external" target="_blank" rel="noopener">
-                        {faq.source}
-                      </a>
+                      {faq.sourceUrl ? (
+                        <a href={faq.sourceUrl} className="external" target="_blank" rel="noopener noreferrer">
+                          {faq.source}
+                        </a>
+                      ) : faq.source}
                     </p>
                     <ReadAloud id={`faq-${i}`} />
                   </div>
@@ -145,15 +148,17 @@ export function TopicPage(props: TopicPageProps) {
                   <p className="program-meta">{p.meta}</p>
                   <p className="program-body">{p.body}</p>
                   <div className="program-foot">
-                    <a
-                      href={p.ctaUrl ?? '#'}
-                      className="btn btn-clover external"
-                      target="_blank"
-                      rel="noopener"
-                      style={{ fontSize: '0.92rem', padding: '0.65rem 1.1rem', minHeight: 0 }}
-                    >
-                      {p.cta}
-                    </a>
+                    {p.ctaUrl && (
+                      <a
+                        href={p.ctaUrl}
+                        className="btn btn-clover external"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontSize: '0.92rem', padding: '0.65rem 1.1rem', minHeight: 0 }}
+                      >
+                        {p.cta}
+                      </a>
+                    )}
                     {p.meta2 && <span style={{ fontSize: '0.92rem', color: 'var(--mute)' }}>{p.meta2}</span>}
                     <ReadAloud id={`program-${i}`} />
                   </div>
@@ -196,6 +201,7 @@ export function TopicPage(props: TopicPageProps) {
           </section>
 
         </div>
+      </div>
       </main>
 
       <SiteFooter />

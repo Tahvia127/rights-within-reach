@@ -43,7 +43,7 @@ export function ChatHeader({ backTo = '/', onReadAloud, reading = false }: Props
         <button
           className="big-text-btn"
           onClick={toggleBigText}
-          aria-label={t('nav.biggerText')}
+          aria-label={`A+ ${t('nav.biggerText')}`}
           aria-pressed={bigText}
         >
           A+

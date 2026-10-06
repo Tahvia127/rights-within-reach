@@ -6,6 +6,12 @@ import { BigTextProvider } from './components/BigTextProvider'
 import { DarkModeProvider } from './components/DarkModeProvider'
 import { LanguageProvider } from './lib/translations'
 import { SpeechProvider } from './lib/speech'
+// Fonts are bundled with the site (no request to Google Fonts or any third party).
+import '@fontsource-variable/fraunces/full.css'
+import '@fontsource/poppins/400.css'
+import '@fontsource/poppins/500.css'
+import '@fontsource/poppins/600.css'
+import '@fontsource/poppins/700.css'
 import './styles/global.css'
 
 // Register the service worker for offline/installable support. Production only, // in dev it would cache stale assets and interfere with Vite HMR.

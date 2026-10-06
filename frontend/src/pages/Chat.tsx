@@ -156,6 +156,17 @@ export default function Chat() {
   const [triage, setTriage] = useState<TriageState>({ state: initialState(), area: null, zip: '', subject: null })
   const [triageStep, setTriageStep] = useState<'state' | 'area' | 'zip' | 'subject' | 'ready'>('state')
 
+  // Notice + consent, shown before anything is collected. Remembered for this
+  // browser tab only, so each new visit sees it again.
+  const [consented, setConsented] = useState<boolean>(hasConsent)
+  const triageRef = useRef<HTMLElement>(null)
+  const acceptConsent = () => {
+    try { sessionStorage.setItem(CONSENT_KEY, '1') } catch { /* ignore */ }
+    setConsented(true)
+    // The Continue button is about to disappear; hand keyboard focus to what replaces it.
+    setTimeout(() => triageRef.current?.focus(), 0)
+  }
+
   const lastMessage = messages[messages.length - 1]
   const readPage = () =>
     speech.toggle('page', lastMessage ? spokenText(lastMessage.bot) : '', language)
@@ -176,10 +187,14 @@ export default function Chat() {
       // If the answer engine soft-failed (e.g. out of API credits), fall back to a
       // curated demo answer so a live demo still shows a real, structured card.
       const bot = response.reason === 'error' ? matchDemoAnswer(question, ctx.subject, ctx.lang) : response
-      setMessages((prev) => [...prev, { user: question, bot, ask: ctx }])
+      if (bot) setMessages((prev) => [...prev, { user: question, bot, ask: ctx }])
+      else { setInput(question); setError(t('chat.unavailable')) }
     } catch {
-      // Hard failure (network/server unreachable): use the demo fallback too.
-      setMessages((prev) => [...prev, { user: question, bot: matchDemoAnswer(question, ctx.subject, ctx.lang), ask: ctx }])
+      // Hard failure (network/server unreachable): a clearly-labelled pre-written
+      // answer if one matches the question, otherwise say the service is down.
+      const bot = matchDemoAnswer(question, ctx.subject, ctx.lang)
+      if (bot) setMessages((prev) => [...prev, { user: question, bot, ask: ctx }])
+      else { setInput(question); setError(t('chat.unavailable')) }
     } finally {
       setLoading(false)
     }
@@ -201,7 +216,7 @@ export default function Chat() {
   // Deep link: /chat?q=…&lang=…&area=…&subject= auto-asks (share links, flyers, QR).
   const didAutoAsk = useRef(false)
   useEffect(() => {
-    if (didAutoAsk.current) return
+    if (didAutoAsk.current || !consented) return
     const q = searchParams.get('q')
     if (!q) return
     didAutoAsk.current = true
@@ -219,7 +234,7 @@ export default function Chat() {
     setSearchParams({}, { replace: true }) // clean URL so refresh doesn't re-ask
     submitQuestion(q, { lang, state: stateVal, locality, area, zip, subject })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [consented])
 
   // When a new answer renders, move focus to it and scroll it into view (so it
   // isn't below the fold on a phone), and announce it to screen readers.
@@ -241,6 +256,7 @@ export default function Chat() {
         reading={speech.speakingId === 'page'}
       />
 
+      <main id="main" aria-label={t('chat.conversationAria')}>
       <div className="chat-topic-strip">
         <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
           <span className="topic-pill">{t('chat.live')}</span>
@@ -249,7 +265,7 @@ export default function Chat() {
         <span className="topic-strip-count">{t('chat.allCite')}</span>
       </div>
 
-      <main id="main" className="chat-body" role="main" aria-label={t('chat.conversationAria')}>
+      <div className="chat-body">
         <h1 className="sr-only">{t('chat.heading')}</h1>
         {messages.length === 0 && !loading && (
           <div className="chat-welcome">
@@ -267,12 +283,15 @@ export default function Chat() {
         })}
         {loading && <LoadingMessage />}
         {error && <ErrorMessage message={error} />}
+      </div>
       </main>
 
       <div className="sr-only" aria-live="polite" role="status">{announce}</div>
 
-      {triageStep !== 'ready' ? (
-        <TriagePanel triage={triage} step={triageStep} setTriage={setTriage} setStep={setTriageStep} speech={speech} language={language} />
+      {!consented ? (
+        <ConsentPanel onAccept={acceptConsent} />
+      ) : triageStep !== 'ready' ? (
+        <TriagePanel panelRef={triageRef} triage={triage} step={triageStep} setTriage={setTriage} setStep={setTriageStep} speech={speech} language={language} />
       ) : (
         <>
           {(triage.state || triage.area || triage.subject) && (
@@ -285,7 +304,7 @@ export default function Chat() {
                   triage.zip,
                 ].filter(Boolean).join(' · ')}
               </span>
-              <button className="triage-edit" onClick={() => setTriageStep('state')}>{t('triage.edit')}</button>
+              <button type="button" className="triage-edit" onClick={() => setTriageStep('state')}>{t('triage.edit')}</button>
             </div>
           )}
 
@@ -293,9 +312,10 @@ export default function Chat() {
             <p className="suggest-label">{t('chat.tryNext')}</p>
             <div className="suggest-chips">
               {followUps.map((q, i) => (
-                <button key={i} className="suggest-chip" onClick={() => setInput(q)}>{q} →</button>
+                <button key={i} type="button" className="suggest-chip" onClick={() => setInput(q)}>{q} <span aria-hidden="true">→</span></button>
               ))}
             </div>
+            <p className="chat-privacy-hint" id="chat-privacy-hint">{t('chat.privacyHint')}</p>
           </section>
 
           <form ref={formRef} className="input-bar" onSubmit={handleSubmit} aria-label={t('chat.askAria')}>
@@ -313,7 +333,7 @@ export default function Chat() {
                 // Enter sends; Shift+Enter inserts a newline.
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); formRef.current?.requestSubmit() }
               }}
-              aria-label={t('chat.typeQuestion')}
+              aria-describedby="chat-privacy-hint"
               disabled={loading}
             />
             <MicButton
@@ -334,6 +354,44 @@ export default function Chat() {
 
       <SiteFooter />
     </div>
+  )
+}
+
+const CONSENT_KEY = 'rwr.consent'
+
+function hasConsent(): boolean {
+  try { return sessionStorage.getItem(CONSENT_KEY) === '1' } catch { return false }
+}
+
+// Shown before the guided questions and the question box. Nothing the user
+// types is sent anywhere until they tick the box and continue.
+function ConsentPanel({ onAccept }: { onAccept: () => void }) {
+  const { t } = useLanguage()
+  const [checked, setChecked] = useState(false)
+  return (
+    <section className="triage-panel consent-panel" aria-labelledby="consent-title">
+      <form onSubmit={(e) => { e.preventDefault(); if (checked) onAccept() }}>
+        <h2 id="consent-title" className="consent-title">{t('consent.title')}</h2>
+        <ul className="consent-list">
+          <li>{t('consent.p1')}</li>
+          <li>{t('consent.p2')}</li>
+          <li>{t('consent.p3')}</li>
+          <li>{t('consent.p4')}</li>
+        </ul>
+        <label className="consent-check" htmlFor="consent-check">
+          <input id="consent-check" type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} required />
+          <span>{t('consent.check')}</span>
+        </label>
+        <p className="consent-links">
+          {t('consent.read')}{' '}
+          <Link to="/terms">{t('footer.terms')}</Link>{' · '}
+          <Link to="/privacy">{t('footer.privacy')}</Link>
+        </p>
+        <button type="submit" className="btn btn-burgundy consent-continue" disabled={!checked}>
+          {t('consent.continue')}
+        </button>
+      </form>
+    </section>
   )
 }
 
@@ -405,7 +463,8 @@ const SUBJECT_LABEL: Record<string, string> = {
   work: 'subject.work',
 }
 
-function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
+function TriagePanel({ panelRef, triage, step, setTriage, setStep, speech, language }: {
+  panelRef?: React.Ref<HTMLElement>
   triage: TriageState
   step: 'state' | 'area' | 'zip' | 'subject' | 'ready'
   setTriage: Dispatch<SetStateAction<TriageState>>
@@ -424,13 +483,13 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
   )
 
   return (
-    <section className="triage-panel" aria-label={t('triage.aria')}>
+    <section ref={panelRef} tabIndex={-1} className="triage-panel" aria-label={t('triage.aria')} style={{ outline: 'none' }}>
       {step === 'state' && (
         <div className="triage-step">
           <Prompt promptKey="triage.state.prompt" />
           <div className="triage-options">
             {SUPPORTED_STATES.map((val) => (
-              <button key={val} className="triage-option" aria-pressed={triage.state === val} onClick={() => {
+              <button key={val} type="button" className="triage-option" aria-pressed={triage.state === val} onClick={() => {
                 // Changing state invalidates the old area, so clear it.
                 setTriage((p) => ({ ...p, state: val, area: null }))
                 try { localStorage.setItem('rwr.state', val) } catch { /* ignore */ }
@@ -448,7 +507,7 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
           <Prompt promptKey="triage.area.prompt" />
           <div className="triage-options">
             {(STATE_AREAS[triage.state] ?? STATE_AREAS.IL).map((val) => (
-              <button key={val} className="triage-option" onClick={() => {
+              <button key={val} type="button" className="triage-option" onClick={() => {
                 setTriage((p) => ({ ...p, area: val }))
                 // ZIP→region is an Illinois-only table, so only IL uses the ZIP step.
                 setStep(triage.state === 'IL' ? 'zip' : 'subject')
@@ -466,6 +525,8 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
           <div className="triage-zip-row">
             <input
               className="triage-zip-input"
+              type="text"
+              autoComplete="postal-code"
               inputMode="numeric"
               maxLength={5}
               placeholder={t('triage.zip.placeholder')}
@@ -473,7 +534,7 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
               onChange={(e) => setZipInput(e.target.value.replace(/[^0-9]/g, ''))}
               aria-label={t('triage.zip.prompt')}
             />
-            <button className="triage-option" onClick={() => { setTriage((p) => ({ ...p, zip: zipInput })); setStep('subject') }}>
+            <button type="button" className="triage-option" onClick={() => { setTriage((p) => ({ ...p, zip: zipInput })); setStep('subject') }}>
               {t('triage.zip.next')}
             </button>
           </div>
@@ -485,7 +546,7 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
           <Prompt promptKey="triage.subject.prompt" />
           <div className="triage-options">
             {Object.entries(SUBJECT_LABEL).map(([val, key]) => (
-              <button key={val} className="triage-option" onClick={() => { setTriage((p) => ({ ...p, subject: val })); setStep('ready') }}>
+              <button key={val} type="button" className="triage-option" onClick={() => { setTriage((p) => ({ ...p, subject: val })); setStep('ready') }}>
                 {t(key)}
               </button>
             ))}
@@ -493,7 +554,7 @@ function TriagePanel({ triage, step, setTriage, setStep, speech, language }: {
         </div>
       )}
 
-      <button className="triage-skip" onClick={() => setStep('ready')}>{t('triage.skip')}</button>
+      <button type="button" className="triage-skip" onClick={() => setStep('ready')}>{t('triage.skip')}</button>
     </section>
   )
 }
@@ -536,21 +597,25 @@ function Exchange({ message, id, speech, language }: { message: DemoMessage; id:
           <div className="sources-block">
             <p className="sources-label">{t('chat.sources')}</p>
             <div className="source-grid">
-              {bot.sources.map((src, i) => (
-                <a
-                  key={i}
-                  href={src.url ?? '#'}
-                  className={`source-card external${src.web ? ' source-card-web' : ''}`}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <p className="source-title">{src.title}</p>
-                  <p className="source-section">
-                    {src.web && <span className="source-web-tag">{t('chat.webSource')}</span>}
-                    {src.web ? t('chat.webChecked') : src.section}
-                  </p>
-                </a>
-              ))}
+              {bot.sources.map((src, i) => {
+                const body = (
+                  <>
+                    <p className="source-title">{src.title}</p>
+                    <p className="source-section">
+                      {src.web && <span className="source-web-tag">{t('chat.webSource')}</span>}
+                      {src.web ? t('chat.webChecked') : src.section}
+                    </p>
+                  </>
+                )
+                // Only a source with a real address is a link.
+                return src.url ? (
+                  <a key={i} href={src.url} className={`source-card external${src.web ? ' source-card-web' : ''}`} target="_blank" rel="noopener noreferrer">
+                    {body}
+                  </a>
+                ) : (
+                  <div key={i} className="source-card">{body}</div>
+                )
+              })}
             </div>
           </div>
         )}
@@ -579,7 +644,7 @@ function HandoffCTA({ handoff }: { handoff: NonNullable<AskResponse['handoff']> 
         {t('chat.handoffPrompt')}
       </p>
       {url ? (
-        <a href={url} target="_blank" rel="noopener" className="btn btn-burgundy"
+        <a href={url} target="_blank" rel="noopener noreferrer" className="btn btn-burgundy"
            style={{ minHeight: '3rem', justifyContent: 'center', width: '100%' }}>
           {t('chat.getLegalHelp')}: {handoff.name} ↗
         </a>
@@ -605,15 +670,17 @@ function AnswerCard({ bot, id, speech, language, shareUrl }: { bot: AskResponse;
   return (
     <article className="answer-card" aria-label={t('chat.answerLabel')}>
       <div className="answer-card-top">
-        {bot.confidence !== 'low' && (
+        {bot.confidence !== 'low' && !bot.prewritten && (
           <div className="answer-sticker" aria-hidden="true">{t('chat.answered')}</div>
         )}
         <ConfidenceBadge level={bot.confidence} />
         <ShareActions bot={bot} shareUrl={shareUrl} />
       </div>
 
+      {bot.prewritten && <p className="answer-prewritten" role="note">{t('chat.demoNote')}</p>}
+
       <section className="answer-section">
-        <SectionHead title={t('chat.answerLabel')} id={`${id}:ans`} text={bot.answer} speech={speech} language={language} />
+        <SectionHead title={t('chat.answerLabel')} id={`${id}:ans`} text={bot.prewritten ? `${t('chat.demoNote')} ${bot.answer}` : bot.answer} speech={speech} language={language} />
         <div className="answer-text"><ReactMarkdown>{bot.answer}</ReactMarkdown></div>
       </section>
 
@@ -655,7 +722,7 @@ function AnswerCard({ bot, id, speech, language, shareUrl }: { bot: AskResponse;
                       </a>
                     )}
                     {web && (
-                      <a href={web} target="_blank" rel="noopener" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+                      <a href={web} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
                         {t('chat.visitSite')}
                       </a>
                     )}
@@ -685,10 +752,10 @@ function FeedbackButtons({ topic, language }: { topic: string; language: Languag
   return (
     <div className="feedback-row">
       <span className="feedback-q">{t('chat.helpful')}</span>
-      <button type="button" className="feedback-btn" onClick={() => vote(true)} aria-label={t('chat.yes')}>
+      <button type="button" className="feedback-btn" onClick={() => vote(true)} aria-label={`${t('chat.helpful')} ${t('chat.yes')}`}>
         <Icon name="like" size={17} aria-hidden="true" /> {t('chat.yes')}
       </button>
-      <button type="button" className="feedback-btn" onClick={() => vote(false)} aria-label={t('chat.no')}>
+      <button type="button" className="feedback-btn" onClick={() => vote(false)} aria-label={`${t('chat.helpful')} ${t('chat.no')}`}>
         <Icon name="like" size={17} aria-hidden="true" style={{ transform: 'rotate(180deg)' }} /> {t('chat.no')}
       </button>
     </div>
@@ -707,7 +774,7 @@ function ContactCard({ contact }: { contact: NonNullable<AskResponse['contact']>
       {contact.how && <p className="contact-how">{contact.how}</p>}
       <div className="org-stats">
         {contact.phone && <div className="stat"><p className="stat-label">{t('chat.phone')}</p><p className="stat-val"><a href={tel}>{contact.phone}</a></p></div>}
-        {web && <div className="stat"><p className="stat-label">{t('chat.website')}</p><p className="stat-val"><a href={web} target="_blank" rel="noopener">{contact.url}</a></p></div>}
+        {web && <div className="stat"><p className="stat-label">{t('chat.website')}</p><p className="stat-val"><a href={web} target="_blank" rel="noopener noreferrer">{contact.url}</a></p></div>}
         {contact.hours && <div className="stat"><p className="stat-label">{t('chat.hours')}</p><p className="stat-val">{orgText(contact.hours, language)}</p></div>}
       </div>
       <div className="contact-actions">
@@ -717,7 +784,7 @@ function ContactCard({ contact }: { contact: NonNullable<AskResponse['contact']>
           </a>
         )}
         {web && (
-          <a href={web} target="_blank" rel="noopener" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
+          <a href={web} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ minHeight: '3rem', justifyContent: 'center' }}>
             {t('chat.visitSite')}
           </a>
         )}
@@ -747,7 +814,17 @@ function ReadAloudButton({ id, text, speech, language }: { id: string; text: str
 
 function RefusalCard({ bot, id, speech, language }: { bot: AskResponse; id: string; speech: Speech; language: Language }) {
   const { t } = useLanguage()
-  const org = bot.refusal_org!
+  const org = bot.refusal_org
+  if (!org) {
+    return (
+      <article className="refuse-card" aria-label={t('chat.refuseAria')}>
+        <p className="serif refuse-title">{bot.answer}</p>
+        <p className="refuse-body">{t('chat.refuseBody')}</p>
+        <Link to="/resources" className="btn btn-outline">{t('chat.moreOptions')}</Link>
+        {bot.handoff && <HandoffCTA handoff={bot.handoff} />}
+      </article>
+    )
+  }
   return (
     <article className="refuse-card" aria-label={t('chat.refuseAria')}>
       <div className="answer-card-top">

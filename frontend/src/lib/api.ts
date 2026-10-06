@@ -40,6 +40,8 @@ export interface AskResponse {
   /** Warm handoff to a guided legal-aid intake — present on refusals / low confidence. */
   handoff?: { name: string; url?: string; description?: string }
   refused?: boolean
+  /** Set client-side when the live engine was down and a pre-written answer is shown. */
+  prewritten?: boolean
   /** Backend sets reason:"error" (in a 200 response) when the answer engine failed. */
   reason?: string
   refusal_org?: {

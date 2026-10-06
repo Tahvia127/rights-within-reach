@@ -41,7 +41,7 @@ export function SiteHeader() {
         <button
           className="big-text-btn"
           onClick={toggleBigText}
-          aria-label={t('nav.biggerText')}
+          aria-label={`A+ ${t('nav.biggerText')}`}
           aria-pressed={bigText}
         >
           A+

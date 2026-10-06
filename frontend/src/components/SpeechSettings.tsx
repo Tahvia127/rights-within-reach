@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useLanguage, Language } from '../lib/translations'
 import { useSpeechContext } from '../lib/speech'
 import { Icon } from '../lib/icons'
@@ -15,6 +15,7 @@ export function SpeechSettings() {
   const { supported, rate, setRate, voiceForLang, setVoiceForLang, voices } = useSpeechContext()
   const { t, language } = useLanguage()
   const [open, setOpen] = useState(false)
+  const btnRef = useRef<HTMLButtonElement>(null)
   if (!supported) return null
 
   const voiceURI = voiceForLang(language)
@@ -23,8 +24,14 @@ export function SpeechSettings() {
   const others  = voices.filter((v) => !v.lang.toLowerCase().startsWith(prefix))
 
   return (
-    <div className="speech-settings">
+    <div
+      className="speech-settings"
+      onKeyDown={(e) => {
+        if (e.key === 'Escape' && open) { setOpen(false); btnRef.current?.focus() }
+      }}
+    >
       <button
+        ref={btnRef}
         type="button"
         className="speech-settings-btn"
         onClick={() => setOpen((o) => !o)}
@@ -38,7 +45,7 @@ export function SpeechSettings() {
       </button>
 
       {open && (
-        <div className="speech-pop" role="dialog" aria-label={t('speak.settings')}>
+        <div className="speech-pop" role="group" aria-label={t('speak.settings')}>
           <div className="speech-pop-label-row">
             <span className="speech-pop-label">{t('speak.speed')}</span>
             <span className="speech-rate-val">{rate}×</span>

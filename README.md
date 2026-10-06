@@ -84,6 +84,19 @@ Vercel (frontend). Key gotchas: Vercel **Root Directory = `frontend`** (the root
 `requirements.txt` is Railway-only), set `ANTHROPIC_API_KEY` + `ALLOWED_ORIGINS` on
 Railway, and enable Railway auto-deploy on push for the daily re-ingest to reach prod.
 
+## Legal pages & privacy
+
+The site ships Privacy, Terms, Cookie, Refund, Accessibility, and About pages
+(`frontend/src/pages/`), linked from the footer. They describe what the code does
+today, so keep them in sync:
+
+- Operator name, location, and contact email live in `frontend/src/lib/siteInfo.ts`.
+- If you enable `ANALYTICS_LOG_QUESTIONS`, `QUESTION_GAP_LOG`, or `ANALYTICS_HASH_IP`
+  on the backend, or add analytics, ads, or third-party embeds, update the Privacy
+  and Cookie pages first (and add a consent banner if anything non-essential is stored).
+- Anything the site saves in the browser must be listed in `frontend/src/pages/Cookies.tsx`.
+- The policies are templates and have not been reviewed by an attorney.
+
 ## Status & roadmap
 
 Pre-launch checklist and remaining work live in **[docs/TODO.md](docs/TODO.md)**. The main

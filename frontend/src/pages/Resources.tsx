@@ -446,7 +446,7 @@ function ResCard({ card }: { card: ResourceCard }) {
       <div className="res-card-head">
         <h3 className="res-card-name">
           {card.href
-            ? <a href={card.href} target="_blank" rel="noopener">{card.name}</a>
+            ? <a href={card.href} target="_blank" rel="noopener noreferrer">{card.name}</a>
             : card.name}
         </h3>
         <span className={tagClass}>{tag}</span>
@@ -485,7 +485,8 @@ export default function Resources() {
       <LanguageStrip />
       <SiteHeader />
 
-      <header className="topic-page-hero" role="banner" data-readable>
+      <main id="main">
+      <div className="topic-page-hero" data-readable>
         <div className="topic-page-hero-inner">
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link to="/">{t('nav.home')}</Link> · {t('nav.resources')}
@@ -500,9 +501,7 @@ export default function Resources() {
           </div>
           <p className="topic-page-sub">{t('res.hero.sub')}</p>
         </div>
-      </header>
-
-      <main id="main">
+      </div>
 
         <FindHelpNearMe />
 

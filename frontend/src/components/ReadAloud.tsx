@@ -53,7 +53,9 @@ export function ReadAloud({ id, text, dark }: Props) {
       className={`section-speak${dark ? ' section-speak--dark' : ''}${active ? ' is-reading' : ''}`}
       onClick={handleClick}
       aria-pressed={active}
-      aria-label={active ? t('speak.stopSection') : t('speak.readSection')}
+      aria-label={active
+        ? `${t('speak.stop')}: ${t('speak.stopSection')}`
+        : `${t('speak.listen')}: ${t('speak.readSection')}`}
     >
       <Icon name="volume" size={17} aria-hidden="true" />
       <span>{active ? t('speak.stop') : t('speak.listen')}</span>
